@@ -39,18 +39,14 @@ public class RoomList extends Model implements Serializable{
     @Column(name = "soundNum")
     public String soundNum;
 
-    public RoomList(int roomId, String roomName, String lightNum,
-                    String windowNum, String airNum, String projectionNum,
-                    String tvNum, String soundNum) {
-        super();
-        this.roomid = roomId;
-        this.roomName = roomName;
-        this.lightNum = lightNum;
-        this.windowNum = windowNum;
-        this.airNum = airNum;
-        this.projectionNum = projectionNum;
-        this.tvNum = tvNum;
-        this.soundNum = soundNum;
-    }
+    @Column
+    public String ip;
+
+    @Column
+    public int sendPort;
+
+    @Column
+    public int receivePort;
+
 
 }

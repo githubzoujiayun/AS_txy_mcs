@@ -50,28 +50,7 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
     private int mNowPosition = 0;// 当前的控制模式，默认的为情景控制
     private PopMenu mSetMenu;
     private ReceiverService receiveService;
-    private ServiceConnection conn = new ServiceConnection() {
-
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-
-        }
-
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            MyBinder myBinder = (MyBinder) service;
-            receiveService = myBinder.getReceiveService();
-            receiveService.startTask();
-            receiveService.setOnReceiveSuccessListener(new OnReceiveSuccessListener() {
-
-                @Override
-                public void onSuccessData(byte[] data) {
-                    Log.e("---------------",data[2]+"");
-                }
-            });
-        }
-    };
+    private ServiceConnection conn = new MyServiceConnection();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -289,6 +268,32 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.framelayout, fragment);
         ft.commit();
+    }
+
+    /**
+     * 跟服务的绑定的连接
+     * 通过这个类可以跟服务进行数据的交互
+     */
+    class MyServiceConnection implements ServiceConnection {
+
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            MyBinder myBinder = (MyBinder) iBinder;
+            receiveService = myBinder.getReceiveService();
+            receiveService.startTask();
+            receiveService.setOnReceiveSuccessListener(new OnReceiveSuccessListener() {
+
+                @Override
+                public void onSuccessData(byte[] data) {
+                    Log.e("---------------",data[2]+"");
+                }
+            });
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+
+        }
     }
 
 }

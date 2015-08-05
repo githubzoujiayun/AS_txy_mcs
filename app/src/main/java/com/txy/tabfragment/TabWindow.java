@@ -30,8 +30,7 @@ public class TabWindow extends Fragment {
 	}
 	
 	/**
-	 * ≥ı ºªØListView
-	 * @param layout 
+	 * @param layout
 	 */
 	private void initListView(View layout) {
 		mListView = (ListView) layout.findViewById(R.id.listView1);

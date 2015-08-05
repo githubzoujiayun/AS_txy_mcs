@@ -211,7 +211,7 @@ public class SetActivity extends FragmentActivity implements OnClickListener, On
         // 创建一个房间
         int roomId = (Integer) SPUtils.get(this, "roomid", 0);
         roomId += 1;
-        RoomList roomList = new RoomList(roomId, roomName, lightNum, windowNum, airNum, projectionNum, tvNum, soundNum);
+        RoomList roomList = new RoomList();
         DBManager.saveRoomList(roomList);
         mRoomListAdapter.addOneRoomList(roomList);
         mRoomListAdapter.notifyDataSetChanged();

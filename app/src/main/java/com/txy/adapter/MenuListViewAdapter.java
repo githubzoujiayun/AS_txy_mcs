@@ -14,14 +14,15 @@ public class MenuListViewAdapter extends BaseAdapter {
     private Context mContext;
     private int mPosition = 0;
     private int[] mBackGround = new int[]{
-            R.drawable.ctrl_mode_off,
-            R.drawable.ctrl_win_off,
-            R.drawable.ctrl_ty_off,
-            R.drawable.ctrl_kg_off,
-            R.drawable.ctrl_music_off,
-            R.drawable.ctrl_ppt_off,
-            R.drawable.ctrl_tv_off,
-            R.drawable.ctrl_sound_off};
+            R.drawable.ctrl_mode_off,// 情景设置
+            R.drawable.ctrl_win_off,// 窗帘控制
+            R.drawable.ctrl_ty_off,// 投影
+            R.drawable.ctrl_kg_off,// 空调
+            R.drawable.ctrl_music_off,// 音乐控制
+            R.drawable.ctrl_ppt_off,// 同屏
+            R.drawable.ctrl_tv_off,// 电视
+            R.drawable.ctrl_sound_off// 音响
+    };
 
     public MenuListViewAdapter(Context context){
         mContext = context;

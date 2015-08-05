@@ -32,7 +32,7 @@ public class ReceiverService extends Service {
         public ReceiverService getReceiveService(){
             WifiManager manager = (WifiManager) ReceiverService.this.getSystemService(Context.WIFI_SERVICE);
             if (lock == null) {
-                lock = manager.createMulticastLock("mywifi");
+                lock = manager.createMulticastLock("myWifi");
             }
             return ReceiverService.this;
         }
@@ -64,7 +64,7 @@ public class ReceiverService extends Service {
                     socket = new DatagramSocket(Constants.RECEIVEPORT);
                     DatagramPacket dp = new DatagramPacket(data , data.length);
                     socket.receive(dp);
-                    mOnReceiveSuccessListener.onSuccessData(data);
+                    mOnReceiveSuccessListener.onSuccessData(data);// 监听
                 } catch (SocketException e) {
                     e.printStackTrace();
                 } catch (IOException e) {

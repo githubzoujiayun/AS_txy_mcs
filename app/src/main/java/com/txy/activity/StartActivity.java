@@ -12,7 +12,7 @@ import com.txy.util.SPUtils;
 
 public class StartActivity extends Activity {
 
-    private static final long DISPLAY_LENGHT = 3000;// 延时3秒
+    private static final long DISPLAY_LENGTH = 3000;// 延时3秒
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +33,7 @@ public class StartActivity extends Activity {
                 StartActivity.this.finish();
             }
 
-        },DISPLAY_LENGHT);
+        },DISPLAY_LENGTH);
     }
 
 

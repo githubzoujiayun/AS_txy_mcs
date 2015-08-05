@@ -54,7 +54,7 @@
             android:exported="false" >
         </service>
         <service
-            android:name=".ProjectionService"
+            android:name="com.txy.services.ProjectionService"
             android:enabled="true"
             android:exported="false" >
         </service>
