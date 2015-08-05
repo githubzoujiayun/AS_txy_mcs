@@ -1,0 +1,294 @@
+package com.txy.activity;
+
+import android.annotation.SuppressLint;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.Bundle;
+import android.os.IBinder;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import com.activeandroid.util.Log;
+import com.txy.adapter.MenuListViewAdapter;
+import com.txy.services.ReceiverService;
+import com.txy.services.ReceiverService.MyBinder;
+import com.txy.services.ReceiverService.OnReceiveSuccessListener;
+import com.txy.tabfragment.TabAirCondition;
+import com.txy.tabfragment.TabMusic;
+import com.txy.tabfragment.TabProjector;
+import com.txy.tabfragment.TabScreen;
+import com.txy.tabfragment.TabSituation;
+import com.txy.tabfragment.TabSound;
+import com.txy.tabfragment.TabTV;
+import com.txy.tabfragment.TabWindow;
+import com.txy.tools.PopMenu;
+import com.txy.txy_mcs.R;
+
+public class IndexActivity extends FragmentActivity implements OnClickListener,
+        OnItemClickListener {
+
+    private TextView mTVHeader;
+    private ImageButton mIbHome;
+    private ImageButton mIbDevice;
+    private ImageButton mIbSetting;
+    private ImageView mImAddButton;
+    private ListView mMenuListView;
+    private MenuListViewAdapter mMenuListViewAdapter;
+    private int mNowPosition = 0;// 当前的控制模式，默认的为情景控制
+    private PopMenu mSetMenu;
+    private ReceiverService receiveService;
+    private ServiceConnection conn = new ServiceConnection() {
+
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+
+        }
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            MyBinder myBinder = (MyBinder) service;
+            receiveService = myBinder.getReceiveService();
+            receiveService.startTask();
+            receiveService.setOnReceiveSuccessListener(new OnReceiveSuccessListener() {
+
+                @Override
+                public void onSuccessData(byte[] data) {
+                    Log.e("---------------",data[2]+"");
+                }
+            });
+        }
+    };
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_index);
+
+        initUI();
+        initListener();
+        initParameter();
+        initListView();
+        initFragment();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        Intent service = new Intent(this,ReceiverService.class);
+        startService(service );
+        bindService(service, conn, Context.BIND_AUTO_CREATE);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unbindService(conn);
+    }
+
+    /**
+     * 设置默认选择的Fragment
+     */
+    private void initFragment() {
+        replaceFragment(new TabSituation());
+    }
+
+    /**
+     * 初始化参数
+     */
+    private void initParameter() {
+
+    }
+
+    /**
+     * ListView的初始化
+     */
+    private void initListView() {
+        mMenuListView = (ListView) findViewById(R.id.menulist);
+        mMenuListViewAdapter = new MenuListViewAdapter(this);
+        mMenuListView.setAdapter(mMenuListViewAdapter);
+        mMenuListView.setOnItemClickListener(this);
+    }
+
+    /**
+     * 设置按键的监听
+     */
+    private void initListener() {
+        mIbHome.setOnClickListener(this);
+        mIbDevice.setOnClickListener(this);
+        mIbSetting.setOnClickListener(this);
+    }
+
+    /**
+     * 找到界面上所有的控件
+     */
+    private void initUI() {
+        mTVHeader = (TextView) findViewById(R.id.header);
+        mIbHome = (ImageButton) findViewById(R.id.btn_selectarea);
+        mIbDevice = (ImageButton) findViewById(R.id.selectsb);
+        mIbSetting = (ImageButton) findViewById(R.id.menubtn);
+        mImAddButton = (ImageView) findViewById(R.id.im_addbutton);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_selectarea:// 区域选择
+
+                break;
+            case R.id.selectsb:// 选择设备
+
+                break;
+            case R.id.menubtn:// 设置
+                showSetMenu(v);
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    /**
+     * 显示popwindow
+     *
+     * @param v
+     */
+    private void showSetMenu(View v) {
+        mSetMenu = new PopMenu(this);
+        mSetMenu.addItems(new int[] { R.drawable.isetinfoselector,
+                R.drawable.ihelpselector, R.drawable.iaboutselector,
+                R.drawable.iexitselector });
+        mSetMenu.showAsDropDown(v);
+        mSetMenu.setOnItemClickListener(this);
+    }
+
+    /**
+     * 关闭popwindow
+     */
+    private void closeSetMenu() {
+        mSetMenu.dismiss();
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position,
+                            long id) {
+        switch (parent.getId()) {
+
+            case R.id.menulist:// 左边选项菜单的点击
+                if (!tabMenu(position)) {// 替换片段不成功直接return
+                    return;
+                }
+                break;
+
+            case R.id.menu_listview:
+                setMenuItemClick(position);
+                break;
+
+            default:
+                break;
+        }
+
+    }
+
+    /**
+     * 设置菜单的点击
+     * @param position
+     */
+    private void setMenuItemClick(int position) {
+        switch (position) {
+            case 0:// 设置
+                Intent intent = new Intent(this,SetActivity.class);
+                startActivity(intent);
+                closeSetMenu();
+                break;
+            case 1:// 帮助
+                closeSetMenu();
+                break;
+            case 2:// 关于我们
+                closeSetMenu();
+                break;
+            case 3:// 退出
+                finish();
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    /**
+     * 选项菜单点击，片段的切换，要是之前已经选中，直接返回false
+     * @param position
+     * @return
+     */
+    private boolean tabMenu(int position) {
+        if (mNowPosition == position) {
+            return false;
+        } else {
+            mNowPosition = position;
+        }
+        Fragment fragment = null;
+        mMenuListViewAdapter.setPosition(position);
+        switch (position) {
+            case 0:// 情景控制
+                fragment = new TabSituation();
+                break;
+
+            case 1:// 窗帘控制
+                fragment = new TabWindow();
+                break;
+            case 2:// 投影控制
+                fragment = new TabProjector();
+                break;
+            case 3:// 空调控制
+                fragment = new TabAirCondition();
+                break;
+            case 4:// 音乐控制
+                fragment = new TabMusic();
+                break;
+            case 5:// 同屏输出
+                fragment = new TabScreen();
+                break;
+            case 6:// 电视控制
+                fragment = new TabTV();
+                break;
+            case 7:// 音响输出
+                fragment = new TabSound();
+                break;
+
+            default:
+                break;
+        }
+        replaceFragment(fragment);
+        return true;
+    }
+
+    /**
+     * 替换片段
+     *
+     * @param fragment
+     */
+    @SuppressLint("Recycle")
+    private void replaceFragment(Fragment fragment) {
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.framelayout, fragment);
+        ft.commit();
+    }
+
+}

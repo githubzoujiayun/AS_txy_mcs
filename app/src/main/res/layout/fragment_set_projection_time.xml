@@ -1,0 +1,221 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SetProjectionTimeFragment" >
+
+    <LinearLayout
+        android:id="@+id/powerset"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="38dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/ipaddr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="41dp"
+                android:layout_marginTop="8dp"
+                android:text="上升时间:"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <EditText
+                android:id="@+id/et_sssj"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="1dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/roundedittext"
+                android:ems="10"
+                android:height="100dp"
+                android:inputType="textEmailAddress|textPostalAddress"
+                android:textColor="#000000"
+                android:width="50dp" >
+
+                <requestFocus />
+            </EditText>
+
+            <TextView
+                android:id="@+id/port"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="8dp"
+                android:text="下降时间:"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <EditText
+                android:id="@+id/et_xjsj"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/roundedittext"
+                android:ems="18"
+                android:height="100dp"
+                android:inputType="textEmailAddress|textPostalAddress"
+                android:textColor="#000000"
+                android:width="50dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/modename1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="41dp"
+                android:text="开机等待时间:"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <EditText
+                android:id="@+id/et_kjsj"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/roundedittext"
+                android:ems="18"
+                android:height="80dp"
+                android:inputType="textEmailAddress|textPostalAddress"
+                android:textColor="#000000"
+                android:width="120dp" />
+
+            <TextView
+                android:id="@+id/modename2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="23dp"
+                android:text="关机等待时间:"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <EditText
+                android:id="@+id/et_gjsj"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/roundedittext"
+                android:ems="18"
+                android:height="80dp"
+                android:inputType="textEmailAddress|textPostalAddress"
+                android:textColor="#000000"
+                android:width="120dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/modename1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="41dp"
+                android:text="白天开始:"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <EditText
+                android:id="@+id/et_btkss"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/roundedittext"
+                android:ems="18"
+                android:height="80dp"
+                android:inputType="textEmailAddress|textPostalAddress"
+                android:textColor="#000000"
+                android:width="120dp" />
+
+            <TextView
+                android:id="@+id/modename2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="23dp"
+                android:text="时"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <EditText
+                android:id="@+id/et_btksf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/roundedittext"
+                android:ems="18"
+                android:height="80dp"
+                android:inputType="textEmailAddress|textPostalAddress"
+                android:textColor="#000000"
+                android:width="120dp" />
+
+            <TextView
+                android:id="@+id/modename2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="23dp"
+                android:text="分"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/modename1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="41dp"
+                android:text="白天结束:"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <EditText
+                android:id="@+id/et_btjss"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/roundedittext"
+                android:ems="18"
+                android:height="80dp"
+                android:inputType="textEmailAddress|textPostalAddress"
+                android:textColor="#000000"
+                android:width="120dp" />
+
+            <TextView
+                android:id="@+id/modename2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="23dp"
+                android:text="时"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <EditText
+                android:id="@+id/et_btjsf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/roundedittext"
+                android:ems="18"
+                android:height="80dp"
+                android:inputType="textEmailAddress|textPostalAddress"
+                android:textColor="#000000"
+                android:width="120dp" />
+
+            <TextView
+                android:id="@+id/modename2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="23dp"
+                android:text="分"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>

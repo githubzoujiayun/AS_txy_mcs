@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/itemView"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:gravity="right"
+        android:background="@drawable/ctrl_mode_off"
+        android:minHeight="40dip" >
+
+        <ImageView
+            android:id="@+id/view_selecteditem"
+            android:layout_width="12dp"
+            android:layout_height="100dp"
+            android:background="@drawable/view_modeselectd"
+            android:visibility="gone" />
+    </LinearLayout>
+
+</LinearLayout>

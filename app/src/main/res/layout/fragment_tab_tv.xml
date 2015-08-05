@@ -1,0 +1,244 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TabTV" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background" >
+
+        <ImageButton
+            android:id="@+id/btn_tvsource"
+            android:layout_width="100dp"
+            android:layout_height="72dp"
+            android:layout_alignTop="@+id/btn_tvpower"
+            android:layout_marginLeft="63dp"
+            android:layout_toRightOf="@+id/btn_tvpower"
+            android:background="@drawable/btn_style_src" />
+
+        <ImageButton
+            android:id="@+id/btn_tvmenu"
+            android:layout_width="100dp"
+            android:layout_height="72dp"
+            android:layout_alignTop="@+id/btn_tvsource"
+            android:layout_marginLeft="63dp"
+            android:layout_toRightOf="@+id/btn_tvsource"
+            android:background="@drawable/btn_menu_off" />
+
+        <ImageButton
+            android:id="@+id/btn_tvmode"
+            android:layout_width="100dp"
+            android:layout_height="72dp"
+            android:layout_alignTop="@+id/btn_tvmenu"
+            android:layout_marginLeft="63dp"
+            android:layout_toRightOf="@+id/btn_tvmenu"
+            android:background="@drawable/btn_style_tymode" />
+
+        <ImageButton
+            android:id="@+id/btn_tvpower"
+            android:layout_width="100dp"
+            android:layout_height="72dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="93dp"
+            android:layout_marginTop="33dp"
+            android:background="@drawable/btn_style_typower" />
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout1"
+            android:layout_width="620dp"
+            android:layout_height="300dp"
+            android:layout_marginLeft="63dp"
+            android:layout_marginTop="133dp" >
+
+            <TableLayout
+                android:id="@+id/tableLayout1"
+                android:layout_width="300dp"
+                android:layout_height="250dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="20dp" >
+
+                <TableRow
+                    android:id="@+id/tableRow1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <ImageButton
+                        android:id="@+id/btn_pd1"
+                        android:layout_width="80dp"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="11dp"
+                        android:background="@drawable/btn_style_a1" />
+
+                    <ImageButton
+                        android:id="@+id/btn_pd2"
+                        android:layout_width="80dp"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="21dp"
+                        android:background="@drawable/btn_style_a2" />
+
+                    <ImageButton
+                        android:id="@+id/btn_pd3"
+                        android:layout_width="80dp"
+                        android:layout_height="50dp"
+                        android:layout_alignTop="@+id/btn_tvmenu"
+                        android:layout_marginLeft="21dp"
+                        android:layout_toRightOf="@+id/btn_tvmenu"
+                        android:background="@drawable/btn_style_a3" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/tableRow2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <ImageButton
+                        android:id="@+id/btn_pd4"
+                        android:layout_width="80dp"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="11dp"
+                        android:layout_marginTop="11dp"
+                        android:background="@drawable/btn_style_a4" />
+
+                    <ImageButton
+                        android:id="@+id/btn_pd5"
+                        android:layout_width="80dp"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="21dp"
+                        android:layout_marginTop="11dp"
+                        android:background="@drawable/btn_style_a5" />
+
+                    <ImageButton
+                        android:id="@+id/btn_pd6"
+                        android:layout_width="80dp"
+                        android:layout_height="50dp"
+                        android:layout_alignTop="@+id/btn_tvmenu"
+                        android:layout_marginLeft="21dp"
+                        android:layout_marginTop="11dp"
+                        android:layout_toRightOf="@+id/btn_pd5"
+                        android:background="@drawable/btn_style_a6" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/tableRow3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <ImageButton
+                        android:id="@+id/btn_pd7"
+                        android:layout_width="80dp"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="11dp"
+                        android:layout_marginTop="11dp"
+                        android:background="@drawable/btn_style_a7" />
+
+                    <ImageButton
+                        android:id="@+id/btn_pd8"
+                        android:layout_width="80dp"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="21dp"
+                        android:layout_marginTop="11dp"
+                        android:background="@drawable/btn_style_a8" />
+
+                    <ImageButton
+                        android:id="@+id/btn_pd9"
+                        android:layout_width="80dp"
+                        android:layout_height="50dp"
+                        android:layout_alignTop="@+id/btn_tvmenu"
+                        android:layout_marginLeft="21dp"
+                        android:layout_marginTop="11dp"
+                        android:layout_toRightOf="@+id/btn_pd8"
+                        android:background="@drawable/btn_style_a9" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/tableRow4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <ImageButton
+                        android:id="@+id/btn_tvhk"
+                        android:layout_width="80dp"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="11dp"
+                        android:layout_marginTop="11dp"
+                        android:background="@drawable/btn_style_tvback" />
+
+                    <ImageButton
+                        android:id="@+id/btn_pd0"
+                        android:layout_width="80dp"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="21dp"
+                        android:layout_marginTop="11dp"
+                        android:background="@drawable/btn_style_a0" />
+
+                    <ImageButton
+                        android:id="@+id/btn_tvd"
+                        android:layout_width="80dp"
+                        android:layout_height="50dp"
+                        android:layout_alignTop="@+id/btn_tvmenu"
+                        android:layout_marginLeft="21dp"
+                        android:layout_marginTop="11dp"
+                        android:layout_toRightOf="@+id/hk1"
+                        android:background="@drawable/btn_style_tvdel" />
+                </TableRow>
+            </TableLayout>
+
+            <ImageButton
+                android:id="@+id/imgbtn_tventer"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_below="@+id/imgbtn_tvup"
+                android:layout_toLeftOf="@+id/imgbtn_volup"
+                android:background="@drawable/btn_style_pdenter" />
+
+            <ImageButton
+                android:id="@+id/imgbtn_voldown"
+                android:layout_width="58dp"
+                android:layout_height="80dp"
+                android:layout_above="@+id/imgbtn_tvdown"
+                android:layout_toLeftOf="@+id/imgbtn_tventer"
+                android:background="@drawable/btn_style_pdvoldown" />
+
+            <ImageButton
+                android:id="@+id/imgbtn_tvdown"
+                android:layout_width="199dp"
+                android:layout_height="56dp"
+                android:layout_alignLeft="@+id/imgbtn_tvup"
+                android:layout_below="@+id/imgbtn_volup"
+                android:background="@drawable/btn_style_pddown" />
+
+            <ImageButton
+                android:id="@+id/imgbtn_tvup"
+                android:layout_width="199dp"
+                android:layout_height="56dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@+id/tableLayout1"
+                android:layout_marginRight="29dp"
+                android:layout_marginTop="22dp"
+                android:background="@drawable/btn_style_pdup" />
+
+            <ImageButton
+                android:id="@+id/imgbtn_volup"
+                android:layout_width="60dp"
+                android:layout_height="80dp"
+                android:layout_alignRight="@+id/imgbtn_tvup"
+                android:layout_alignTop="@+id/imgbtn_tventer"
+                android:background="@drawable/btn_style_pdvolup" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/txt_tvname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/relativeLayout1"
+            android:layout_marginLeft="51dp"
+            android:layout_toRightOf="@+id/relativeLayout1"
+            android:text="" />
+    </RelativeLayout>
+
+</FrameLayout>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_top"
+    android:descendantFocusability="blocksDescendants"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:paddingBottom="0dip" >
+
+    <TextView
+        android:id="@+id/txt_roomname"
+        android:layout_width="10dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_weight="0.7"
+        android:gravity="center"
+        android:paddingTop="6dip"
+        android:textColor="#ccc"
+        android:textSize="18dip" />
+
+    <TextView
+        android:id="@+id/txt_roomid"
+        android:layout_width="20dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.1"
+        android:gravity="center"
+        android:paddingTop="6dip"
+        android:textColor="#ccc"
+        android:textSize="10dip"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/view_selectedroomitem"
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:layout_marginLeft="0dp"
+        android:layout_weight="0.05"
+        android:background="@drawable/view_setselectd"
+        android:visibility="gone" />
+
+</LinearLayout>

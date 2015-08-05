@@ -1,0 +1,196 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TabMusic" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background" >
+
+        <ImageButton
+            android:id="@+id/imgBtn_Meet"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:layout_alignTop="@+id/imgBtn_beforeMeet"
+            android:layout_marginLeft="32dp"
+            android:layout_toRightOf="@+id/imgBtn_beforeMeet"
+            android:background="@drawable/btn_meeting_off" />
+
+        <ImageButton
+            android:id="@+id/imgBtn_rest"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:layout_alignTop="@+id/imgBtn_Meet"
+            android:layout_marginLeft="32dp"
+            android:layout_toRightOf="@+id/imgBtn_Meet"
+            android:background="@drawable/btn_rest_off" />
+
+        <ImageButton
+            android:id="@+id/imgBtn_Hd"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:layout_alignTop="@+id/imgBtn_rest"
+            android:layout_marginLeft="32dp"
+            android:layout_toRightOf="@+id/imgBtn_rest"
+            android:background="@drawable/btn_hd_off" />
+
+        <ImageButton
+            android:id="@+id/imgBtn_beforeMeet"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/btn_beforemeet_off"
+            android:text="会议前" />
+
+        <ImageButton
+            android:id="@+id/imgBtn_Bj"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:layout_alignTop="@+id/imgBtn_Hd"
+            android:layout_marginLeft="32dp"
+            android:layout_toRightOf="@+id/imgBtn_Hd"
+            android:background="@drawable/btn_prize_off" />
+
+        <LinearLayout
+            android:id="@+id/imageView3"
+            android:layout_width="wrap_content"
+            android:layout_height="300dp"
+            android:layout_alignLeft="@+id/imgBtn_beforeMeet"
+            android:layout_alignRight="@+id/imgBtn_Bj"
+            android:layout_below="@+id/imgBtn_beforeMeet"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/view_music"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="30dp" >
+
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_weight="1"
+                    android:text="歌名"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="230dp"
+                    android:layout_weight="1"
+                    android:text="时长"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="230dp"
+                    android:layout_weight="1"
+                    android:text="编辑"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/lv_playlist"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_weight="1" >
+            </ListView>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/imageView3"
+            android:layout_alignRight="@+id/imageView3"
+            android:layout_below="@+id/imageView3"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/view_musicctrl" />
+
+        <LinearLayout
+            android:id="@+id/ll_currentmusic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/imageView4"
+            android:layout_alignTop="@+id/imageView4"
+            android:layout_marginTop="15dp"
+            android:layout_toLeftOf="@+id/sb_playseekbar"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/txt_currentmusic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="18dp"
+                android:text=""
+                android:textAppearance="?android:attr/textAppearanceMediumInverse" />
+
+            <TextView
+                android:id="@+id/txt_currentart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="18dp"
+                android:text=""
+                android:textAppearance="?android:attr/textAppearanceMediumInverse" />
+        </LinearLayout>
+
+        <SeekBar
+            android:id="@+id/sb_playseekbar"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/imgBtn_Meet"
+            android:layout_alignTop="@+id/ll_currentmusic" />
+
+        <TextView
+            android:id="@+id/txt_readMusic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/sb_playseekbar"
+            android:layout_alignRight="@+id/imageView4"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:text="添加音乐"
+            android:textAppearance="?android:attr/textAppearanceLargeInverse" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/txt_readMusic"
+            android:layout_toRightOf="@+id/imgBtn_rest" >
+
+            <ImageButton
+                android:id="@+id/imgBtn_pre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/btn_kj_off" />
+
+            <ImageButton
+                android:id="@+id/imgBtn_play"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/btn_play_off" />
+
+            <ImageButton
+                android:id="@+id/imgBtn_next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/btn_kt_off" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</FrameLayout>

@@ -1,0 +1,102 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".IndexActivity" >
+
+    <RelativeLayout
+        android:id="@+id/rl_header"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/bg_top" >
+
+        <TextView
+            android:id="@+id/header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text=""
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <ImageButton
+            android:id="@+id/btn_selectarea"
+            android:layout_width="43dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="16dp"
+            android:layout_toLeftOf="@+id/selectsb"
+            android:background="@drawable/btn_style_roomselect" />
+
+        <ImageButton
+            android:id="@+id/selectsb"
+            android:layout_width="43dp"
+            android:layout_height="40dp"
+            android:layout_alignTop="@+id/btn_selectarea"
+            android:layout_marginRight="17dp"
+            android:layout_toLeftOf="@+id/menubtn"
+            android:background="@drawable/btn_style_sbselect" />
+
+        <ImageButton
+            android:id="@+id/menubtn"
+            android:layout_width="43dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/selectsb"
+            android:layout_marginRight="25dp"
+            android:background="@drawable/btn_style_szselect" />
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/im_addbutton"
+        android:layout_width="220dp"
+        android:layout_height="58dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignRight="@+id/menulist"
+        android:layout_below="@+id/rl_header"
+        android:background="@drawable/aboutus" />
+
+    <ListView
+        android:id="@+id/menulist"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/im_addbutton"
+        android:scrollbars="none"
+        android:background="@drawable/background" >
+    </ListView>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/im_addbutton"
+        android:layout_toRightOf="@+id/im_addbutton"
+        android:background="@drawable/bg_title" >
+
+        <TextView
+            android:id="@+id/txt_modesheet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="11dp"
+            android:text="点击以下按钮进行情景切换"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/framelayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/relativeLayout1"
+        android:layout_toRightOf="@+id/im_addbutton" 
+        >
+    </FrameLayout>
+
+</RelativeLayout>

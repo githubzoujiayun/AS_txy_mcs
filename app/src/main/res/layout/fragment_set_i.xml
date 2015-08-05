@@ -1,0 +1,160 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SetIPFragment" >
+
+    <LinearLayout
+        android:id="@+id/powerset"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="38dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/ipaddr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="41dp"
+                android:layout_marginTop="8dp"
+                android:text="ip地址:"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <EditText
+                android:id="@+id/ipaddrVal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="1dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/roundedittext"
+                android:ems="10"
+                android:height="100dp"
+                android:inputType="textEmailAddress|textPostalAddress"
+                android:textColor="#000000"
+                android:width="200dp" >
+
+                <requestFocus />
+            </EditText>
+
+            <TextView
+                android:id="@+id/port"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="8dp"
+                android:text="端   口:"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <EditText
+                android:id="@+id/portVal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/roundedittext"
+                android:ems="18"
+                android:height="100dp"
+                android:inputType="textEmailAddress|textPostalAddress"
+                android:textColor="#000000"
+                android:width="50dp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/modename"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="41dp"
+            android:layout_marginTop="24dp"
+            android:text="场景模式名称修改"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/modename1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="41dp"
+                android:text="节能模式:"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <EditText
+                android:id="@+id/mname1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/roundedittext"
+                android:ems="18"
+                android:height="80dp"
+                android:inputType="textEmailAddress|textPostalAddress"
+                android:textColor="#000000"
+                android:width="120dp" />
+
+            <TextView
+                android:id="@+id/modename2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="23dp"
+                android:text="会议模式:"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <EditText
+                android:id="@+id/mname2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/roundedittext"
+                android:ems="18"
+                android:height="80dp"
+                android:inputType="textEmailAddress|textPostalAddress"
+                android:textColor="#000000"
+                android:width="120dp" />
+
+            <TextView
+                android:id="@+id/m3name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="35dp"
+                android:text="投影模式:"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <EditText
+                android:id="@+id/mname3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/roundedittext"
+                android:ems="18"
+                android:height="80dp"
+                android:inputType="textEmailAddress|textPostalAddress"
+                android:textColor="#000000"
+                android:width="120dp" />
+
+            <TextView
+                android:id="@+id/modename4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="31dp"
+                android:text="展示模式:"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <EditText
+                android:id="@+id/mname4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/roundedittext"
+                android:ems="18"
+                android:height="80dp"
+                android:inputType="textEmailAddress|textPostalAddress"
+                android:textColor="#000000"
+                android:width="120dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>

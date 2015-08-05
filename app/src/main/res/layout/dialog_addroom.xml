@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/exit_layout"
+    android:layout_width="480dp"
+    android:layout_height="3500dp"
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:background="@drawable/view_addroomtitle" />
+
+    <RelativeLayout
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/view_addroombackground" >
+
+        <LinearLayout
+            android:id="@+id/imageView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp" >
+
+            <TextView
+                android:id="@+id/TextView02"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/EditText01"
+                android:layout_alignLeft="@+id/txt_currentmusic"
+                android:padding="10dp"
+                android:text="区域名称设置"
+                android:textColor="#333"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/et_roomname"
+                android:layout_width="150dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="2dp"
+                android:layout_weight="1"
+                android:background="@drawable/login_edit_normal"
+                android:ems="10"
+                android:hint="请输入区域名称"
+                android:singleLine="true"
+                android:textSize="15sp" >
+
+                <requestFocus />
+            </EditText>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/imageView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp" >
+
+            <TextView
+                android:id="@+id/TextView02"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/EditText01"
+                android:layout_alignLeft="@+id/txt_currentmusic"
+                android:padding="10dp"
+                android:text="区域灯光数量"
+                android:textColor="#333"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/et_lightnum"
+                android:layout_width="150dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="2dp"
+                android:layout_weight="1"
+                android:background="@drawable/login_edit_normal"
+                android:digits="0123456789"
+                android:ems="10"
+                android:hint="灯光数不超过20"
+                android:inputType="number"
+                android:singleLine="true"
+                android:textSize="15sp" >
+
+                <requestFocus />
+            </EditText>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/LinearLayout01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="90dp" >
+
+            <TextView
+                android:id="@+id/TextView01"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/EditText01"
+                android:layout_alignLeft="@+id/txt_currentmusic"
+                android:padding="10dp"
+                android:text="区域窗帘数量"
+                android:textColor="#333"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/et_windowsnum"
+                android:layout_width="150dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="2dp"
+                android:layout_weight="1"
+                android:background="@drawable/login_edit_normal"
+                android:digits="0123456789"
+                android:ems="10"
+                android:hint="窗帘数不超过8"
+                android:inputType="number"
+                android:singleLine="true"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/LinearLayout01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="130dp" >
+
+            <TextView
+                android:id="@+id/TextView01"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/EditText01"
+                android:layout_alignLeft="@+id/txt_currentmusic"
+                android:padding="10dp"
+                android:text="区域空调数量"
+                android:textColor="#333"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/et_kgnum"
+                android:layout_width="150dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="2dp"
+                android:layout_weight="1"
+                android:background="@drawable/login_edit_normal"
+                android:digits="0123456789"
+                android:ems="10"
+                android:hint="空调数不超过6"
+                android:inputType="number"
+                android:singleLine="true"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/LinearLayout02"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="170dp" >
+
+            <TextView
+                android:id="@+id/TextView03"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/EditText01"
+                android:layout_alignLeft="@+id/txt_currentmusic"
+                android:padding="10dp"
+                android:text="区域投影机数量"
+                android:textColor="#333"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/et_tynum"
+                android:layout_width="150dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="2dp"
+                android:layout_weight="1"
+                android:background="@drawable/login_edit_normal"
+                android:digits="0123456789"
+                android:ems="10"
+                android:hint="投影机数不超过6"
+                android:inputType="number"
+                android:singleLine="true"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/LinearLayout02"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="210dp" >
+
+            <TextView
+                android:id="@+id/TextView03"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/EditText01"
+                android:layout_alignLeft="@+id/txt_currentmusic"
+                android:padding="10dp"
+                android:text="区域电视机数量"
+                android:textColor="#333"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/et_tvnum"
+                android:layout_width="150dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="2dp"
+                android:layout_weight="1"
+                android:background="@drawable/login_edit_normal"
+                android:digits="0123456789"
+                android:ems="10"
+                android:hint="电视机数不超过6"
+                android:inputType="number"
+                android:singleLine="true"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/LinearLayout02"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="250dp" >
+
+            <TextView
+                android:id="@+id/TextView03"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/EditText01"
+                android:layout_alignLeft="@+id/txt_currentmusic"
+                android:padding="10dp"
+                android:text="区域音响数量"
+                android:textColor="#333"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/et_soundnum"
+                android:layout_width="150dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="2dp"
+                android:layout_weight="1"
+                android:background="@drawable/login_edit_normal"
+                android:digits="0123456789"
+                android:ems="10"
+                android:hint="音响不超过1"
+                android:inputType="number"
+                android:singleLine="true"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="290dp" >
+
+            <Button
+                android:id="@+id/btn_sure"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_style_addroom"
+                android:gravity="center"
+                android:onClick="clickaddroom"
+                android:textColor="#fff"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/btn_cancel"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="60dp"
+                android:background="@drawable/btn_style_canceladdroom"
+                android:gravity="center"
+                android:onClick="clickcancelroom"
+                android:textColor="#333"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

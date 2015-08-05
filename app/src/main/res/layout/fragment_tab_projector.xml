@@ -1,0 +1,135 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TabProjector" >
+
+    <RelativeLayout
+        android:id="@+id/tylayout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/background" >
+
+        <ImageButton
+            android:id="@+id/btn_tyup"
+            android:layout_width="198dp"
+            android:layout_height="56dp"
+            android:layout_below="@+id/btn_tymode"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/btn_style_tyup" />
+
+        <ImageButton
+            android:id="@+id/btn_tymode"
+            android:layout_width="100dp"
+            android:layout_height="72dp"
+            android:layout_alignTop="@+id/btn_typower"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/btn_style_tymode" />
+
+        <ImageButton
+            android:id="@+id/btn_typower"
+            android:layout_width="100dp"
+            android:layout_height="72dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="12dp"
+            android:layout_toLeftOf="@+id/btn_tyup"
+            android:background="@drawable/btn_style_typower" />
+
+        <ImageButton
+            android:id="@+id/btn_tyenter"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_below="@+id/btn_tyup"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/btn_style_tyenter" />
+
+        <ImageButton
+            android:id="@+id/btn_tyleft"
+            android:layout_width="59dp"
+            android:layout_height="80dp"
+            android:layout_above="@+id/btn_tydown"
+            android:layout_toLeftOf="@+id/btn_tyenter"
+            android:background="@drawable/btn_style_tyleft" />
+
+        <ImageButton
+            android:id="@+id/btn_tyss"
+            android:layout_width="84dp"
+            android:layout_height="41dp"
+            android:layout_alignLeft="@+id/btn_tyvoldown"
+            android:layout_below="@+id/btn_tyvoldown"
+            android:layout_marginTop="17dp"
+            android:background="@drawable/btn_style_tyss" />
+
+        <ImageButton
+            android:id="@+id/btn_tyright"
+            android:layout_width="58dp"
+            android:layout_height="80dp"
+            android:layout_alignTop="@+id/btn_tyenter"
+            android:layout_toRightOf="@+id/btn_tyenter"
+            android:background="@drawable/btn_style_tyright" />
+
+        <ImageButton
+            android:id="@+id/btn_tyvoldown"
+            android:layout_width="84dp"
+            android:layout_height="42dp"
+            android:layout_below="@+id/btn_tydown"
+            android:layout_marginTop="38dp"
+            android:layout_toLeftOf="@+id/btn_tyenter"
+            android:background="@drawable/btn_style_tyvoldown" />
+
+        <ImageButton
+            android:id="@+id/btn_tyvolup"
+            android:layout_width="84dp"
+            android:layout_height="41dp"
+            android:layout_above="@+id/btn_tyss"
+            android:layout_toRightOf="@+id/btn_tyenter"
+            android:background="@drawable/btn_style_tyvolup" />
+
+        <ImageButton
+            android:id="@+id/btn_tyxj"
+            android:layout_width="84dp"
+            android:layout_height="41dp"
+            android:layout_alignTop="@+id/btn_tyss"
+            android:layout_toRightOf="@+id/btn_tyenter"
+            android:background="@drawable/btn_style_tyxj" />
+
+        <ImageButton
+            android:id="@+id/btn_tysource"
+            android:layout_width="100dp"
+            android:layout_height="72dp"
+            android:layout_above="@+id/btn_tyup"
+            android:layout_marginLeft="27dp"
+            android:layout_toRightOf="@+id/btn_tyvolup"
+            android:background="@drawable/btn_style_tysource" />
+
+
+        <TextView
+            android:id="@+id/vol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/btn_typower"
+            android:layout_alignTop="@+id/btn_tyvolup"
+            android:layout_marginRight="57dp"
+            android:text="音    量："
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <ImageButton
+            android:id="@+id/btn_tydown"
+            android:layout_width="198dp"
+            android:layout_height="58dp"
+            android:layout_alignLeft="@+id/btn_tyleft"
+            android:layout_below="@+id/btn_tyenter"
+            android:background="@drawable/btn_style_tydown" />
+
+        <TextView
+            android:id="@+id/TextView01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/vol"
+            android:layout_alignTop="@+id/btn_tyss"
+            android:text="投影布:："
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+    </RelativeLayout>
+
+</FrameLayout>

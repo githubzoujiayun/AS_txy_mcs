@@ -1,0 +1,99 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SetNameFragment" >
+
+    <LinearLayout
+        android:id="@+id/powerset"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/modename"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="11dp"
+            android:layout_marginTop="14dp"
+            android:text="场景模式名称修改"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <GridView
+            android:id="@+id/gd_lightname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="11dp"
+            android:numColumns="5" >
+        </GridView>
+
+        <TextView
+            android:id="@+id/modename"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="11dp"
+            android:layout_marginTop="14dp"
+            android:text="场景窗帘名称修改"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <GridView
+            android:id="@+id/gd_windowsname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="11dp"
+            android:numColumns="5" >
+        </GridView>
+
+        <TextView
+            android:id="@+id/modename"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="11dp"
+            android:layout_marginTop="14dp"
+            android:text="场景投影名称修改"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <GridView
+            android:id="@+id/gd_tyname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="11dp"
+            android:numColumns="5" >
+        </GridView>
+
+        <TextView
+            android:id="@+id/modename"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="11dp"
+            android:layout_marginTop="14dp"
+            android:text="场景电视名称修改"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <GridView
+            android:id="@+id/gd_tvname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="11dp"
+            android:numColumns="5" >
+        </GridView>
+
+        <TextView
+            android:id="@+id/modename"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="11dp"
+            android:layout_marginTop="14dp"
+            android:text="场景空调名称修改"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <GridView
+            android:id="@+id/gd_airname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="11dp"
+            android:numColumns="5" >
+        </GridView>
+    </LinearLayout>
+
+</FrameLayout>

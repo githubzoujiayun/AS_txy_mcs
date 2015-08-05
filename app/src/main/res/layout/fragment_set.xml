@@ -1,0 +1,134 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeSetFragment" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/btn_mode1set"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="80dp"
+                android:layout_marginTop="100dp"
+                android:background="@drawable/btn_bg_off"
+                android:text="节能模式设置" 
+                android:textColor="#ffffff"/>
+
+            <Button
+                android:id="@+id/btn_mode2set"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="80dp"
+                android:layout_marginTop="100dp"
+                android:background="@drawable/btn_bg_off"
+                android:textColor="#ffffff"
+                android:text="会议模式设置" />
+
+            <Button
+                android:id="@+id/btn_mode3set"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="80dp"
+                android:layout_marginTop="100dp"
+                android:background="@drawable/btn_bg_off"
+                android:textColor="#ffffff"
+                android:text="投影模式设置" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/btn_mode4set"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="80dp"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/btn_bg_off"
+                android:textColor="#ffffff"
+                android:text="展示模式设置" />
+
+            <Button
+                android:id="@+id/btn_baseset"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="80dp"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/btn_bg_off"
+                android:textColor="#ffffff"
+                android:text="基础信息设置" />
+
+            <Button
+                android:id="@+id/btn_powerset"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="80dp"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/btn_bg_off"
+                android:textColor="#ffffff"
+                android:text="设备名称设置" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/btn_tyset"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="80dp"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/btn_bg_off"
+                android:textColor="#ffffff"
+                android:text="投影时间设置" />
+
+            <Button
+                android:id="@+id/btn_offset"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="80dp"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/btn_bg_off"
+                android:textColor="#ffffff"
+                android:text="总关设置" />
+
+            <Button
+                android:id="@+id/btn_pdset"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="80dp"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/btn_bg_off"
+                android:textColor="#ffffff"
+                android:text="电视频道设置" />
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>
