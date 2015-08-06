@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 public class WindowAdapter extends BaseAdapter {
 
-    private int mWindowNum = 2;// 控制窗帘的数量
+    private int mWindowNum = 0;// 控制窗帘的数量
     private Context mContext;
 
     public WindowAdapter(Context context) {

@@ -16,6 +16,7 @@
             android:layout_height="wrap_content"
             android:text="窗帘一"
             android:textSize="15sp"
+            android:textColor="#ffffff"
             android:gravity="center"
             android:layout_gravity="center"
             android:layout_weight="0.6"

@@ -205,7 +205,7 @@ public class HomeFragment extends Fragment implements OnClickListener {
                 (byte) 0xff, (byte) 0xff, (byte) 0xff, (byte) 0xff,
                 (byte) 0x08, (byte) 0x00, (byte) 0x00, (byte) 0x00,
                 (byte) 0x00, cl, (byte) 0x00, (byte) 0x00 };
-        new Thread(new Sender(data1, Constants.IP, Constants.SENDPORT)).start();
+        new Thread(new Sender(data1, Constants.IP, Constants.DEFAULT_SENDPORT)).start();
     }
 
     /**

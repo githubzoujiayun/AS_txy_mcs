@@ -14,9 +14,9 @@ public class MyApplication extends Application{
     @Override
     public void onCreate() {
         super.onCreate();
-        ip = (String) SPUtils.get(getApplicationContext(), Constants.IP, Constants.IP);
-        port = (Integer) SPUtils.get(getApplicationContext(), "Constants.SENDPORT", Constants.SENDPORT);
-        ActiveAndroid.initialize(this);// Android ORM框架ActiceAndroid的初始化
+        ip = (String) SPUtils.get(getApplicationContext(), Constants.IP, Constants.DEFAULT_IP);
+        port = (Integer) SPUtils.get(getApplicationContext(), Constants.SENDPORT, Constants.DEFAULT_SENDPORT);
+        ActiveAndroid.initialize(this);// Android ORM框架ActiveAndroid的初始化
     }
 
     @Override

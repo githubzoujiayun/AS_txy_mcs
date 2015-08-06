@@ -221,8 +221,10 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
         } else {
             mNowPosition = position;
         }
+
         Fragment fragment = null;
         mMenuListViewAdapter.setPosition(position);
+        mMenuListViewAdapter.notifyDataSetChanged();
         switch (position) {
             case 0:// 情景控制
                 fragment = new TabSituation();
@@ -259,7 +261,6 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
 
     /**
      * 替换片段
-     *
      * @param fragment
      */
     @SuppressLint("Recycle")

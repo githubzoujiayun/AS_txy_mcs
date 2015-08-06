@@ -46,22 +46,19 @@ public class MenuListViewAdapter extends BaseAdapter {
     @SuppressWarnings("null")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder viewHolder = null;
-        if (convertView == null) {
-            LayoutInflater inflater = LayoutInflater.from(mContext);
-            convertView = inflater.inflate(R.layout.menu_list_row, null);
-            viewHolder = new ViewHolder();
-            viewHolder.groupItem = convertView.findViewById(R.id.itemView);
-            viewHolder.selecteditem = (ImageView) convertView.findViewById(R.id.view_selecteditem);
-            convertView.setTag(viewHolder);
-        } else {
-            viewHolder = (ViewHolder) convertView.getTag();
-        }
+
+        ViewHolder viewHolder = new ViewHolder();
+        LayoutInflater inflater = LayoutInflater.from(mContext);
+        convertView = inflater.inflate(R.layout.menu_list_row, null);
+        viewHolder.groupItem = convertView.findViewById(R.id.itemView);
+        viewHolder.selectedItem = (ImageView) convertView.findViewById(R.id.view_selecteditem);
+
         viewHolder.groupItem.setBackgroundResource(mBackGround[position]);
+
         if (position == mPosition) {
-            viewHolder.selecteditem.setVisibility(View.VISIBLE);
+            viewHolder.selectedItem.setVisibility(View.VISIBLE);
         } else {
-            viewHolder.selecteditem.setVisibility(View.INVISIBLE);
+            viewHolder.selectedItem.setVisibility(View.INVISIBLE);
         }
 
         return convertView;
@@ -69,7 +66,7 @@ public class MenuListViewAdapter extends BaseAdapter {
 
     private class ViewHolder {
         View groupItem;
-        ImageView selecteditem;
+        ImageView selectedItem;
     }
 
     public void setPosition(int position) {

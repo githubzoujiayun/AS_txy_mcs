@@ -6,23 +6,33 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.anupcowkur.wheelmenu.WheelMenu;
 import com.txy.txy_mcs.R;
-import com.txy.view.WheelMenu;
 
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass.
- * 
  */
-public class TabSound extends Fragment {
+public class TabSound extends Fragment implements WheelMenu.WheelChangeListener {
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+    private WheelMenu mWheelMenu;
+
+    @Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 		View layout = inflater.inflate(R.layout.fragment_tab_sound, container, false);
-		WheelMenu mWheelMenu = (WheelMenu) layout.findViewById(R.id.wheelMenu);
-		mWheelMenu.setDivCount(285);
-		mWheelMenu.setWheelImage(R.drawable.an);
+        initWheelMenu(layout);
+
 		return layout;
 	}
 
+    private void initWheelMenu(View layout) {
+        mWheelMenu = (WheelMenu) layout.findViewById(R.id.wheelMenu);
+        mWheelMenu.setDivCount(2);
+        mWheelMenu.setWheelImage(R.drawable.an);
+        mWheelMenu.setWheelChangeListener(this);
+    }
+
+    @Override
+    public void onSelectionChange(int i) {
+        
+    }
 }
