@@ -1,6 +1,5 @@
 package com.txy.activity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import android.annotation.SuppressLint;
@@ -31,7 +30,6 @@ import android.widget.ListView;
 import com.txy.adapter.RoomListAdapter;
 import com.txy.constants.Constants;
 import com.txy.database.DBManager;
-import com.txy.database.Light;
 import com.txy.database.RoomList;
 import com.txy.fragment.HomeSetFragment;
 import com.txy.fragment.SetModeFragment;
@@ -225,14 +223,6 @@ public class SetActivity extends FragmentActivity implements OnClickListener, On
     }
 
     private void saveLight(int lightnumber, int roomId) {
-        for (int i = 0; i < lightnumber; i++){
-            for (int j = 0; j < 2; j++) {
-                for (int k = 0; k < 4; k++) {
-                    Light light = new Light(roomId, ""+j, ""+k, "灯"+i+1, true);
-                    DBManager.saveOneLight(light);
-                }
-            }
-        }
     }
 
     /**

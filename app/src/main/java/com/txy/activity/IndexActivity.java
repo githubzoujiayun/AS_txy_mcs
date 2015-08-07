@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 import com.activeandroid.util.Log;
 import com.txy.adapter.MenuListViewAdapter;
+import com.txy.constants.Constants;
 import com.txy.services.ReceiverService;
 import com.txy.services.ReceiverService.MyBinder;
 import com.txy.services.ReceiverService.OnReceiveSuccessListener;
@@ -37,6 +38,8 @@ import com.txy.tabfragment.TabWindow;
 import com.txy.tools.PopMenu;
 import com.txy.txy_mcs.R;
 
+import java.util.ArrayList;
+
 public class IndexActivity extends FragmentActivity implements OnClickListener,
         OnItemClickListener {
 
@@ -47,10 +50,11 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
     private ImageView mImAddButton;
     private ListView mMenuListView;
     private MenuListViewAdapter mMenuListViewAdapter;
-    private int mNowPosition = 0;// 当前的控制模式，默认的为情景控制
+    private int mNowPosition = 1;// 当前的控制模式
     private PopMenu mSetMenu;
     private ReceiverService receiveService;
     private ServiceConnection conn = new MyServiceConnection();
+    private ArrayList<Integer> mEquipList; // 当前房间拥有的设备
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,14 +88,20 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
      * 设置默认选择的Fragment
      */
     private void initFragment() {
-        replaceFragment(new TabSituation());
+        tabMenu(0);
     }
 
     /**
      * 初始化参数
      */
     private void initParameter() {
+        mEquipList = new ArrayList<Integer>();
+        mEquipList.add(Constants.EQUIPMENT.CTR_MODE);
+        mEquipList.add(Constants.EQUIPMENT.CTR_WINDOW);
+        mEquipList.add(Constants.EQUIPMENT.CTR_TV);
 
+        mEquipList.add(Constants.EQUIPMENT.CTR_MUSIC);
+        mEquipList.add(Constants.EQUIPMENT.CTR_PPT);
     }
 
     /**
@@ -99,7 +109,7 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
      */
     private void initListView() {
         mMenuListView = (ListView) findViewById(R.id.menulist);
-        mMenuListViewAdapter = new MenuListViewAdapter(this);
+        mMenuListViewAdapter = new MenuListViewAdapter(this, mEquipList);
         mMenuListView.setAdapter(mMenuListViewAdapter);
         mMenuListView.setOnItemClickListener(this);
     }
@@ -189,6 +199,7 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
      * @param position
      */
     private void setMenuItemClick(int position) {
+
         switch (position) {
             case 0:// 设置
                 Intent intent = new Intent(this,SetActivity.class);
@@ -225,11 +236,10 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
         Fragment fragment = null;
         mMenuListViewAdapter.setPosition(position);
         mMenuListViewAdapter.notifyDataSetChanged();
-        switch (position) {
+        switch (mEquipList.get(position)) {
             case 0:// 情景控制
                 fragment = new TabSituation();
                 break;
-
             case 1:// 窗帘控制
                 fragment = new TabWindow();
                 break;
@@ -239,17 +249,17 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
             case 3:// 空调控制
                 fragment = new TabAirCondition();
                 break;
-            case 4:// 音乐控制
-                fragment = new TabMusic();
-                break;
-            case 5:// 同屏输出
-                fragment = new TabScreen();
-                break;
-            case 6:// 电视控制
+            case 4:// 电视控制
                 fragment = new TabTV();
                 break;
-            case 7:// 音响输出
+            case 5:// 音响输出
                 fragment = new TabSound();
+                break;
+            case 6:// 音乐控制
+                fragment = new TabMusic();
+                break;
+            case 7:// 同屏输出
+                fragment = new TabScreen();
                 break;
 
             default:

@@ -9,7 +9,6 @@
         android:layout_width="wrap_content"
         android:layout_height="100dp"
         android:gravity="right"
-        android:background="@drawable/ctrl_mode_off"
         android:minHeight="40dip" >
 
         <ImageView

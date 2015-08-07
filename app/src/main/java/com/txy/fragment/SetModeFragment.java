@@ -23,7 +23,6 @@ import android.widget.RelativeLayout;
 import com.txy.adapter.SetCheckBoxAdapter;
 import com.txy.constants.Constants;
 import com.txy.database.DBManager;
-import com.txy.database.Light;
 import com.txy.database.RoomList;
 import com.txy.txy_mcs.R;
 
@@ -49,8 +48,6 @@ public class SetModeFragment extends Fragment implements OnClickListener {
     private RoomList mRoomList;// 房间的信息
     private BroadcastReceiver receive;
     private int mode;
-    private List<Light> mDaylights;
-    private List<Light> mNightlights;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -108,16 +105,6 @@ public class SetModeFragment extends Fragment implements OnClickListener {
     private void initStates() {
         mNightSetUI.setVisibility(View.INVISIBLE);
         mRoomList = DBManager.getRoom("" + mRoomId);
-        mDaylights = DBManager.getLights(mRoomId, "" + Constants.DAYMODE, ""
-                + mode);
-        mNightlights = DBManager.getLights(mRoomId, "" + Constants.NIGHTMODE,
-                "" + mode);
-        int size = mDaylights.size();
-
-        for (int i = 0; i < size; i++) {
-            DayLightStatus.add(mDaylights.get(i).status);
-            NightLightStatus.add(mNightlights.get(i).status);
-        }
     }
 
     private void initListener() {
@@ -194,37 +181,6 @@ public class SetModeFragment extends Fragment implements OnClickListener {
     private void saveLight(int button) {
         List<Boolean> getDayStatus = getGdValue(mDayLightGrid);
         List<Boolean> getNightStatus = getGdValue(mNightLightGrid);
-
-        switch (button) {
-            case 0:// 节能
-                DBManager.updateLightStatus(mRoomId, "" + Constants.DAYMODE, ""
-                        + Constants.SAVEMODE, getDayStatus);
-                DBManager.updateLightStatus(mRoomId, "" + Constants.NIGHTMODE, ""
-                        + Constants.SAVEMODE, getNightStatus);
-                break;
-            case 1:
-                DBManager.updateLightStatus(mRoomId, "" + Constants.DAYMODE, ""
-                        + Constants.MEETMODE, getDayStatus);
-                DBManager.updateLightStatus(mRoomId, "" + Constants.NIGHTMODE, ""
-                        + Constants.MEETMODE, getNightStatus);
-                break;
-            case 2:
-                DBManager.updateLightStatus(mRoomId, "" + Constants.DAYMODE, ""
-                        + Constants.MEETMODE, getDayStatus);
-                DBManager.updateLightStatus(mRoomId, "" + Constants.NIGHTMODE, ""
-                        + Constants.MEETMODE, getNightStatus);
-                break;
-            case 3:
-                DBManager.updateLightStatus(mRoomId, "" + Constants.DAYMODE, ""
-                        + Constants.MEETMODE, getDayStatus);
-                DBManager.updateLightStatus(mRoomId, "" + Constants.NIGHTMODE, ""
-                        + Constants.MEETMODE, getNightStatus);
-                break;
-
-            default:
-                break;
-        }
-
     }
 
     /**

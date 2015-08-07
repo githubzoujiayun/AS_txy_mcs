@@ -13,15 +13,19 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
+import com.android.volley.VolleyError;
 import com.txy.constants.Constants;
 import com.txy.txy_mcs.R;
 import com.txy.util.SPUtils;
 import com.txy.util.ToastUtils;
+import com.txy.volley.HttpUtils;
+import com.txy.volley.VolleyListener;
 
-public class StartActivity extends Activity {
+public class StartActivity extends Activity implements View.OnClickListener {
 
-    private EditText edtText_ipset;
-    private EditText edtText_portset;
+    private EditText edtText_ipSet;
+    private EditText edtText_portSet;
+    private AlertDialog mIpSetDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,68 +54,91 @@ public class StartActivity extends Activity {
         this.finish();
     }
 
+    /**
+     * IP、Port的设置Dialog
+     */
     private void show(){
+
         LayoutInflater inflater = LayoutInflater.from(this);
-        LinearLayout ipsetlayout = (LinearLayout) inflater.inflate(R.layout.dialog_ipset, null);
+        LinearLayout ipSetLayout = (LinearLayout) inflater.inflate(R.layout.dialog_ipset, null);
 
         // 2. 新建对话框对象
-        final AlertDialog ipsetdialog = new AlertDialog.Builder(this).create();
-        // adddialog.setCancelable(false);
-        ipsetdialog.show();
-        ipsetdialog.getWindow().setContentView(ipsetlayout);
-        ipsetdialog.getWindow().clearFlags( WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+        mIpSetDialog = new AlertDialog.Builder(this).create();
+        mIpSetDialog.show();
+        mIpSetDialog.getWindow().setContentView(ipSetLayout);
+        mIpSetDialog.getWindow().clearFlags( WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
 
-        edtText_ipset = (EditText) ipsetlayout.findViewById(R.id.edtText_ipset);
-        // 加入端口号的设置
-        edtText_portset = (EditText) ipsetlayout.findViewById(R.id.edtText_portset);
+        edtText_ipSet = (EditText) ipSetLayout.findViewById(R.id.edtText_ipset);
+        edtText_portSet = (EditText) ipSetLayout.findViewById(R.id.edtText_portset);
 
-        final String ip = (String) SPUtils.get(this, Constants.SERVERIP, Constants.DEFAULT_SERVER_IP);
+        String ip = (String) SPUtils.get(this, Constants.SERVERIP, Constants.DEFAULT_SERVER_IP);
         if (!ip.equalsIgnoreCase(Constants.DEFAULT_SERVER_IP)) {
-            edtText_ipset.setText(ip);
+            edtText_ipSet.setText(ip);
         }
-        final String port = (String) SPUtils.get(this, Constants.SERVERPORT, Constants.DEFAULT_SERVER_PORT);
+        String port = (String) SPUtils.get(this, Constants.SERVERPORT, Constants.DEFAULT_SERVER_PORT);
         if (!port.equalsIgnoreCase(Constants.DEFAULT_SERVER_PORT)) {
-            edtText_portset.setText(port);
+            edtText_portSet.setText(port);
         }
 
-        ImageButton imgBtn_ipsubmit = (ImageButton) ipsetlayout.findViewById(R.id.imgBtn_ipsubmit);
-        ImageButton imgBtn_ipcancel = (ImageButton) ipsetlayout.findViewById(R.id.imgBtn_ipcancel);
+        ImageButton imgBtn_ipSubmit = (ImageButton) ipSetLayout.findViewById(R.id.imgBtn_ipsubmit);
+        ImageButton imgBtn_ipCancel = (ImageButton) ipSetLayout.findViewById(R.id.imgBtn_ipcancel);
 
-        imgBtn_ipsubmit.setOnClickListener(new View.OnClickListener() {
+        imgBtn_ipSubmit.setOnClickListener(this);
+        imgBtn_ipCancel.setOnClickListener(this);
 
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.imgBtn_ipsubmit:
+                submitButton();
+                break;
+            case R.id.imgBtn_ipcancel:
+                cancelButton();
+                break;
+        }
+    }
+
+    private void cancelButton() {
+        mIpSetDialog.dismiss();
+        StartActivity.this.finish();
+    }
+
+    private void submitButton() {
+        if (edtText_ipSet.getText().equals("")) {
+            ToastUtils.showShort(StartActivity.this, "请输入服务器IP地址!");
+            return;
+        }
+
+        if (edtText_portSet.getText().equals("")) {
+            ToastUtils.showShort(StartActivity.this, "请输入端口号!");
+            return;
+        }
+
+        String ip = edtText_ipSet.getText().toString();
+        String port = edtText_portSet.getText().toString();
+        SPUtils.put(StartActivity.this, ip, Constants.DEFAULT_SERVER_IP);
+        SPUtils.put(StartActivity.this, port, Constants.DEFAULT_SERVER_PORT);
+        ToastUtils.showShort(StartActivity.this, "设置成功!");
+
+        mIpSetDialog.dismiss();
+
+        go2Indext();
+        SPUtils.put(StartActivity.this,"isFirstTime",false);
+    }
+
+    public void getData(){
+        HttpUtils.get(this, Constants.URL.INIT_DATA, new VolleyListener() {
             @Override
-            public void onClick(View arg0) {
+            public void onErrorResponse(VolleyError error) {
 
-                if (edtText_ipset.getText().equals("")) {
-                    ToastUtils.showShort(StartActivity.this, "请输入服务器IP地址!");
-                    return;
-                }
-
-                if (edtText_portset.getText().equals("")) {
-                    ToastUtils.showShort(StartActivity.this, "请输入端口号!");
-                    return;
-                }
-                String ip = edtText_ipset.getText().toString();
-                String port = edtText_portset.getText().toString();
-                SPUtils.put(StartActivity.this,ip,Constants.DEFAULT_SERVER_IP);
-                SPUtils.put(StartActivity.this, port, Constants.DEFAULT_SERVER_PORT);
-                ToastUtils.showShort(StartActivity.this, "设置成功!");
-
-                ipsetdialog.dismiss();
-
-                go2Indext();
-                SPUtils.put(StartActivity.this,"isFirstTime",false);
             }
-        });
-
-        imgBtn_ipcancel.setOnClickListener(new View.OnClickListener() {
 
             @Override
-            public void onClick(View arg0) {
-                ipsetdialog.dismiss();
-                StartActivity.this.finish();
+            public void onResponse(String response) {
+
             }
         });
     }
-
 }

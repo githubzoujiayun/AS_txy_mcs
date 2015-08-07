@@ -3,6 +3,7 @@ package com.txy.constants;
 public final class Constants {
 
     public static int STARTAPP_DELAY = 3000;// 延时3秒
+    public static int MY_SOCKET_TIMEOUT_MS = 3000;
 
     public static int DAYMODE = 0;// 白天模式
     public static int NIGHTMODE = 1;// 夜晚模式
@@ -27,6 +28,19 @@ public final class Constants {
     public static String DEFAULT_SERVER_PORT = "8888";// 默认的服务器端口号
 
 
+    public static final class EQUIPMENT{
+
+        public static int CTR_MODE = 0;
+        public static int CTR_WINDOW = 1;
+        public static int CTR_PROJECTION = 2;
+        public static int CTR_AIR = 3;
+        public static int CTR_MUSIC = 4;
+        public static int CTR_PPT = 5;
+        public static int CTR_TV = 6;
+        public static int CTR_SOUND = 7;
+
+    }
+
     /**
      * 数据库的常量
      * @author Administrator
@@ -45,6 +59,10 @@ public final class Constants {
     public static final class SP{
         public static String MODE = "MODE";
         public static String SITUATION = "SITUATION";
+    }
+
+    public static final class URL{
+        public static String INIT_DATA = "";
     }
 
 }

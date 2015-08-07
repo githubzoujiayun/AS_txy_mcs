@@ -24,8 +24,7 @@ public class PopMenu {
         this.context = context;
         itemList = new ArrayList<Integer>();
 
-        View view = LayoutInflater.from(context)
-                .inflate(R.layout.poplist, null);
+        View view = LayoutInflater.from(context).inflate(R.layout.poplist, null);
 
         // 设置 listview
         listView = (ListView) view.findViewById(R.id.menu_listview);

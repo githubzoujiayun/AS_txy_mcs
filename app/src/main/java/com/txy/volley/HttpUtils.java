@@ -3,6 +3,7 @@ package com.txy.volley;
 import java.util.Map;
 import android.content.Context;
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request.Method;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -10,6 +11,7 @@ import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.txy.constants.Constants;
 
 /**
  * Created by Administrator on 2015/8/6.
@@ -22,7 +24,6 @@ public class HttpUtils {
 
     private static void init(Context context) {
         mRequestQueue = Volley.newRequestQueue(context);
-
     }
 
     public static void post(Context context, String url, final Map<String, String> params,
@@ -49,6 +50,7 @@ public class HttpUtils {
 
         //请用缓存
         myReq.setShouldCache(true);
+
         //设置缓存时间10分钟
 //		myReq.setCacheTime(10*60);
         mRequestQueue.add(myReq);
@@ -69,6 +71,11 @@ public class HttpUtils {
         if (mRequestQueue == null) {
             init(context);
         }
+        // 设置延时时间
+        myReq.setRetryPolicy(new DefaultRetryPolicy(Constants.MY_SOCKET_TIMEOUT_MS,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
         mRequestQueue.add(myReq);
     }
 

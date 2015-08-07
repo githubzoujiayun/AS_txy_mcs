@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="1"
+            android:id="@+id/music_id"
+            android:layout_marginLeft="15dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="musicName"
+            android:id="@+id/music_name"
+            android:layout_marginLeft="15dp"
+            android:layout_above="@+id/music_id"
+            android:layout_toRightOf="@+id/music_id"
+            android:layout_toEndOf="@+id/music_id" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="singerName"
+            android:id="@+id/singer_name"
+            android:layout_below="@+id/music_id"
+            android:layout_alignLeft="@+id/music_name"
+            android:layout_alignStart="@+id/music_name" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/checkBox"
+            android:layout_marginLeft="71dp"
+            android:layout_marginStart="71dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/singer_name"
+            android:layout_toEndOf="@+id/singer_name"
+            android:checked="false" />
+    </RelativeLayout>
+</RelativeLayout>

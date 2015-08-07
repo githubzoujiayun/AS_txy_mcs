@@ -26,7 +26,7 @@ public class TabSound extends Fragment implements WheelMenu.WheelChangeListener 
 
     private void initWheelMenu(View layout) {
         mWheelMenu = (WheelMenu) layout.findViewById(R.id.wheelMenu);
-        mWheelMenu.setDivCount(2);
+        mWheelMenu.setDivCount(6);
         mWheelMenu.setWheelImage(R.drawable.an);
         mWheelMenu.setWheelChangeListener(this);
     }
