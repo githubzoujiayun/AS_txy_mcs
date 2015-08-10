@@ -40,5 +40,38 @@ public class DBManager {
                 .execute();
     }
 
+    /**
+     * 保存音乐列表
+     * @param musicList
+     */
+    public static void saveMusicList(List<MyMusic> musicList){
+        if (musicList != null) {
+            ActiveAndroid.beginTransaction();
+            try{
+                int size = musicList.size();
+                for (int i = 0; i < size; i++){
+                    musicList.get(i).save();
+                }
+                ActiveAndroid.setTransactionSuccessful();
+            } finally {
+                ActiveAndroid.endTransaction();
+            }
+
+        }
+    }
+
+    /**
+     * 查询播放列表
+     * @param mode
+     * @return
+     */
+    public static List<MyMusic> getMusicLists(int mode){
+        return new Select()
+                .from(MyMusic.class)
+                .where("mode = ?", mode)
+                .execute();
+    }
+
+
 
 }

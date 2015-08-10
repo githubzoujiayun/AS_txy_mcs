@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.txpark.yzd.mcs"
-        minSdkVersion 9
+        minSdkVersion 15
         targetSdkVersion 20
         versionCode 1
         versionName "1.0.1"
@@ -35,4 +35,5 @@ dependencies {
     compile 'com.android.support:support-v4:22.2.0'
     compile 'com.google.code.gson:gson:2.2.4'
     compile 'com.mcxiaoke.volley:library:1.0.18'
+    compile 'com.github.d-max:spots-dialog:0.3@aar'//进度
 }

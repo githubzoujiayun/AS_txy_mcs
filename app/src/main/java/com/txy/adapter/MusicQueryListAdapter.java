@@ -9,7 +9,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
-import com.txy.jsondata.MyMusic;
+import com.txy.database.MyMusic;
 import com.txy.txy_mcs.R;
 
 import java.util.ArrayList;
@@ -18,13 +18,13 @@ import java.util.List;
 /**
  * Created by Administrator on 2015/8/7.
  */
-public class MusicListAdapter extends BaseAdapter {
+public class MusicQueryListAdapter extends BaseAdapter {
 
     private Context mContext;
     private List<MyMusic> mAllMusicList;
     private List<MyMusic> mMusicList = new ArrayList<MyMusic>();// 被勾选上的音乐列表
 
-    public MusicListAdapter(Context context, List<MyMusic> musicList){
+    public MusicQueryListAdapter(Context context, List<MyMusic> musicList){
         mContext = context;
         mAllMusicList = musicList;
     }
@@ -57,7 +57,7 @@ public class MusicListAdapter extends BaseAdapter {
         MyMusic myMusic = mAllMusicList.get(position);
         viewHolder.musicName.setText(myMusic.getTitle());
         viewHolder.singerName.setText(myMusic.getArtist());
-        viewHolder.musicId.setText(position+"、");
+        viewHolder.musicId.setText(1+position+"、");
 
         viewHolder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

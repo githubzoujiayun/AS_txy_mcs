@@ -1,11 +1,37 @@
-package com.txy.jsondata;
+package com.txy.database;
 
 import android.graphics.Bitmap;
 
-public class MyMusic {
-	private String title , path , artist , album ;
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
+
+@Table(name = "myMusic")
+public class MyMusic extends Model{
+
+    @Column
+    private int mode;
+
+    @Column
+    private String path;
+
+    @Column
+    private String artist;
+
+    @Column
+    private String album;
+
+    @Column
+	private String title;
+
+    @Column
 	private long duration ;
+
 	private Bitmap albumCover ;
+
+    public MyMusic(){
+        super();
+    }
 
 	public MyMusic(String title, String path, String artist, String album , long duration) {
 		super();
@@ -73,6 +99,12 @@ public class MyMusic {
 				+ artist + ", album=" + album + ", duration=" + duration
 				+ ", albumCover=" + albumCover + "]";
 	}
+    public int getMode() {
+        return mode;
+    }
 
+    public void setMode(int mode) {
+        this.mode = mode;
+    }
 	
 }

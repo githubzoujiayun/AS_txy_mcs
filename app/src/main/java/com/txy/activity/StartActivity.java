@@ -15,11 +15,16 @@ import android.widget.LinearLayout;
 
 import com.android.volley.VolleyError;
 import com.txy.constants.Constants;
+import com.txy.database.DBManager;
+import com.txy.database.MyMusic;
 import com.txy.txy_mcs.R;
 import com.txy.util.SPUtils;
 import com.txy.util.ToastUtils;
 import com.txy.volley.HttpUtils;
 import com.txy.volley.VolleyListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class StartActivity extends Activity implements View.OnClickListener {
 
@@ -36,6 +41,11 @@ public class StartActivity extends Activity implements View.OnClickListener {
         boolean isFirstTime = (Boolean) SPUtils.get(this, "isFirstTime", true);
         if (isFirstTime){
             show();
+            MyMusic myMusic = new MyMusic("txyPark", "txyPark", "txyPark", "txyPark", 0);
+            myMusic.setMode(100);
+            List<MyMusic> musicList = new ArrayList<MyMusic>();
+            musicList.add(myMusic);
+            DBManager.saveMusicList(musicList);
         } else {
             new Handler().postDelayed(new Runnable(){
                 @Override

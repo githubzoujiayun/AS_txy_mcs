@@ -13,7 +13,7 @@ import android.provider.MediaStore.Audio;
 import android.provider.MediaStore.Images;
 import android.util.Log;
 
-import com.txy.jsondata.MyMusic;
+import com.txy.database.MyMusic;
 
 
 public class ReadDataFromContentProvider {
