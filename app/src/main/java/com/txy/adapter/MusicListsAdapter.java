@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.txy.database.DBManager;
 import com.txy.database.MyMusic;
 import com.txy.txy_mcs.R;
 
@@ -23,9 +24,11 @@ public class MusicListsAdapter extends BaseAdapter {
 
     private List<MyMusic> mMusicList = new ArrayList<MyMusic>();
     private Context mContext;
+    private int mMode;// 当前的模式
 
-    public MusicListsAdapter(Context context, List<MyMusic> musicList){
+    public MusicListsAdapter(Context context, List<MyMusic> musicList, int mode){
         mContext = context;
+        mMode = mode;
         if (musicList != null) {
             mMusicList.addAll(musicList);
         }
@@ -47,7 +50,7 @@ public class MusicListsAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View view, ViewGroup viewGroup) {
+    public View getView(final int position, View view, ViewGroup viewGroup) {
 
         ViewHolder viewHolder = null;
         if (view == null) {
@@ -71,7 +74,9 @@ public class MusicListsAdapter extends BaseAdapter {
         viewHolder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                mMusicList.remove(position);
+                MusicListsAdapter.this.notifyDataSetChanged();
+                DBManager.removeOneMusic(mMode,mMusicList.get(position).getPath());
             }
         });
 
@@ -90,7 +95,11 @@ public class MusicListsAdapter extends BaseAdapter {
 
     public void setmMusicList(List<MyMusic> mMusicList) {
         this.mMusicList.clear();
-        this.mMusicList = mMusicList;
+        this.mMusicList.addAll(mMusicList);
+    }
+
+    public void setmMode(int mMode) {
+        this.mMode = mMode;
     }
 }
 

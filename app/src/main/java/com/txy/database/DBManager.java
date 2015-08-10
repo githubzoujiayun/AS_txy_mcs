@@ -3,6 +3,7 @@ package com.txy.database;
 import java.util.List;
 
 import com.activeandroid.ActiveAndroid;
+import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 
 public class DBManager {
@@ -69,6 +70,18 @@ public class DBManager {
         return new Select()
                 .from(MyMusic.class)
                 .where("mode = ?", mode)
+                .execute();
+    }
+
+    /**
+     * 依靠着每首歌的path不同区删除一首
+     * @param mode
+     * @param path
+     */
+    public static void removeOneMusic(int mode,String path){
+        new Delete()
+                .from(MyMusic.class)
+                .where("mode = ? and path = ?",new Object[] {mode, path})
                 .execute();
     }
 

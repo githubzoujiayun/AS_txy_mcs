@@ -5,20 +5,29 @@ import com.txy.adapter.MusicListsAdapter;
 import com.txy.adapter.MusicQueryListAdapter;
 import com.txy.database.DBManager;
 import com.txy.database.MyMusic;
+import com.txy.services.MusicService;
 import com.txy.txy_mcs.R;
 import com.txy.util.SPUtils;
 import com.txy.util.ToastUtils;
 
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -30,7 +39,7 @@ import dmax.dialog.SpotsDialog;
  * A simple {@link android.support.v4.app.Fragment} subclass.
  * 
  */
-public class TabMusic extends Fragment implements View.OnClickListener {
+public class TabMusic extends Fragment implements View.OnClickListener, AdapterView.OnItemClickListener, MusicService.OnPositionChangeListener, SeekBar.OnSeekBarChangeListener {
 
     private TextView mAddMusicButton;
     private List<MyMusic> mAllMusicList;// 扫描到的音乐
@@ -50,12 +59,21 @@ public class TabMusic extends Fragment implements View.OnClickListener {
     private ImageButton mAwardButton;
     private ListView mMusicList;
     private MusicListsAdapter mMusicListAdapter;
+    private FragmentActivity mActivity;
+    private ServiceConnection conn;
+    private MusicService musicService;
+    private ImageButton mPreButton;
+    private ImageButton mNextButton;
+    private ImageButton mPlayButton;
+    private TextView mMusicName;
+    private TextView mSingerName;
+    private SeekBar mSeekBar;
 
     @Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+        mActivity = getActivity();
         layout = inflater.inflate(R.layout.fragment_tab_music, container, false);
-
 
         initUI(layout);
         initListener();
@@ -63,6 +81,21 @@ public class TabMusic extends Fragment implements View.OnClickListener {
         initListView(layout);
 		return layout;
 	}
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Intent service = new Intent(mActivity, MusicService.class);
+        mActivity.startService(service);
+        conn = new MyServicesConnect();
+        mActivity.bindService(service,conn, Context.BIND_AUTO_CREATE);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mActivity.unbindService(conn);
+    }
 
     /**
      * 初始化一些界面的状态
@@ -76,27 +109,47 @@ public class TabMusic extends Fragment implements View.OnClickListener {
     private void initListView(View layout) {
 
         mMusicList = (ListView) layout.findViewById(R.id.lv_playlist);
-        mMusicListAdapter = new MusicListsAdapter(getActivity(), mBefore);
+        mMusicListAdapter = new MusicListsAdapter(getActivity(), mBefore, mNowMode);
         mMusicList.setAdapter(mMusicListAdapter);
 
+        mMusicList.setOnItemClickListener(this);
     }
 
     private void initListener() {
+
         mAddMusicButton.setOnClickListener(this);
         mBeforeMeetButton.setOnClickListener(this);
         mMeetButton.setOnClickListener(this);
         mRelaxButton.setOnClickListener(this);
         mSportButton.setOnClickListener(this);
         mAwardButton.setOnClickListener(this);
+
+        mPreButton.setOnClickListener(this);
+        mNextButton.setOnClickListener(this);
+        mPlayButton.setOnClickListener(this);
+
+        mSeekBar.setOnSeekBarChangeListener(this);
+
     }
 
     private void initUI(View layout) {
+
         mAddMusicButton = (TextView) layout.findViewById(R.id.txt_readMusic);
         mBeforeMeetButton = (ImageButton) layout.findViewById(R.id.imgBtn_beforeMeet);
         mMeetButton = (ImageButton) layout.findViewById(R.id.imgBtn_Meet);
         mRelaxButton = (ImageButton) layout.findViewById(R.id.imgBtn_rest);
         mSportButton = (ImageButton) layout.findViewById(R.id.imgBtn_Hd);
         mAwardButton = (ImageButton) layout.findViewById(R.id.imgBtn_Bj);
+
+        mPreButton = (ImageButton) layout.findViewById(R.id.imgBtn_pre);
+        mNextButton = (ImageButton) layout.findViewById(R.id.imgBtn_next);
+        mPlayButton = (ImageButton) layout.findViewById(R.id.imgBtn_play);
+
+        mMusicName = (TextView) layout.findViewById(R.id.txt_currentmusic);
+        mSingerName = (TextView) layout.findViewById(R.id.txt_currentmusic);
+
+        mSeekBar = (SeekBar) layout.findViewById(R.id.sb_playseekbar);
+
     }
 
     @Override
@@ -142,6 +195,30 @@ public class TabMusic extends Fragment implements View.OnClickListener {
                 changImage(mNowMode);
                 changeMode();
                 break;
+
+            case R.id.imgBtn_pre:// 上一首
+                musicService.preMusic();
+                mMusicName.setText(mBefore.get(musicService.getPosition()).getTitle());
+                mSingerName.setText(mBefore.get(musicService.getPosition()).getArtist());
+                mSeekBar.setMax(musicService.getDuration());
+                break;
+            case R.id.imgBtn_play:// 播放/暂停
+
+                if (musicService.isPlaying()) {
+                    musicService.pauseMusic();
+                    mPlayButton.setBackgroundResource(R.drawable.btn_play_off);
+                } else {
+                    musicService.playMusic();
+                    mPlayButton.setBackgroundResource(R.drawable.btn_play_on);
+                }
+
+                break;
+            case R.id.imgBtn_next:// 下一首
+                musicService.nextMusic();
+                mMusicName.setText(mBefore.get(musicService.getPosition()).getTitle());
+                mSingerName.setText(mBefore.get(musicService.getPosition()).getArtist());
+                mSeekBar.setMax(musicService.getDuration());
+                break;
         }
     }
 
@@ -155,6 +232,7 @@ public class TabMusic extends Fragment implements View.OnClickListener {
         }
 
         mBefore.clear();
+
         mBefore.addAll(musicList);
         int size = musicList.size();
         for (int i = 0;i < size;i++){
@@ -218,13 +296,19 @@ public class TabMusic extends Fragment implements View.OnClickListener {
 
     }
 
+    /**
+     * 改变模式
+     */
     private void changeMode(){
         List<MyMusic> musicLists = DBManager.getMusicLists(mNowMode);
         mBefore.clear();
         mBefore.addAll(musicLists);
 
         mMusicListAdapter.setmMusicList(mBefore);
+        mMusicListAdapter.setmMode(mNowMode);
         mMusicListAdapter.notifyDataSetChanged();
+
+        musicService.setMyMusicList(mBefore);// 更新服务里面的播放列表
     }
 
     /**
@@ -296,5 +380,62 @@ public class TabMusic extends Fragment implements View.OnClickListener {
     public void disMissSpotsDialog(){
         mSpotsDialog.dismiss();
         mSpotsDialog = null;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        musicService.setPosition(i);
+        musicService.startPlay();
+        mPlayButton.setBackgroundResource(R.drawable.btn_play_on);
+        mMusicName.setText(mBefore.get(i).getTitle());
+        mSingerName.setText(mBefore.get(i).getArtist());
+    }
+
+    @Override
+    public void onPositionChange(int position) {
+        mSeekBar.setMax(musicService.getDuration());
+        mMusicName.setText(mBefore.get(musicService.getPosition()).getTitle());
+        mSingerName.setText(mBefore.get(musicService.getPosition()).getArtist());
+    }
+
+    @Override
+    public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+        musicService.changProgress(i);
+    }
+
+    @Override
+    public void onStartTrackingTouch(SeekBar seekBar) {
+
+    }
+
+    @Override
+    public void onStopTrackingTouch(SeekBar seekBar) {
+
+    }
+
+    class MyServicesConnect implements ServiceConnection {
+
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            MusicService.MusicBinder musicBinder = (MusicService.MusicBinder) iBinder;
+            musicService = musicBinder.getMusicService();
+            musicService.setMyMusicList(mBefore);
+            musicService.setOnPositionChangeListener(TabMusic.this);
+
+            if (musicService.isPlaying()) {
+                mPlayButton.setBackgroundResource(R.drawable.btn_play_on);
+//                mSeekBar.setMax(musicService.getDuration());
+//                int currentDuration = musicService.getCurrentDuration();
+//                if (currentDuration > 0) {
+//                    mSeekBar.setProgress(currentDuration);
+//                }
+            }
+
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+
+        }
     }
 }
