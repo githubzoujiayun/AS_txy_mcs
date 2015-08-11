@@ -34,6 +34,12 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
         mMyMediaPlayer.setOnCompletionListener(this);
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        stopMediaPlayer();
+    }
+
     public void beginMusic(String path){
         mMyMediaPlayer.reset(); // 设置reset状态，处于Idle状态
         try {
@@ -44,6 +50,14 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
             e.printStackTrace();
         }
 
+    }
+
+    public void stopMediaPlayer(){
+        if (mMyMediaPlayer != null){
+            mMyMediaPlayer.stop();
+            mMyMediaPlayer.release();
+            mMyMediaPlayer = null;
+        }
     }
 
     public void playMusic(){
@@ -85,6 +99,8 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
 
         startPlay();
     }
+
+    
 
     public int getDuration(){
         return (int) myMusicList.get(mPosition).getDuration();

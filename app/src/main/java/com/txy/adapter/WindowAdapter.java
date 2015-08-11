@@ -8,19 +8,27 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import java.util.HashMap;
 
 public class WindowAdapter extends BaseAdapter {
 
-    private int mWindowNum = 0;// 控制窗帘的数量
+    private int mWindowNum = 4;// 控制窗帘的数量
     private Context mContext;
+    private HashMap<Integer, Boolean> isCheckedMap = new HashMap<Integer, Boolean>();
 
     public WindowAdapter(Context context) {
         mContext = context;
+        initCheck();
     }
 
+    private void initCheck() {
+
+    }
 
     @Override
     public int getCount() {
@@ -40,55 +48,60 @@ public class WindowAdapter extends BaseAdapter {
     @SuppressWarnings("null")
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        ViewHolder holder = null;
-        if (convertView == null) {
-            LayoutInflater inflater = LayoutInflater.from(mContext);
-            convertView = inflater.inflate(R.layout.window_ctr_row, null);
-            holder = new ViewHolder();
-            holder.textView = (TextView) convertView.findViewById(R.id.textView1);
-            holder.windowOpen = (ImageView) convertView.findViewById(R.id.imageButton1);
-            holder.windowClose = (ImageView) convertView.findViewById(R.id.imageView1);
-            holder.windowPause = (ImageView) convertView.findViewById(R.id.imageView2);
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
-        }
 
-        holder.windowOpen.setOnClickListener(new OnClickListener() {
+        View layout = LayoutInflater.from(mContext).inflate(R.layout.window_ctr_row, null);
+        final ViewHolder holder = new ViewHolder();
+        holder.textView = (TextView) layout.findViewById(R.id.textView1);
+        holder.windowOpen = (CheckBox) layout.findViewById(R.id.openWindow);
+        holder.windowClose = (CheckBox) layout.findViewById(R.id.closeWindow);
+        holder.windowPause = (CheckBox) layout.findViewById(R.id.pauseWindow);
 
+        holder.textView.setText("窗帘");
+
+        holder.windowOpen.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
 
+                if (isChecked) {
+                    holder.windowClose.setChecked(false);
+                    holder.windowPause.setChecked(false);
+                }
             }
         });
-        holder.windowClose.setOnClickListener(new OnClickListener() {
 
+        holder.windowPause.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
-
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if (isChecked) {
+                    holder.windowClose.setChecked(false);
+                    holder.windowOpen.setChecked(false);
+                }
             }
         });
-        holder.windowPause.setOnClickListener(new OnClickListener() {
 
+        holder.windowClose.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
-
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if (isChecked) {
+                    holder.windowPause.setChecked(false);
+                    holder.windowOpen.setChecked(false);
+                }
             }
         });
-        return convertView;
+        return layout;
     }
 
-    class ViewHolder{
-        ImageView windowOpen;
-        ImageView windowClose;
-        ImageView windowPause;
+    final class ViewHolder{
+        CheckBox windowOpen;
+        CheckBox windowClose;
+        CheckBox windowPause;
         TextView  textView;
     }
     /**
      * 设置Window的数量
      * @param mNum
      */
-    public void setmNum(int mNum) {
+    public void setNum(int mNum) {
         this.mWindowNum = mNum;
     }
 

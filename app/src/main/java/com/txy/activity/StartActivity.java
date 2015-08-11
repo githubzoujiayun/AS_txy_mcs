@@ -41,11 +41,7 @@ public class StartActivity extends Activity implements View.OnClickListener {
         boolean isFirstTime = (Boolean) SPUtils.get(this, "isFirstTime", true);
         if (isFirstTime){
             show();
-            MyMusic myMusic = new MyMusic("txyPark", "txyPark", "txyPark", "txyPark", 0);
-            myMusic.setMode(100);
-            List<MyMusic> musicList = new ArrayList<MyMusic>();
-            musicList.add(myMusic);
-            DBManager.saveMusicList(musicList);
+            createMusicDB();
         } else {
             new Handler().postDelayed(new Runnable(){
                 @Override
@@ -56,6 +52,17 @@ public class StartActivity extends Activity implements View.OnClickListener {
             },Constants.STARTAPP_DELAY);
         }
 
+    }
+
+    /**
+     * 建一个数据库
+     */
+    private void createMusicDB() {
+        MyMusic myMusic = new MyMusic("txyPark", "txyPark", "txyPark", "txyPark", 0);
+        myMusic.setMode(100);
+        List<MyMusic> musicList = new ArrayList<MyMusic>();
+        musicList.add(myMusic);
+        DBManager.saveMusicList(musicList);
     }
 
     private void go2Indext() {

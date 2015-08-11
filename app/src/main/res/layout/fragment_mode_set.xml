@@ -18,7 +18,7 @@
             android:padding="10.0dp" >
 
             <ImageView
-                android:id="@+id/imageView1"
+                android:id="@+id/pauseWindow"
                 android:layout_width="100dp"
                 android:layout_height="match_parent"
                 android:src="@drawable/view_btbg" />

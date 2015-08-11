@@ -21,6 +21,18 @@
         <item name="android:button">@drawable/light_seletor</item>
     </style>
 
+    <style name="winDowCloseCheckBox">
+        <item name="android:button">@drawable/window_close_selector</item>
+    </style>
+
+    <style name="winDowPauseCheckBox">
+        <item name="android:button">@drawable/window_pause_selector</item>
+    </style>
+
+    <style name="windDowOpenCheckBox">
+        <item name="android:button">@drawable/window_open_selector</item>
+    </style>
+
     <!-- 定制的SpotsDialog -->
     <style name="Custom" parent="android:Theme.DeviceDefault.Dialog">
         <item name="DialogTitleAppearance">@android:style/TextAppearance.Medium</item>

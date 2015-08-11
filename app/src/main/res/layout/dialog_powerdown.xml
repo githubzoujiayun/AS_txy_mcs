@@ -6,7 +6,7 @@
     android:gravity="center">
 
     <ImageView
-        android:id="@+id/imageView1"
+        android:id="@+id/pauseWindow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/view_powerdonw" />
@@ -16,14 +16,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/imageView1"
+        android:layout_below="@+id/pauseWindow"
         android:background="@drawable/btn_downok_off" />
 
     <ImageButton
         android:id="@+id/btn_powerdowncancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/imageView1"
+        android:layout_alignRight="@+id/pauseWindow"
         android:layout_alignTop="@+id/btn_powerdownok"
         android:background="@drawable/btn_downcancel_off" />
 
