@@ -13,16 +13,18 @@ import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.IBinder;
+import android.util.Log;
 
 import com.txy.constants.Constants;
 import com.txy.util.SPUtils;
 
 public class ReceiverService extends Service {
 
-    private byte[] data = new byte[32];
+    private byte[] data = new byte[1024];
     private OnReceiveSuccessListener mOnReceiveSuccessListener;
     private ReceiveTask mReceiveTask;// 接收的线程
     private WifiManager.MulticastLock lock;
+    private boolean isRunning;
     private int mPort;
 
     @Override
@@ -55,7 +57,13 @@ public class ReceiverService extends Service {
         if (mReceiveTask == null) {
             mReceiveTask = new ReceiveTask();
             mReceiveTask.execute("");
+            isRunning = true;
         }
+    }
+
+    public void stopTask(){
+        isRunning = false;
+        mReceiveTask = null;
     }
 
     public interface OnReceiveSuccessListener{
@@ -70,11 +78,12 @@ public class ReceiverService extends Service {
 
         @Override
         protected Void doInBackground(String... params) {
-            while(true){
+
+            while(isRunning){
                 lock.acquire();
                 DatagramSocket socket = null;
                 try {
-                    socket = new DatagramSocket(mPort);
+                    socket = new DatagramSocket(3339);
                     DatagramPacket dp = new DatagramPacket(data , data.length);
                     socket.receive(dp);
                     mOnReceiveSuccessListener.onSuccessData(data);// 监听
@@ -89,6 +98,7 @@ public class ReceiverService extends Service {
                     }
                 }
             }
+            return null;
         }
 
     }

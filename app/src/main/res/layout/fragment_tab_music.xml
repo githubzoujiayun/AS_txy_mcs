@@ -172,27 +172,27 @@
             android:layout_alignTop="@+id/txt_readMusic"
             android:layout_toRightOf="@+id/imgBtn_rest" >
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/imgBtn_pre"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/btn_kj_off" />
+                android:src="@drawable/music_pre_selector" />
 
             <ImageButton
                 android:id="@+id/imgBtn_play"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_marginLeft="20dp"
                 android:background="@drawable/btn_play_off" />
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/imgBtn_next"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/btn_kt_off" />
+                android:src="@drawable/music_next_selector" />
         </LinearLayout>
     </RelativeLayout>
 

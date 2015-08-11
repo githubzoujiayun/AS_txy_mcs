@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">txy_Mcs</string>
+    <string name="app_name">会议中控</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_start">StartActivity</string>
+    <string name="title_activity_start">会议中控</string>
     <string name="title_activity_set">SetActivity</string>
     <string  name="set_title">房间设置</string>
 

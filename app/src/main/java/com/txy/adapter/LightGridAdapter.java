@@ -15,7 +15,7 @@ import com.txy.txy_mcs.R;
 public class LightGridAdapter extends BaseAdapter{
 
     private Context mContext;
-    private int mLightNum;// 灯光的数量
+    private int mLightNum = 4;// 灯光的数量
     private ArrayList<Boolean> mLightStatus;// 灯的状态
     private ArrayList<String> mLightName;// 灯的名字
 
@@ -54,13 +54,14 @@ public class LightGridAdapter extends BaseAdapter{
             holder = (ViewHolder) convertView.getTag();
         }
 
-        if (mLightStatus.size() > 0) {
-            holder.button.setChecked(mLightStatus.get(position));
-        }
-
-        if(mLightName.size() > 0) {
-            holder.name.setText(mLightName.get(position));
-        }
+        holder.name.setText("灯"+position);
+//        if (mLightStatus.size() > 0) {
+//            holder.button.setChecked(mLightStatus.get(position));
+//        }
+//
+//        if(mLightName.size() > 0) {
+//            holder.name.setText(mLightName.get(position));
+//        }
 
         return convertView;
     }

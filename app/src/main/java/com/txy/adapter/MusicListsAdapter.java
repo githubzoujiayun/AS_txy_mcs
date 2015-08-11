@@ -1,11 +1,14 @@
 package com.txy.adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.txy.database.DBManager;
@@ -25,6 +28,9 @@ public class MusicListsAdapter extends BaseAdapter {
     private List<MyMusic> mMusicList = new ArrayList<MyMusic>();
     private Context mContext;
     private int mMode;// 当前的模式
+    private ImageButton mOkButton;
+    private ImageButton mCancelButton;
+    private AlertDialog mDialog;
 
     public MusicListsAdapter(Context context, List<MyMusic> musicList, int mode){
         mContext = context;
@@ -74,9 +80,8 @@ public class MusicListsAdapter extends BaseAdapter {
         viewHolder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mMusicList.remove(position);
-                MusicListsAdapter.this.notifyDataSetChanged();
-                DBManager.removeOneMusic(mMode,mMusicList.get(position).getPath());
+                showDialog(position);
+
             }
         });
 
@@ -100,6 +105,38 @@ public class MusicListsAdapter extends BaseAdapter {
 
     public void setmMode(int mMode) {
         this.mMode = mMode;
+    }
+
+    /**
+     * 弹出自定义对话框
+     */
+    private void showDialog(final int position) {
+        LayoutInflater inflater = LayoutInflater.from(mContext);
+        RelativeLayout layout = (RelativeLayout) inflater.inflate(
+                R.layout.music_delete_dialog, null);
+        mOkButton = (ImageButton) layout.findViewById(R.id.btn_powerdownok);
+        mCancelButton = (ImageButton) layout
+                .findViewById(R.id.btn_powerdowncancel);
+
+        mDialog = new AlertDialog.Builder(mContext).create();
+        mDialog.setCancelable(false);
+        mDialog.show();
+        mDialog.getWindow().setContentView(layout);
+        mOkButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DBManager.removeOneMusic(mMode,mMusicList.get(position).getPath());
+                mMusicList.remove(position);
+                MusicListsAdapter.this.notifyDataSetChanged();
+                mDialog.dismiss();
+            }
+        });
+        mCancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mDialog.dismiss();
+            }
+        });
     }
 }
 

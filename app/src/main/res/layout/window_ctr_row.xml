@@ -2,54 +2,51 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:clickable="false">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="130dp"
-        android:paddingRight="80dp"
-         >
+        android:layout_height="140dp"
+        android:paddingRight="120dp"
+        android:paddingLeft="40dp"
+        android:clickable="false">
 
         <TextView
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="窗帘一"
-            android:paddingLeft="40dp"
-            android:paddingRight="50dp"
-            android:textSize="15sp"
+            android:text=""
             android:textColor="#ffffff"
+            android:textSize="15sp"
             android:gravity="center"
             android:layout_gravity="center"
             android:layout_weight="0.6"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
-        <CheckBox
+        <ImageView
             android:id="@+id/openWindow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
             android:layout_gravity="center"
             android:layout_weight="1"
-            style="@style/windDowOpenCheckBox"
-            />
+            android:src="@drawable/window_open_selector" />
 
-        <CheckBox
+        <ImageView
             android:id="@+id/pauseWindow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
             android:layout_gravity="center"
             android:layout_weight="1"
-            style="@style/winDowPauseCheckBox"
-            android:checked="false" />
+            android:src="@drawable/window_pause_selector" />
 
-        <CheckBox
+        <ImageView
             android:id="@+id/closeWindow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
             android:layout_gravity="center"
             android:layout_weight="1"
-            style="@style/winDowCloseCheckBox"
-            android:checked="false" />
+            android:src="@drawable/window_close_selector" />
 
     </LinearLayout>
 

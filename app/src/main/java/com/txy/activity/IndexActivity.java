@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -21,7 +22,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.activeandroid.util.Log;
 import com.txy.adapter.MenuListViewAdapter;
 import com.txy.constants.Constants;
 import com.txy.services.ReceiverService;
@@ -53,7 +53,24 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
     private int mNowPosition = 1;// 当前的控制模式
     private PopMenu mSetMenu;
     private ReceiverService receiveService;
-    private ServiceConnection conn = new MyServiceConnection();
+    private ServiceConnection conn = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            MyBinder myBinder = (MyBinder) iBinder;
+            receiveService = myBinder.getReceiveService();
+            receiveService.startTask();
+            receiveService.setOnReceiveSuccessListener(new OnReceiveSuccessListener() {
+
+                @Override
+                public void onSuccessData(byte[] data) {
+                }
+            });
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+        }
+    };
     private ArrayList<Integer> mEquipList; // 当前房间拥有的设备
 
     @Override
@@ -292,6 +309,7 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
             MyBinder myBinder = (MyBinder) iBinder;
             receiveService = myBinder.getReceiveService();
             receiveService.startTask();
+            Log.e("------","sus");
             receiveService.setOnReceiveSuccessListener(new OnReceiveSuccessListener() {
 
                 @Override
@@ -303,7 +321,7 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
 
         @Override
         public void onServiceDisconnected(ComponentName componentName) {
-
+            Log.e("------","dis");
         }
     }
 

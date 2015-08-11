@@ -23,11 +23,6 @@ public class WindowAdapter extends BaseAdapter {
 
     public WindowAdapter(Context context) {
         mContext = context;
-        initCheck();
-    }
-
-    private void initCheck() {
-
     }
 
     @Override
@@ -52,49 +47,40 @@ public class WindowAdapter extends BaseAdapter {
         View layout = LayoutInflater.from(mContext).inflate(R.layout.window_ctr_row, null);
         final ViewHolder holder = new ViewHolder();
         holder.textView = (TextView) layout.findViewById(R.id.textView1);
-        holder.windowOpen = (CheckBox) layout.findViewById(R.id.openWindow);
-        holder.windowClose = (CheckBox) layout.findViewById(R.id.closeWindow);
-        holder.windowPause = (CheckBox) layout.findViewById(R.id.pauseWindow);
+        holder.windowOpen = (ImageView) layout.findViewById(R.id.openWindow);
+        holder.windowClose = (ImageView) layout.findViewById(R.id.closeWindow);
+        holder.windowPause = (ImageView) layout.findViewById(R.id.pauseWindow);
 
+
+        holder.windowOpen.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        holder.windowClose.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        holder.windowPause.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
         holder.textView.setText("窗帘");
 
-        holder.windowOpen.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-
-                if (isChecked) {
-                    holder.windowClose.setChecked(false);
-                    holder.windowPause.setChecked(false);
-                }
-            }
-        });
-
-        holder.windowPause.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                if (isChecked) {
-                    holder.windowClose.setChecked(false);
-                    holder.windowOpen.setChecked(false);
-                }
-            }
-        });
-
-        holder.windowClose.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                if (isChecked) {
-                    holder.windowPause.setChecked(false);
-                    holder.windowOpen.setChecked(false);
-                }
-            }
-        });
         return layout;
     }
 
     final class ViewHolder{
-        CheckBox windowOpen;
-        CheckBox windowClose;
-        CheckBox windowPause;
+        ImageView windowOpen;
+        ImageView windowClose;
+        ImageView windowPause;
         TextView  textView;
     }
     /**

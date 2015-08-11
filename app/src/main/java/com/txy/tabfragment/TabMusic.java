@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.SeekBar;
@@ -62,8 +63,8 @@ public class TabMusic extends Fragment implements View.OnClickListener, AdapterV
     private FragmentActivity mActivity;
     private ServiceConnection conn;
     private MusicService musicService;
-    private ImageButton mPreButton;
-    private ImageButton mNextButton;
+    private ImageView mPreButton;
+    private ImageView mNextButton;
     private ImageButton mPlayButton;
     private TextView mMusicName;
     private TextView mSingerName;
@@ -141,8 +142,8 @@ public class TabMusic extends Fragment implements View.OnClickListener, AdapterV
         mSportButton = (ImageButton) layout.findViewById(R.id.imgBtn_Hd);
         mAwardButton = (ImageButton) layout.findViewById(R.id.imgBtn_Bj);
 
-        mPreButton = (ImageButton) layout.findViewById(R.id.imgBtn_pre);
-        mNextButton = (ImageButton) layout.findViewById(R.id.imgBtn_next);
+        mPreButton = (ImageView) layout.findViewById(R.id.imgBtn_pre);
+        mNextButton = (ImageView) layout.findViewById(R.id.imgBtn_next);
         mPlayButton = (ImageButton) layout.findViewById(R.id.imgBtn_play);
 
         mMusicName = (TextView) layout.findViewById(R.id.txt_currentmusic);
@@ -197,12 +198,18 @@ public class TabMusic extends Fragment implements View.OnClickListener, AdapterV
                 break;
 
             case R.id.imgBtn_pre:// 上一首
+                if (mBefore == null || mBefore.size() == 0) {
+                    return;
+                }
                 musicService.preMusic();
                 mMusicName.setText(mBefore.get(musicService.getPosition()).getTitle());
                 mSingerName.setText(mBefore.get(musicService.getPosition()).getArtist());
-                mSeekBar.setMax(musicService.getDuration());
                 break;
             case R.id.imgBtn_play:// 播放/暂停
+
+                if (mBefore == null || mBefore.size() == 0) {
+                    return;
+                }
 
                 if (musicService.isPlaying()) {
                     musicService.pauseMusic();
@@ -214,10 +221,12 @@ public class TabMusic extends Fragment implements View.OnClickListener, AdapterV
 
                 break;
             case R.id.imgBtn_next:// 下一首
+                if (mBefore == null || mBefore.size() == 0) {
+                    return;
+                }
                 musicService.nextMusic();
                 mMusicName.setText(mBefore.get(musicService.getPosition()).getTitle());
                 mSingerName.setText(mBefore.get(musicService.getPosition()).getArtist());
-                mSeekBar.setMax(musicService.getDuration());
                 break;
         }
     }

@@ -36,6 +36,7 @@ public class TabWindow extends Fragment {
 		mListView = (ListView) layout.findViewById(R.id.listView1);
 		windowAdapter = new WindowAdapter(getActivity());
 		mListView.setAdapter(windowAdapter);
+
 	}
 
 }
