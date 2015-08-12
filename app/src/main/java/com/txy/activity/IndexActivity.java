@@ -34,7 +34,7 @@ import com.txy.tabfragment.TabScreen;
 import com.txy.tabfragment.TabSituation;
 import com.txy.tabfragment.TabSound;
 import com.txy.tabfragment.TabTV;
-import com.txy.tabfragment.TabWindow;
+import com.txy.tabfragment.TabCurtain;
 import com.txy.tools.PopMenu;
 import com.txy.txy_mcs.R;
 
@@ -53,24 +53,7 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
     private int mNowPosition = 1;// 当前的控制模式
     private PopMenu mSetMenu;
     private ReceiverService receiveService;
-    private ServiceConnection conn = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
-            MyBinder myBinder = (MyBinder) iBinder;
-            receiveService = myBinder.getReceiveService();
-            receiveService.startTask();
-            receiveService.setOnReceiveSuccessListener(new OnReceiveSuccessListener() {
-
-                @Override
-                public void onSuccessData(byte[] data) {
-                }
-            });
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName componentName) {
-        }
-    };
+    private ServiceConnection conn = new MyServiceConnection();
     private ArrayList<Integer> mEquipList; // 当前房间拥有的设备
 
     @Override
@@ -116,6 +99,7 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
         mEquipList.add(Constants.EQUIPMENT.CTR_MODE);
         mEquipList.add(Constants.EQUIPMENT.CTR_WINDOW);
         mEquipList.add(Constants.EQUIPMENT.CTR_TV);
+        mEquipList.add(Constants.EQUIPMENT.CTR_PROJECTION);
 
         mEquipList.add(Constants.EQUIPMENT.CTR_MUSIC);
         mEquipList.add(Constants.EQUIPMENT.CTR_PPT);
@@ -258,7 +242,7 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
                 fragment = new TabSituation();
                 break;
             case 1:// 窗帘控制
-                fragment = new TabWindow();
+                fragment = new TabCurtain();
                 break;
             case 2:// 投影控制
                 fragment = new TabProjector();
@@ -309,19 +293,17 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
             MyBinder myBinder = (MyBinder) iBinder;
             receiveService = myBinder.getReceiveService();
             receiveService.startTask();
-            Log.e("------","sus");
             receiveService.setOnReceiveSuccessListener(new OnReceiveSuccessListener() {
 
                 @Override
-                public void onSuccessData(byte[] data) {
-                    Log.e("---------------",data[2]+"");
+                public void onSuccessData(String data) {
+
                 }
             });
         }
 
         @Override
         public void onServiceDisconnected(ComponentName componentName) {
-            Log.e("------","dis");
         }
     }
 

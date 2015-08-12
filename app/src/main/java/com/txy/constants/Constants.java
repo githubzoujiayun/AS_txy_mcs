@@ -12,6 +12,7 @@ public final class Constants {
     public static int MEETMODE = 1;// 会议模式
     public static int PLAYMODE = 2;// 投影模式
     public static int SHOWMODE = 3;// 展示模式
+    public static int OFFMODE = 4;// 总关模式
 
     public static String SERVERIP = "SERVERIP";// 服务器的IP
     public static String SERVERPORT = "SERVERPORT";// 服务器的PORT
@@ -20,7 +21,7 @@ public final class Constants {
     public static String SENDPORT = "SENDPORT";// 发送的端口
     public static String RECEIVEPORT = "RECEIVEPORT";// 接收的端口
 
-    public static String DEFAULT_IP = "192.168.1.201";// 默认的发送IP
+    public static String DEFAULT_IP = "192.168.1.102";// 默认的发送IP
     public static int DEFAULT_SENDPORT = 3341;// 默认的发送端口号
     public static int DEFAULT_RECEIVEPORT = 3339;// 默认的接收端口号
 

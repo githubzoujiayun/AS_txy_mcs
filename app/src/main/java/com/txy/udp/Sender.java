@@ -1,5 +1,7 @@
 package com.txy.udp;
 
+import com.txy.util.BytesUtils;
+
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -12,10 +14,15 @@ public class Sender implements Runnable {
     private int port;
     private byte[] mSendData;
 
-    public Sender(byte[] dg, String ip, int port) {
-        this.mSendData = dg;
+    public Sender(String msg, String ip, int port) {
+
+        this.mSendData = BytesUtils.hexStringToBytes(msg);
         this.ip = ip;
         this.port = port;
+    }
+
+    public void send(){
+        new Thread(this).start();
     }
 
     public synchronized void run() {

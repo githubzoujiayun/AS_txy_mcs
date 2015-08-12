@@ -1,18 +1,9 @@
 package com.txy.fragment;
 
-import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetSocketAddress;
-import java.net.SocketAddress;
-import java.net.SocketException;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,9 +12,9 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
 import com.txy.constants.Constants;
+import com.txy.constants.InitData.DataMerge;
 import com.txy.txy_mcs.R;
 import com.txy.udp.Sender;
-import com.txy.util.ParseUtil;
 import com.txy.util.SPUtils;
 
 /**
@@ -46,8 +37,8 @@ public class HomeFragment extends Fragment implements OnClickListener {
     private ImageButton mOkButton;
     private ImageButton mCancelButton;
     private Dialog mDialog;
-    private byte cl;
-    private byte data[] = new byte[32];
+
+    private String mSituationControlCode = "";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -96,8 +87,57 @@ public class HomeFragment extends Fragment implements OnClickListener {
 
     @Override
     public void onClick(View v) {
-        situationChange(v);
-        modeChange(v);
+        switch (v.getId()) {
+            case R.id.btn_savemode:// 节能模式
+                mSituationMode = Constants.SAVEMODE;
+                modeSetBG(mSituationMode);
+                send();
+                break;
+            case R.id.btn_meetmode:// 会议模式
+                mSituationMode = Constants.MEETMODE;
+                modeSetBG(mSituationMode);
+                send();
+                break;
+            case R.id.btn_playmode:// 投影模式
+                mSituationMode = Constants.PLAYMODE;
+                modeSetBG(mSituationMode);
+                send();
+                break;
+            case R.id.btn_showmode:// 展示模式
+                mSituationMode = Constants.SHOWMODE;
+                modeSetBG(mSituationMode);
+                send();
+                break;
+
+            case R.id.btn_yw:
+                mMode = Constants.NIGHTMODE;
+                send();
+                setMode(mMode);
+                break;
+
+            case R.id.btn_bt:
+                mMode = Constants.DAYMODE;
+                send();
+                setMode(mMode);
+                break;
+
+            case R.id.btn_powerdown:
+                showDialog();
+                break;
+
+            case R.id.btn_powerdownok:
+                mSituationMode = Constants.OFFMODE;
+                modeSetBG(mSituationMode);
+                send();
+                mDialog.dismiss();
+                break;
+            case R.id.btn_powerdowncancel:
+                mDialog.dismiss();
+                break;
+
+            default:
+                break;
+        }
         saveNowMode();
     }
 
@@ -109,36 +149,6 @@ public class HomeFragment extends Fragment implements OnClickListener {
         SPUtils.put(getActivity(), Constants.SP.SITUATION, mSituationMode);
     }
 
-    /**
-     * 白天、夜晚两种模式的切换
-     *
-     * @param v
-     */
-    private void modeChange(View v) {
-        switch (v.getId()) {
-            case R.id.btn_yw:
-                mMode = Constants.NIGHTMODE;
-                break;
-
-            case R.id.btn_bt:
-                mMode = Constants.DAYMODE;
-                break;
-
-            case R.id.btn_powerdown:
-                showDialog();
-                break;
-
-            case R.id.btn_powerdownok:
-                break;
-            case R.id.btn_powerdowncancel:
-                mDialog.dismiss();
-                break;
-
-            default:
-                break;
-        }
-        setMode(mMode);
-    }
 
     /**
      * 弹出自定义对话框
@@ -160,52 +170,13 @@ public class HomeFragment extends Fragment implements OnClickListener {
     }
 
     /**
-     * 四种场景的改变
-     *
-     * @param v
+     * 发送场景模式的指令
      */
-    private void situationChange(View v) {
-        byte cl = 0;
-        switch (v.getId()) {
-            case R.id.btn_savemode:// 节能模式
-                mSituationMode = Constants.SAVEMODE;
-                send();
-                break;
-            case R.id.btn_meetmode:// 会议模式
-                mSituationMode = Constants.MEETMODE;
-                break;
-            case R.id.btn_playmode:// 投影模式
-                mSituationMode = Constants.PLAYMODE;
-                break;
-            case R.id.btn_showmode:// 展示模式
-                mSituationMode = Constants.SHOWMODE;
-                break;
-            default:
-                break;
-        }
-        modeSetBG(mSituationMode);
-    }
-
     private void send() {
-        StringBuffer sb2 = new StringBuffer();
-        sb2.append(String.valueOf("01")); // 00关 01开 10停
-        sb2.append(String.valueOf("000"));// 预留
-        sb2.append(String.valueOf("001")); // 00 1路 01 2路 10 3路
-
-        try {
-            cl = ParseUtil.getByteFromEigthBitsString(sb2.toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        final byte[] data1 = new byte[] { (byte) 0x1e, (byte) 0x1e,
-                (byte) 0x48, (byte) 0x4d, (byte) 0x49, (byte) 0x53,
-                (byte) 0x00, (byte) 0x08, (byte) 0x00, (byte) 0x00,
-                (byte) 0xff, (byte) 0xff, (byte) 0xff, (byte) 0xff,
-                (byte) 0x00, (byte) 0x00, (byte) 0x5d, (byte) 0x01,
-                (byte) 0xff, (byte) 0xff, (byte) 0xff, (byte) 0xff,
-                (byte) 0x08, (byte) 0x00, (byte) 0x00, (byte) 0x00,
-                (byte) 0x00, cl, (byte) 0x00, (byte) 0x00 };
-        new Thread(new Sender(data1, Constants.IP, Constants.DEFAULT_SENDPORT)).start();
+        String msg = new DataMerge().situationControl(mSituationMode, mMode);
+        String ip = (String) SPUtils.get(getActivity(), Constants.IP, Constants.DEFAULT_IP);
+        int port =(Integer) SPUtils.get(getActivity(), Constants.SENDPORT, Constants.DEFAULT_SENDPORT);
+        new Sender(msg, ip,port).send();
     }
 
     /**
@@ -262,7 +233,12 @@ public class HomeFragment extends Fragment implements OnClickListener {
                 mPlayModeButton.setBackgroundResource(R.drawable.mode_play_off);
                 mShowModeButton.setBackgroundResource(R.drawable.mode_show_on);
                 break;
-
+            case 4:
+                mSaveModeButton.setBackgroundResource(R.drawable.mode_save_off);
+                mMeetModeButton.setBackgroundResource(R.drawable.mode_meet_off);
+                mPlayModeButton.setBackgroundResource(R.drawable.mode_play_off);
+                mShowModeButton.setBackgroundResource(R.drawable.mode_show_off);
+                break;
             default:
                 break;
         }

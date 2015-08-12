@@ -16,6 +16,7 @@ import android.os.IBinder;
 import android.util.Log;
 
 import com.txy.constants.Constants;
+import com.txy.util.BytesUtils;
 import com.txy.util.SPUtils;
 
 public class ReceiverService extends Service {
@@ -67,7 +68,7 @@ public class ReceiverService extends Service {
     }
 
     public interface OnReceiveSuccessListener{
-        void onSuccessData(byte[] data);
+        void onSuccessData(String data);
     }
 
     public void setOnReceiveSuccessListener(OnReceiveSuccessListener listener){
@@ -86,7 +87,7 @@ public class ReceiverService extends Service {
                     socket = new DatagramSocket(3339);
                     DatagramPacket dp = new DatagramPacket(data , data.length);
                     socket.receive(dp);
-                    mOnReceiveSuccessListener.onSuccessData(data);// 监听
+                    mOnReceiveSuccessListener.onSuccessData(BytesUtils.bytesToHexString(data));// 监听
                 } catch (SocketException e) {
                     e.printStackTrace();
                 } catch (IOException e) {

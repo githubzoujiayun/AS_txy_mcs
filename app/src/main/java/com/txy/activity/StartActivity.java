@@ -46,7 +46,7 @@ public class StartActivity extends Activity implements View.OnClickListener {
             new Handler().postDelayed(new Runnable(){
                 @Override
                 public void run() {
-                    go2Indext();
+                    go2indext();
                 }
 
             },Constants.STARTAPP_DELAY);
@@ -65,7 +65,7 @@ public class StartActivity extends Activity implements View.OnClickListener {
         DBManager.saveMusicList(musicList);
     }
 
-    private void go2Indext() {
+    private void go2indext() {
         Intent intent = new Intent(this,IndexActivity.class);
         startActivity(intent );
         this.finish();
@@ -141,7 +141,7 @@ public class StartActivity extends Activity implements View.OnClickListener {
 
         mIpSetDialog.dismiss();
 
-        go2Indext();
+        go2indext();
         SPUtils.put(StartActivity.this,"isFirstTime",false);
     }
 
