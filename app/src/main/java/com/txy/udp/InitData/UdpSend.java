@@ -21,11 +21,11 @@ public class UdpSend {
     public static String TARGET_MODULE = "00";// 目标模块
 
     // 命令代号
-    public static String SITUAION_CONTROL_ORDER_CODE= "0050";// 场景模式控制命令
+    public static String SITUATION_CONTROL_ORDER_CODE = "0050";// 场景模式控制命令
     public static String GET_SITUATION_ORDER_CODE = "0051";// 获取场景模式命令
     public static String GET_EQUIPMENT_STATUS_ORDER_CODE = "0052";// 获取设备状态命令
     public static String LIGHT_CONTROL_ORDER_CODE = "0053";// 灯光控制命令
-    public static String INGRARED_CONTROL_ORDER_CODE = "0054";// 红外控制命令
+    public static String INFRARED_CONTROL_ORDER_CODE = "0054";// 红外控制命令
     public static String CURTAIN_CONTROL_ORDER_CODE = "0055";// 窗帘控制命令
     public static String IP_SET_ORDER_CODE = "005e";// IP设置命令
 
@@ -35,6 +35,8 @@ public class UdpSend {
 
     public static final class AIRCONDITION{
         public static String AIRCONDITION = "00";// 空调
+        public static String TEMPERATURE22 = "";// 温度22
+        public static String TEMPERATURE23 = "";// 温度23
     }
 
     public static final class PROJECTION{

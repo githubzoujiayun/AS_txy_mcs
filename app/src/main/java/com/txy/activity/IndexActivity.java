@@ -303,7 +303,7 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
         public void onSuccessData(String data) {
             String orderCode = data.substring(29, 30);
             // 场景模式控制命令
-            if (orderCode.equalsIgnoreCase(UdpSend.SITUAION_CONTROL_ORDER_CODE))
+            if (orderCode.equalsIgnoreCase(UdpSend.SITUATION_CONTROL_ORDER_CODE))
             {
 
             }
@@ -323,7 +323,7 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
 
             }
             // 红外控制命令
-            else if (orderCode.equalsIgnoreCase(UdpSend.INGRARED_CONTROL_ORDER_CODE))
+            else if (orderCode.equalsIgnoreCase(UdpSend.INFRARED_CONTROL_ORDER_CODE))
             {
 
             }

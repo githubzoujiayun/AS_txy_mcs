@@ -22,7 +22,7 @@ public class StringMerge {
                 + UdpSend.MESSAGE_NUM
                 + UdpSend.PROJECT_NUM
                 + UdpSend.TARGET_MODULE
-                + UdpSend.SITUAION_CONTROL_ORDER_CODE
+                + UdpSend.SITUATION_CONTROL_ORDER_CODE
                 + UdpSend.SEND_ASK
                 + UdpSend.TARGET_HOST_CODE
                 + "0600000000";
@@ -126,7 +126,7 @@ public class StringMerge {
                 + UdpSend.MESSAGE_NUM
                 + UdpSend.PROJECT_NUM
                 + UdpSend.TARGET_MODULE
-                + UdpSend.INGRARED_CONTROL_ORDER_CODE
+                + UdpSend.INFRARED_CONTROL_ORDER_CODE
                 + UdpSend.SEND_ASK
                 + UdpSend.TARGET_HOST_CODE
                 + "04"
