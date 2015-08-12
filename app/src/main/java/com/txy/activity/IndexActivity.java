@@ -1,6 +1,5 @@
 package com.txy.activity;
 
-import android.annotation.SuppressLint;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -11,7 +10,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -24,7 +22,7 @@ import android.widget.TextView;
 
 import com.txy.adapter.MenuListViewAdapter;
 import com.txy.constants.Constants;
-import com.txy.constants.UdpSend;
+import com.txy.udp.InitData.UdpSend;
 import com.txy.services.ReceiverService;
 import com.txy.services.ReceiverService.MyBinder;
 import com.txy.services.ReceiverService.OnReceiveSuccessListener;
@@ -101,6 +99,7 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
         mEquipList.add(Constants.EQUIPMENT.CTR_WINDOW);
         mEquipList.add(Constants.EQUIPMENT.CTR_TV);
         mEquipList.add(Constants.EQUIPMENT.CTR_PROJECTION);
+        mEquipList.add(Constants.EQUIPMENT.CTR_AIR);
 
         mEquipList.add(Constants.EQUIPMENT.CTR_MUSIC);
         mEquipList.add(Constants.EQUIPMENT.CTR_PPT);

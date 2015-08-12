@@ -1,4 +1,4 @@
-package com.txy.constants;
+package com.txy.udp.InitData;
 
 public class CRC16 {
 	static int  auchCRCHi[] = { 

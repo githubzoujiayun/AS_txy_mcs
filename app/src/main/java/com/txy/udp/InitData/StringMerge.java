@@ -1,13 +1,11 @@
-package com.txy.InitData;
+package com.txy.udp.InitData;
 
-import com.txy.constants.CRC16;
 import com.txy.constants.Constants;
-import com.txy.constants.UdpSend;
 
 /**
  * Created by Administrator on 2015/8/12.
  */
-public class DataMerge {
+public class StringMerge {
 
 
     /**
@@ -85,6 +83,7 @@ public class DataMerge {
      * @return
      */
     public String lightControl(int position, boolean tag){
+
         String msg = UdpSend.LIGHT_CONTROL_FRAME_LENGTH
                 + UdpSend.HMIS
                 + UdpSend.TARGET_EQUIPMENT
@@ -96,6 +95,7 @@ public class DataMerge {
                 + UdpSend.SEND_ASK
                 + UdpSend.TARGET_HOST_CODE
                 + "03" ;
+
         if (position >= 10) {
             msg = msg + position;
         } else {

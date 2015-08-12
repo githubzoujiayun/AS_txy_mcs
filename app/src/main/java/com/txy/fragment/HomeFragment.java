@@ -12,7 +12,7 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
 import com.txy.constants.Constants;
-import com.txy.InitData.DataMerge;
+import com.txy.udp.InitData.StringMerge;
 import com.txy.txy_mcs.R;
 import com.txy.udp.Sender;
 import com.txy.util.SPUtils;
@@ -173,7 +173,7 @@ public class HomeFragment extends Fragment implements OnClickListener {
      * 发送场景模式的指令
      */
     private void send() {
-        String msg = new DataMerge().situationControl(mSituationMode, mMode);
+        String msg = new StringMerge().situationControl(mSituationMode, mMode);
         String ip = (String) SPUtils.get(getActivity(), Constants.IP, Constants.DEFAULT_IP);
         int port =(Integer) SPUtils.get(getActivity(), Constants.SENDPORT, Constants.DEFAULT_SENDPORT);
         new Sender(msg, ip,port).send();
