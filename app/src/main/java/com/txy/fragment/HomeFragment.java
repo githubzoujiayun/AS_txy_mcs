@@ -12,7 +12,7 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
 import com.txy.constants.Constants;
-import com.txy.constants.InitData.DataMerge;
+import com.txy.InitData.DataMerge;
 import com.txy.txy_mcs.R;
 import com.txy.udp.Sender;
 import com.txy.util.SPUtils;

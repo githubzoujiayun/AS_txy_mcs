@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import com.txy.adapter.MenuListViewAdapter;
 import com.txy.constants.Constants;
+import com.txy.constants.UdpSend;
 import com.txy.services.ReceiverService;
 import com.txy.services.ReceiverService.MyBinder;
 import com.txy.services.ReceiverService.OnReceiveSuccessListener;
@@ -274,7 +275,6 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
      * 替换片段
      * @param fragment
      */
-    @SuppressLint("Recycle")
     private void replaceFragment(Fragment fragment) {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
@@ -286,24 +286,58 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
      * 跟服务的绑定的连接
      * 通过这个类可以跟服务进行数据的交互
      */
-    class MyServiceConnection implements ServiceConnection {
+    class MyServiceConnection implements ServiceConnection, OnReceiveSuccessListener {
 
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
             MyBinder myBinder = (MyBinder) iBinder;
             receiveService = myBinder.getReceiveService();
             receiveService.startTask();
-            receiveService.setOnReceiveSuccessListener(new OnReceiveSuccessListener() {
-
-                @Override
-                public void onSuccessData(String data) {
-
-                }
-            });
+            receiveService.setOnReceiveSuccessListener(this);
         }
 
         @Override
         public void onServiceDisconnected(ComponentName componentName) {
+        }
+
+        @Override// 成功接收到数据
+        public void onSuccessData(String data) {
+            String orderCode = data.substring(29, 30);
+            // 场景模式控制命令
+            if (orderCode.equalsIgnoreCase(UdpSend.SITUAION_CONTROL_ORDER_CODE))
+            {
+
+            }
+            // 获取场景模式命令
+            else if (orderCode.equalsIgnoreCase(UdpSend.GET_SITUATION_ORDER_CODE))
+            {
+
+            }
+            // 获取设备状态命令
+            else if (orderCode.equalsIgnoreCase(UdpSend.GET_EQUIPMENT_STATUS_ORDER_CODE))
+            {
+
+            }
+            // 灯光控制命令
+            else if (orderCode.equalsIgnoreCase(UdpSend.LIGHT_CONTROL_ORDER_CODE))
+            {
+
+            }
+            // 红外控制命令
+            else if (orderCode.equalsIgnoreCase(UdpSend.INGRARED_CONTROL_ORDER_CODE))
+            {
+
+            }
+            // 窗帘控制命令
+            else if (orderCode.equalsIgnoreCase(UdpSend.CURTAIN_CONTROL_ORDER_CODE))
+            {
+
+            }
+            // IP设置命令
+            else if (orderCode.equalsIgnoreCase(UdpSend.IP_SET_ORDER_CODE))
+            {
+
+            }
         }
     }
 

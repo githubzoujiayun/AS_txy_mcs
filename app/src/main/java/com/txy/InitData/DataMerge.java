@@ -1,4 +1,4 @@
-package com.txy.constants.InitData;
+package com.txy.InitData;
 
 import com.txy.constants.CRC16;
 import com.txy.constants.Constants;
