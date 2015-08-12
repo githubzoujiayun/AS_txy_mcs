@@ -57,6 +57,7 @@ public class UdpSend {
         public static String DOWN_LONG_BUTTON = "0c";// 投影布降长按按键
         public static String UP_BUTTON = "0d";// 投影布升短按按键
         public static String DOWN_BUTTON = "0e";// 投影布降短按按键
+
     }
 
     public static final class FAN {
