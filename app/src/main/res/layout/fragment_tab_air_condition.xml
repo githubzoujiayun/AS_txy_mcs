@@ -21,7 +21,7 @@
             android:orientation="vertical" >
 
             <LinearLayout
-                android:id="@+id/closeWindow"
+                android:id="@+id/fanWindow"
                 android:layout_width="fill_parent"
                 android:layout_height="40dp" >
 

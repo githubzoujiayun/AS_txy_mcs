@@ -1,6 +1,6 @@
 package com.txy.udp;
 
-import com.txy.util.BytesUtils;
+import com.txy.utils.BytesUtils;
 
 import java.io.IOException;
 import java.net.DatagramPacket;

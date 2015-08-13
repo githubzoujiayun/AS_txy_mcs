@@ -38,8 +38,8 @@ import com.txy.fragment.SetIPFragment;
 import com.txy.fragment.SetNameFragment;
 import com.txy.fragment.SetProjectionTimeFragment;
 import com.txy.txy_mcs.R;
-import com.txy.util.SPUtils;
-import com.txy.util.ToastUtils;
+import com.txy.utils.SPUtils;
+import com.txy.utils.ToastUtils;
 
 public class SetActivity extends FragmentActivity implements OnClickListener, OnItemClickListener, OnLongClickListener {
 

@@ -1,6 +1,9 @@
 package com.txy.udp.InitData;
 
+import android.util.Log;
+
 import com.txy.constants.Constants;
+import com.txy.database.AirCondition;
 
 /**
  * Created by Administrator on 2015/8/12.
@@ -112,13 +115,35 @@ public class StringMerge {
     }
 
     /**
-     * 红外控制命令
+     * 空调控制命令
      * @param equip
      * @param position
-     * @param orderCode
+     * @param airCondition
      * @return
      */
-    public String InfraredControl(String equip,String position, String orderCode){
+    public String airConditionControl(String equip,String position, AirCondition airCondition){
+
+        String s = new ByteMerge().AirConditionMerge(airCondition);
+        Log.e("airConditionControl", s);
+        String msg = UdpSend.INFRARED_CONTROL_FRAME_LENGTH
+                + UdpSend.HMIS
+                + UdpSend.TARGET_EQUIPMENT
+                + UdpSend.SOURCE_EQUIPMENT
+                + UdpSend.MESSAGE_NUM
+                + UdpSend.PROJECT_NUM
+                + UdpSend.TARGET_MODULE
+                + UdpSend.INFRARED_CONTROL_ORDER_CODE
+                + UdpSend.SEND_ASK
+                + UdpSend.TARGET_HOST_CODE
+                + "04"
+                + equip
+                + position
+                + s;
+
+        return msg + CRC16.ccr16(msg);
+    }
+
+    public String infrafedControl(String equip,String position,String orderCode){
         String msg = UdpSend.INFRARED_CONTROL_FRAME_LENGTH
                 + UdpSend.HMIS
                 + UdpSend.TARGET_EQUIPMENT

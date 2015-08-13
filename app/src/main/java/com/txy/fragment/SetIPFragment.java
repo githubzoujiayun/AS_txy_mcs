@@ -14,7 +14,7 @@ import android.widget.EditText;
 
 import com.txy.constants.Constants;
 import com.txy.txy_mcs.R;
-import com.txy.util.SPUtils;
+import com.txy.utils.SPUtils;
 
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass.

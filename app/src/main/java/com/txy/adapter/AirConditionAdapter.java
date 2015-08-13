@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.txy.fragment.AirConditionFragment;
+import com.txy.fragment.HomeFragment;
 
 /**
  * Created by Clearlove on 15/8/12.
@@ -22,12 +23,13 @@ public class AirConditionAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
 
-        AirConditionFragment airConditionFragment = new AirConditionFragment();
+        Fragment fragment = new AirConditionFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("position", position);
         bundle.putInt("airConditionNum", mAirConditionNum);
-        airConditionFragment.setArguments(bundle);
-        return airConditionFragment;
+        fragment.setArguments(bundle);
+
+        return fragment;
     }
 
     @Override

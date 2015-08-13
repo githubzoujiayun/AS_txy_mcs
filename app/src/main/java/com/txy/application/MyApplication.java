@@ -2,7 +2,7 @@ package com.txy.application;
 
 import com.activeandroid.ActiveAndroid;
 import com.txy.constants.Constants;
-import com.txy.util.SPUtils;
+import com.txy.utils.SPUtils;
 
 import android.app.Application;
 

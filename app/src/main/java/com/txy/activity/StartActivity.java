@@ -18,8 +18,8 @@ import com.txy.constants.Constants;
 import com.txy.database.DBManager;
 import com.txy.database.MyMusic;
 import com.txy.txy_mcs.R;
-import com.txy.util.SPUtils;
-import com.txy.util.ToastUtils;
+import com.txy.utils.SPUtils;
+import com.txy.utils.ToastUtils;
 import com.txy.volley.HttpUtils;
 import com.txy.volley.VolleyListener;
 

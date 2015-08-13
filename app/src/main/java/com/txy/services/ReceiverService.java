@@ -5,7 +5,6 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
 
-import android.app.Application;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -13,11 +12,10 @@ import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.IBinder;
-import android.util.Log;
 
 import com.txy.constants.Constants;
-import com.txy.util.BytesUtils;
-import com.txy.util.SPUtils;
+import com.txy.utils.BytesUtils;
+import com.txy.utils.SPUtils;
 
 public class ReceiverService extends Service {
 

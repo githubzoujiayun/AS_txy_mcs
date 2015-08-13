@@ -19,23 +19,34 @@ public class TabAirCondition extends Fragment {
 
 	private View layout;
 	private FragmentActivity mActivity;
+    private AirConditionAdapter mAirConditionAdapter;
 
 
-	@Override
+    @Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		mActivity = getActivity();
-		layout = inflater.inflate(R.layout.frame_aircondition,null);
-		initViewPager();
+        if (layout == null) {
+            layout = inflater.inflate(R.layout.frame_aircondition, container, false);
+            initViewPager();
+        }
+
 		return layout;
 	}
 
 
 
 	private void initViewPager() {
-		ViewPager mViewPager = (ViewPager) layout.findViewById(R.id.viewpager);
-		new AirConditionAdapter(getChildFragmentManager(),4);
+		ViewPager mViewPager = (ViewPager) layout.findViewById(R.id.airConditionViewPager);
+        mAirConditionAdapter = new AirConditionAdapter(getChildFragmentManager(), 4);
+        mViewPager.setAdapter(mAirConditionAdapter);
+    }
 
-	}
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ViewGroup parent = (ViewGroup) layout.getParent();
+        parent.removeView(layout);
+    }
 
 }

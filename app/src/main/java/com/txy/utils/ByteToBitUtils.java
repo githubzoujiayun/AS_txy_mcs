@@ -1,4 +1,4 @@
-package com.txy.util;
+package com.txy.utils;
 
 /**
  * Created by Administrator on 2015/8/12.

@@ -7,8 +7,8 @@ import com.txy.database.DBManager;
 import com.txy.database.MyMusic;
 import com.txy.services.MusicService;
 import com.txy.txy_mcs.R;
-import com.txy.util.SPUtils;
-import com.txy.util.ToastUtils;
+import com.txy.utils.SPUtils;
+import com.txy.utils.ToastUtils;
 
 import android.content.ComponentName;
 import android.content.Context;

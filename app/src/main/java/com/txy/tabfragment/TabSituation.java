@@ -2,12 +2,10 @@ package com.txy.tabfragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 
 import com.txy.adapter.SituationPagerAdapter;
 import com.txy.txy_mcs.R;

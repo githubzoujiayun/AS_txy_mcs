@@ -39,13 +39,13 @@ public class RoomList extends Model implements Serializable{
     @Column(name = "soundNum")
     public String soundNum;
 
-    @Column
+    @Column(name = "ip")
     public String ip;
 
-    @Column
+    @Column(name = "sendPort")
     public int sendPort;
 
-    @Column
+    @Column(name = "receivePort")
     public int receivePort;
 
 

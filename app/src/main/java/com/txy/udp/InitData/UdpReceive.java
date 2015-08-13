@@ -5,4 +5,7 @@ package com.txy.udp.InitData;
  */
 public class UdpReceive {
 
+    public static class LightStatus {
+
+    }
 }

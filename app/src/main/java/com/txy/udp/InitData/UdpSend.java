@@ -35,8 +35,36 @@ public class UdpSend {
 
     public static final class AIRCONDITION{
         public static String AIRCONDITION = "00";// 空调
-        public static String TEMPERATURE22 = "";// 温度22
-        public static String TEMPERATURE23 = "";// 温度23
+        // 第四位
+        public static String TEMPERATURE22 = "0";// 温度22
+        public static String TEMPERATURE23 = "1";// 温度23
+        public static String TEMPERATURE24 = "2";// 温度24
+        public static String TEMPERATURE25 = "3";// 温度25
+        public static String TEMPERATURE26 = "4";// 温度26
+        public static String TEMPERATURE27 = "5";// 温度27
+        public static String TEMPERATURE28 = "6";// 温度28
+        public static String TEMPERATURE29 = "7";// 温度29
+
+        // 风扇占据了分别占了高低四位的一位
+        // 风扇低位
+        public static String FAN_RATE_LOW_L = "0";
+        public static String FAN_RATE_MID_L = "8";
+        public static String FAN_RATE_HIGH_L = "0";
+        public static String FAN_RATE_HOT_L = "8";
+        // 风扇高位
+        public static String FAN_RATE_LOW_H = "0";
+        public static String FAN_RATE_MID_H = "0";
+        public static String FAN_RATE_HIGH_H = "1";
+        public static String FAN_RATE_HOT_H = "1";
+
+        // 模式
+        public static String COLD = "0";
+        public static String HOT = "2";
+
+        // 开关机
+        public static String CLOSE = "0";
+        public static String OPEN = "4";
+        public static String STATUS = "8";
     }
 
     public static final class PROJECTION{
@@ -82,5 +110,18 @@ public class UdpSend {
         public static String BUTTON = "09";// -/--
         public static String OK_BUTTON = "0a";
         public static String FIRST_CHANNEL = "0f";
+    }
+
+    public static final class CURTAIN {
+        public static String ONE = "0";
+        public static String TWO = "1";
+        public static String THREE = "2";
+        public static String FOUR = "3";
+        public static String FIVE = "4";
+        public static String SIX = "5";
+
+        public static String OPEN = "4";
+        public static String CLOSE = "0";
+        public static String PAUSE = "8";
     }
 }
