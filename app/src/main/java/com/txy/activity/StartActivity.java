@@ -66,7 +66,7 @@ public class StartActivity extends Activity implements View.OnClickListener {
     }
 
     private void go2indext() {
-        Intent intent = new Intent(this,IndexActivity.class);
+        Intent intent = new Intent(this, IndexActivity.class);
         startActivity(intent );
         this.finish();
     }

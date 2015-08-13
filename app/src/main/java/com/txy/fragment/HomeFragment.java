@@ -38,8 +38,6 @@ public class HomeFragment extends Fragment implements OnClickListener {
     private ImageButton mCancelButton;
     private Dialog mDialog;
 
-    private String mSituationControlCode = "";
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -55,6 +53,19 @@ public class HomeFragment extends Fragment implements OnClickListener {
         mSituationMode = (Integer) SPUtils.get(getActivity(), Constants.SP.SITUATION, 0);
         setMode(mMode);
         modeSetBG(mSituationMode);
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+
+            getEquipStatus();
+        }
+    }
+
+    private void getEquipStatus() {
+
     }
 
     /**
@@ -173,7 +184,7 @@ public class HomeFragment extends Fragment implements OnClickListener {
      * 发送场景模式的指令
      */
     private void send() {
-        String msg = new StringMerge().situationControl(mSituationMode, mMode);
+        String msg = StringMerge.situationControl(mSituationMode, mMode);
         String ip = (String) SPUtils.get(getActivity(), Constants.IP, Constants.DEFAULT_IP);
         int port =(Integer) SPUtils.get(getActivity(), Constants.SENDPORT, Constants.DEFAULT_SENDPORT);
         new Sender(msg, ip,port).send();

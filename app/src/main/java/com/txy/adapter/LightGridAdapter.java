@@ -10,13 +10,17 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import com.txy.constants.Constants;
 import com.txy.txy_mcs.R;
+import com.txy.udp.InitData.StringMerge;
+import com.txy.udp.Sender;
+import com.txy.utils.SPUtils;
 
 public class LightGridAdapter extends BaseAdapter{
 
     private Context mContext;
-    private int mLightNum = 4;// 灯光的数量
-    private ArrayList<Boolean> mLightStatus;// 灯的状态
+    private int mLightNum = 0;// 灯光的数量
+    private ArrayList<Boolean> mLightStatus = new ArrayList<Boolean>();// 灯的状态
     private ArrayList<String> mLightName;// 灯的名字
 
     public LightGridAdapter(Context context, ArrayList<Boolean> lightStatus, ArrayList<String> lightName) {
@@ -41,7 +45,7 @@ public class LightGridAdapter extends BaseAdapter{
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(mContext);
@@ -55,19 +59,39 @@ public class LightGridAdapter extends BaseAdapter{
         }
 
         holder.name.setText("灯"+position);
-//        if (mLightStatus.size() > 0) {
-//            holder.button.setChecked(mLightStatus.get(position));
-//        }
-//
-//        if(mLightName.size() > 0) {
-//            holder.name.setText(mLightName.get(position));
-//        }
+
+        if (mLightStatus.get(position)) {
+            holder.button.setChecked(true);
+        } else {
+            holder.button.setChecked(false);
+        }
+
+        final ViewHolder finalHolder = holder;
+        holder.button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String msg = "";
+                if (finalHolder.button.isChecked()) {
+                    msg = StringMerge.lightControl(position, true);
+                } else {
+                    msg = StringMerge.lightControl(position, false);
+                }
+                String ip = (String) SPUtils.get(mContext, Constants.IP, Constants.DEFAULT_IP);
+                int port =(Integer) SPUtils.get(mContext, Constants.SENDPORT, Constants.DEFAULT_SENDPORT);
+                new Sender(msg, ip, port).send();
+            }
+        });
 
         return convertView;
     }
 
     public void setmLightNum(int mLightNum) {
         this.mLightNum = mLightNum;
+    }
+
+    public void setLightStatus(ArrayList<Boolean> list) {
+        mLightStatus.clear();
+        mLightStatus.addAll(list);
     }
 
     class ViewHolder {

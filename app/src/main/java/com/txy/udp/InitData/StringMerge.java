@@ -17,7 +17,7 @@ public class StringMerge {
      * @param mode
      * @return
      */
-    public String  situationControl(int situationMode, int mode){
+    public static String  situationControl(int situationMode, int mode){
         String msg = UdpSend.SITUATION_FRAME_LENGTH
                 + UdpSend.HMIS
                 + UdpSend.TARGET_EQUIPMENT
@@ -48,7 +48,7 @@ public class StringMerge {
      * 获取场景的状态
      * @return
      */
-    public String getSituation(){
+    public static String getSituation(){
         String msg = UdpSend.GET_SITUATION_FRAME_LENGTH
                 + UdpSend.HMIS
                 + UdpSend.TARGET_EQUIPMENT
@@ -63,7 +63,7 @@ public class StringMerge {
         return msg;
     }
 
-    public String getAllEquipMentStatus(){
+    public static String getAllEquipMentStatus(){
         String msg = UdpSend.GET_EQUIPMENT_STATUS_FRAME_LENGTH
                 + UdpSend.HMIS
                 + UdpSend.TARGET_EQUIPMENT
@@ -85,7 +85,7 @@ public class StringMerge {
      * @param tag
      * @return
      */
-    public String lightControl(int position, boolean tag){
+    public static String lightControl(int position, boolean tag){
 
         String msg = UdpSend.LIGHT_CONTROL_FRAME_LENGTH
                 + UdpSend.HMIS
@@ -121,9 +121,9 @@ public class StringMerge {
      * @param airCondition
      * @return
      */
-    public String airConditionControl(String equip,String position, AirCondition airCondition){
+    public static String airConditionControl(String equip,String position, AirCondition airCondition){
 
-        String s = new ByteMerge().AirConditionMerge(airCondition);
+        String s = ByteMerge.AirConditionMerge(airCondition);
         Log.e("airConditionControl", s);
         String msg = UdpSend.INFRARED_CONTROL_FRAME_LENGTH
                 + UdpSend.HMIS
@@ -143,7 +143,7 @@ public class StringMerge {
         return msg + CRC16.ccr16(msg);
     }
 
-    public String infrafedControl(String equip,String position,String orderCode){
+    public static String infrafedControl(String equip,String position,String orderCode){
         String msg = UdpSend.INFRARED_CONTROL_FRAME_LENGTH
                 + UdpSend.HMIS
                 + UdpSend.TARGET_EQUIPMENT
@@ -162,7 +162,9 @@ public class StringMerge {
         return msg + CRC16.ccr16(msg);
     }
 
-    public String curtainControl(String orderCode){
+    public static String curtainControl(String channel, String status){
+
+        String orderCode = ByteMerge.Curtain(channel, status);
         String msg = UdpSend.CURTAIN_CONTROL_FRAME_LENGTH
                 + UdpSend.HMIS
                 + UdpSend.TARGET_EQUIPMENT
@@ -177,4 +179,6 @@ public class StringMerge {
                 + orderCode;
         return msg + CRC16.ccr16(msg);
     }
+
+
 }

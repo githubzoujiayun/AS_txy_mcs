@@ -112,6 +112,7 @@
             android:layout_alignTop="@+id/btn_tyvolup"
             android:layout_marginRight="57dp"
             android:text="音    量："
+            android:textColor="#ffffff"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <ImageButton
@@ -129,6 +130,7 @@
             android:layout_alignRight="@+id/vol"
             android:layout_alignTop="@+id/btn_tyss"
             android:text="投影布:："
+            android:textColor="#ffffff"
             android:textAppearance="?android:attr/textAppearanceMedium" />
     </RelativeLayout>
 

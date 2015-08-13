@@ -27,32 +27,23 @@
             android:layout_height="40dp"
             android:layout_centerVertical="true"
             android:layout_marginRight="16dp"
-            android:layout_toLeftOf="@+id/selectsb"
-            android:background="@drawable/btn_style_roomselect" />
-
-        <ImageButton
-            android:id="@+id/selectsb"
-            android:layout_width="43dp"
-            android:layout_height="40dp"
-            android:layout_alignTop="@+id/btn_selectarea"
-            android:layout_marginRight="17dp"
-            android:layout_toLeftOf="@+id/menubtn"
-            android:background="@drawable/btn_style_sbselect" />
+            android:background="@drawable/btn_style_roomselect"
+            android:layout_toLeftOf="@+id/menubtn" />
 
         <ImageButton
             android:id="@+id/menubtn"
             android:layout_width="43dp"
             android:layout_height="40dp"
             android:layout_alignParentRight="true"
-            android:layout_alignTop="@+id/selectsb"
             android:layout_marginRight="25dp"
-            android:background="@drawable/btn_style_szselect" />
+            android:background="@drawable/btn_style_szselect"
+            android:layout_alignTop="@+id/btn_selectarea" />
     </RelativeLayout>
 
     <ImageView
         android:id="@+id/im_addbutton"
         android:layout_width="220dp"
-        android:layout_height="58dp"
+        android:layout_height="65dp"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/rl_header"
         android:background="@drawable/aboutus" />
@@ -62,7 +53,7 @@
     <RelativeLayout
         android:id="@+id/relativeLayout1"
         android:layout_width="fill_parent"
-        android:layout_height="30dp"
+        android:layout_height="45dp"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/im_addbutton"
         android:layout_toRightOf="@+id/im_addbutton"
@@ -76,6 +67,8 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="11dp"
             android:text="点击以下按钮进行情景切换"
+            android:textSize="16sp"
+            android:textColor="#ffffff"
             android:textAppearance="?android:attr/textAppearanceSmall" />
     </RelativeLayout>
 

@@ -1,6 +1,11 @@
 package com.txy.adapter;
 
+import com.txy.constants.Constants;
 import com.txy.txy_mcs.R;
+import com.txy.udp.InitData.StringMerge;
+import com.txy.udp.InitData.UdpSend;
+import com.txy.udp.Sender;
+import com.txy.utils.SPUtils;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -55,21 +60,33 @@ public class WindowAdapter extends BaseAdapter {
         holder.windowOpen.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                String channel = String.valueOf(position);
+                String msg = StringMerge.curtainControl(channel, UdpSend.CURTAIN.OPEN);
+                String ip = (String) SPUtils.get(mContext, Constants.IP, Constants.DEFAULT_IP);
+                int port =(Integer) SPUtils.get(mContext, Constants.SENDPORT, Constants.DEFAULT_SENDPORT);
+                new Sender(msg, ip, port).send();
             }
         });
 
         holder.windowClose.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                String channel = String.valueOf(position);
+                String msg = StringMerge.curtainControl(channel, UdpSend.CURTAIN.CLOSE);
+                String ip = (String) SPUtils.get(mContext, Constants.IP, Constants.DEFAULT_IP);
+                int port =(Integer) SPUtils.get(mContext, Constants.SENDPORT, Constants.DEFAULT_SENDPORT);
+                new Sender(msg, ip, port).send();
             }
         });
 
         holder.windowPause.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                String channel = String.valueOf(position);
+                String msg = StringMerge.curtainControl(channel, UdpSend.CURTAIN.PAUSE);
+                String ip = (String) SPUtils.get(mContext, Constants.IP, Constants.DEFAULT_IP);
+                int port =(Integer) SPUtils.get(mContext, Constants.SENDPORT, Constants.DEFAULT_SENDPORT);
+                new Sender(msg, ip, port).send();
             }
         });
         holder.textView.setText("窗帘");

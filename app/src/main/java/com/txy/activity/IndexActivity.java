@@ -22,6 +22,8 @@ import android.widget.TextView;
 
 import com.txy.adapter.MenuListViewAdapter;
 import com.txy.constants.Constants;
+import com.txy.database.RoomList;
+import com.txy.udp.InitData.ByteMerge;
 import com.txy.udp.InitData.UdpSend;
 import com.txy.services.ReceiverService;
 import com.txy.services.ReceiverService.MyBinder;
@@ -36,6 +38,8 @@ import com.txy.tabfragment.TabTV;
 import com.txy.tabfragment.TabCurtain;
 import com.txy.tools.PopMenu;
 import com.txy.txy_mcs.R;
+import com.txy.utils.BytesUtils;
+import com.txy.utils.SPUtils;
 
 import java.util.ArrayList;
 
@@ -54,6 +58,8 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
     private ReceiverService receiveService;
     private ServiceConnection conn = new MyServiceConnection();
     private ArrayList<Integer> mEquipList; // 当前房间拥有的设备
+
+    private ArrayList<RoomList> mRoomList = new ArrayList<RoomList>();// 所有房间的的信息
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +87,12 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
     protected void onStop() {
         super.onStop();
         unbindService(conn);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        receiveService.stopTask();// 界面关闭停止接收
     }
 
     /**
@@ -120,7 +132,6 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
      */
     private void initListener() {
         mIbHome.setOnClickListener(this);
-        mIbDevice.setOnClickListener(this);
         mIbSetting.setOnClickListener(this);
     }
 
@@ -130,7 +141,6 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
     private void initUI() {
         mTVHeader = (TextView) findViewById(R.id.header);
         mIbHome = (ImageButton) findViewById(R.id.btn_selectarea);
-        mIbDevice = (ImageButton) findViewById(R.id.selectsb);
         mIbSetting = (ImageButton) findViewById(R.id.menubtn);
         mImAddButton = (ImageView) findViewById(R.id.im_addbutton);
     }
@@ -139,9 +149,6 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_selectarea:// 区域选择
-
-                break;
-            case R.id.selectsb:// 选择设备
 
                 break;
             case R.id.menubtn:// 设置
@@ -300,8 +307,8 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
         }
 
         @Override// 成功接收到数据
-        public void onSuccessData(String data) {
-            String orderCode = data.substring(29, 30);
+        public void onSuccessData(String msg) {
+            String orderCode = msg.substring(29, 30);
             // 场景模式控制命令
             if (orderCode.equalsIgnoreCase(UdpSend.SITUATION_CONTROL_ORDER_CODE))
             {
@@ -310,11 +317,18 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
             // 获取场景模式命令
             else if (orderCode.equalsIgnoreCase(UdpSend.GET_SITUATION_ORDER_CODE))
             {
+                String substring = msg.substring(60, 61);
+                byte[] bytes = BytesUtils.hexStringToBytes(substring);
+                SPUtils.put(IndexActivity.this, "situationMode", new String(bytes));
 
             }
             // 获取设备状态命令
             else if (orderCode.equalsIgnoreCase(UdpSend.GET_EQUIPMENT_STATUS_ORDER_CODE))
             {
+
+                String data = msg.substring(44);
+                byte[] bytes = BytesUtils.hexStringToBytes(data);// 把为字符串转化为字节数组
+                SPUtils.put(IndexActivity.this, "equipStatus", new String(bytes));// 保存到SP
 
             }
             // 灯光控制命令

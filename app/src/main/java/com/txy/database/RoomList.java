@@ -45,8 +45,5 @@ public class RoomList extends Model implements Serializable{
     @Column(name = "sendPort")
     public int sendPort;
 
-    @Column(name = "receivePort")
-    public int receivePort;
-
 
 }

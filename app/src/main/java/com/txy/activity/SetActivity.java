@@ -319,7 +319,6 @@ public class SetActivity extends FragmentActivity implements OnClickListener, On
 
     @Override
     public boolean onLongClick(View v) {
-        // TODO Auto-generated method stub
         return false;
     }
 

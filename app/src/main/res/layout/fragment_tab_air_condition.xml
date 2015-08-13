@@ -75,6 +75,8 @@
                         android:layout_marginLeft="12dp"
                         android:layout_marginTop="12dp"
                         android:text="当前温度:"
+                        android:textSize="18sp"
+                        android:textColor="#ffffff"
                         android:textAppearance="?android:attr/textAppearanceLarge" />
 
                     <TextView
@@ -82,7 +84,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="12dp"
+                        android:textColor="#ffffff"
                         android:text="Temperature:"
+                        android:textSize="12sp"
                         android:textAppearance="?android:attr/textAppearanceSmall" />
                 </LinearLayout>
 
@@ -92,6 +96,7 @@
                     android:layout_height="fill_parent"
                     android:layout_gravity="center"
                     android:text="22°"
+                    android:textColor="#ffffff"
                     android:textSize="60sp" />
             </LinearLayout>
 
@@ -115,7 +120,9 @@
                         android:layout_alignRight="@+id/TextView05"
                         android:layout_marginLeft="12dp"
                         android:layout_marginTop="5dp"
-                        android:text="当前风速:"
+                        android:text="当前模式:"
+                        android:textSize="14sp"
+                        android:textColor="#ffffff"
                         android:textAppearance="?android:attr/textAppearanceMedium" />
 
                     <TextView
@@ -125,7 +132,9 @@
                         android:layout_alignBottom="@+id/closeWindow"
                         android:layout_alignLeft="@+id/TextView07"
                         android:layout_marginLeft="12dp"
-                        android:text="wind speed:"
+                        android:textColor="#ffffff"
+                        android:text="wind mode:"
+                        android:textSize="10sp"
                         android:textAppearance="?android:attr/textAppearanceSmall" />
                 </LinearLayout>
 
@@ -145,6 +154,8 @@
             android:layout_alignLeft="@+id/btn_kgmode"
             android:layout_alignTop="@+id/closeWindow"
             android:text="当前风速:"
+            android:textSize="16sp"
+            android:textColor="#ffffff"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView
@@ -154,6 +165,8 @@
             android:layout_alignRight="@+id/textView5"
             android:layout_below="@+id/textView5"
             android:text="wind speed:"
+            android:textSize="13sp"
+            android:textColor="#ffffff"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <ImageButton
@@ -178,20 +191,26 @@
             android:id="@+id/TextView04"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/closeWindow"
+            android:layout_marginTop="36dp"
+            android:text="温度控制:"
+            android:textColor="#ffffff"
+            android:textSize="16sp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
             android:layout_below="@+id/closeWindow"
-            android:layout_marginTop="20dp"
-            android:text="当前温度:"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:layout_alignLeft="@+id/closeWindow"
+            android:layout_alignStart="@+id/closeWindow" />
 
         <TextView
             android:id="@+id/TextView05"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/TextView04"
-            android:layout_below="@+id/TextView04"
             android:text="Temperature:"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:textColor="#ffffff"
+            android:textSize="12sp"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_below="@+id/TextView04"
+            android:layout_alignLeft="@+id/TextView04"
+            android:layout_alignStart="@+id/TextView04" />
 
         <TextView
             android:id="@+id/TextView10"
@@ -200,6 +219,8 @@
             android:layout_alignLeft="@+id/TextView09"
             android:layout_below="@+id/TextView09"
             android:text="Mode:"
+            android:textSize="13sp"
+            android:textColor="#ffffff"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <ImageButton
@@ -217,6 +238,8 @@
             android:layout_above="@+id/textView6"
             android:layout_alignLeft="@+id/imgBtn_kgyy"
             android:text="当前模式:"
+            android:textSize="16sp"
+            android:textColor="#ffffff"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <ImageButton
@@ -242,15 +265,6 @@
             android:layout_alignLeft="@+id/imgBtn_zr"
             android:layout_alignTop="@+id/btn_kgdf"
             android:background="@drawable/btn_zl_off" />
-
-        <SeekBar
-            android:id="@+id/sb_kgtemp"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_alignRight="@+id/btn_kgpower"
-            android:layout_alignTop="@+id/TextView04"
-            android:max="7"
-            android:progress="22" />
 
         <ImageButton
             android:id="@+id/btn_kgmode"
@@ -279,6 +293,24 @@
             android:layout_marginLeft="66dp"
             android:layout_toRightOf="@+id/btn_kgwf"
             android:background="@drawable/btn_style_ktyy" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tempup"
+            android:background="@drawable/btn_style_tyss"
+            android:layout_alignBottom="@+id/TextView05"
+            android:layout_toLeftOf="@+id/btn_kgpower"
+            android:layout_toStartOf="@+id/btn_kgpower" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tempdown"
+            android:background="@drawable/btn_style_tyxj"
+            android:layout_alignTop="@+id/tempup"
+            android:layout_alignRight="@+id/closeWindow"
+            android:layout_alignEnd="@+id/closeWindow" />
     </RelativeLayout>
 
 </FrameLayout>
