@@ -52,8 +52,7 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.fragment_tab_air_condition, null);
         initParams();
         initUI(layout);
@@ -160,6 +159,7 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
                 }
                 mFanSpeed = 1;
                 setFanSpeedBackGround();
+                send(mPosition);
                 break;
             case R.id.btn_kgdf:
                 if (mStatus == 0) {
@@ -167,6 +167,7 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
                 }
                 mFanSpeed = 2;
                 setFanSpeedBackGround();
+                send(mPosition);
                 break;
             case R.id.imgBtn_sf:
                 if (mStatus == 0) {
@@ -174,6 +175,7 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
                 }
                 mMode = 0;
                 setModeBackGround();
+                send(mPosition);
                 break;
             case R.id.imgBtn_zr:
                 if (mStatus == 0) {
@@ -181,6 +183,7 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
                 }
                 mMode = 1;
                 setModeBackGround();
+                send(mPosition);
                 break;
             case R.id.imgBtn_zl:
                 if (mStatus == 0) {
@@ -188,6 +191,7 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
                 }
                 mMode = 2;
                 setModeBackGround();
+                send(mPosition);
                 break;
 
             case R.id.tempup:
@@ -199,6 +203,7 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
                 }
                 mNowTemperature++;
                 upDataTemperatureShow();
+                send(mPosition);
                 break;
             case R.id.tempdown:
                 if (mStatus == 0) {
@@ -209,6 +214,7 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
                 }
                 mNowTemperature--;
                 upDataTemperatureShow();
+                send(mPosition);
                 break;
 
             case R.id.btn_kgmode:
@@ -276,8 +282,12 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
                 break;
         }
 
+        if (mStatus == 0) {
+            airCondition.status = Integer.parseInt(UdpSend.AIRCONDITION.CLOSE);
+        } else {
+            airCondition.status = Integer.parseInt(UdpSend.AIRCONDITION.OPEN);
+        }
 
-        airCondition.status = Integer.parseInt(UdpSend.AIRCONDITION.OPEN);
 
         String msg = new StringMerge().airConditionControl(UdpSend.AIRCONDITION.AIRCONDITION, "01", airCondition);
         String ip = (String) SPUtils.get(getActivity(), Constants.IP, Constants.DEFAULT_IP);

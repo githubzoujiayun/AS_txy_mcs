@@ -104,6 +104,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
+                android:listSelector="@android:color/transparent"
                 android:layout_weight="1" >
             </ListView>
         </LinearLayout>
@@ -152,6 +153,8 @@
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/imgBtn_Meet"
+            android:thumb="@drawable/music_thumb"
+            android:progressDrawable="@drawable/music_seek_bar"
             android:layout_alignTop="@+id/ll_currentmusic"
             android:indeterminate="false" />
 
