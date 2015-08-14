@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -23,7 +24,6 @@ import android.widget.TextView;
 import com.txy.adapter.MenuListViewAdapter;
 import com.txy.constants.Constants;
 import com.txy.database.RoomList;
-import com.txy.udp.InitData.ByteMerge;
 import com.txy.udp.InitData.UdpSend;
 import com.txy.services.ReceiverService;
 import com.txy.services.ReceiverService.MyBinder;
@@ -42,6 +42,7 @@ import com.txy.utils.BytesUtils;
 import com.txy.utils.SPUtils;
 
 import java.util.ArrayList;
+
 
 public class IndexActivity extends FragmentActivity implements OnClickListener,
         OnItemClickListener {
@@ -318,17 +319,22 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
             else if (orderCode.equalsIgnoreCase(UdpSend.GET_SITUATION_ORDER_CODE))
             {
                 String substring = msg.substring(60, 61);
-                byte[] bytes = BytesUtils.hexStringToBytes(substring);
-                SPUtils.put(IndexActivity.this, "situationMode", new String(bytes));
-
+                SPUtils.put(IndexActivity.this, "situationMode", substring);
+                Intent intent = new Intent();
+                intent.putExtra("updateSituation",substring);
+                intent.setAction("txPark.updateSituation");
+                LocalBroadcastManager.getInstance(IndexActivity.this).sendBroadcast(intent);
             }
             // 获取设备状态命令
             else if (orderCode.equalsIgnoreCase(UdpSend.GET_EQUIPMENT_STATUS_ORDER_CODE))
             {
 
                 String data = msg.substring(44);
-                byte[] bytes = BytesUtils.hexStringToBytes(data);// 把为字符串转化为字节数组
-                SPUtils.put(IndexActivity.this, "equipStatus", new String(bytes));// 保存到SP
+//                byte[] bytes = BytesUtils.hexStringToBytes(data);// 把为字符串转化为字节数组
+                SPUtils.put(IndexActivity.this, "equipStatus", data);// 保存到SP
+                Intent intent = new Intent("txPark.updateEquipStatus");
+                intent.putExtra("equipStatus",data);
+                LocalBroadcastManager.getInstance(IndexActivity.this).sendBroadcast(intent);
 
             }
             // 灯光控制命令

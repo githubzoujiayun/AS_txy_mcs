@@ -2,6 +2,9 @@ package com.txy.fragment;
 
 import java.util.ArrayList;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -89,5 +92,21 @@ public class LightControlFragment extends Fragment {
         mLightGridAdapter.setLightStatus(mLightStatus);
         mLightGridAdapter.notifyDataSetChanged();
 
+    }
+
+    class UpdateLightStatusReceive extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            mLightStatus.clear();
+            String equipStatus = intent.getStringExtra("equipStatus");
+            byte[] bytes = equipStatus.substring(48, 52).getBytes();
+            for (int i = 0; i < 5; i++) {
+                mLightStatus.addAll(ByteMerge.parseByteToBit(bytes[i]));
+            }
+
+            updateLightStatus();
+        }
     }
 }

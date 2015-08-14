@@ -17,6 +17,7 @@ import com.android.volley.VolleyError;
 import com.txy.constants.Constants;
 import com.txy.database.DBManager;
 import com.txy.database.MyMusic;
+import com.txy.database.RoomList;
 import com.txy.txy_mcs.R;
 import com.txy.utils.SPUtils;
 import com.txy.utils.ToastUtils;
@@ -31,6 +32,7 @@ public class StartActivity extends Activity implements View.OnClickListener {
     private EditText edtText_ipSet;
     private EditText edtText_portSet;
     private AlertDialog mIpSetDialog;
+    private ArrayList<RoomList> mRoomList = new ArrayList<RoomList>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,7 +151,7 @@ public class StartActivity extends Activity implements View.OnClickListener {
         HttpUtils.get(this, Constants.URL.INIT_DATA, new VolleyListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                
             }
 
             @Override

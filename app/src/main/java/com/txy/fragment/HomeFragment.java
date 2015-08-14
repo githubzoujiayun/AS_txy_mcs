@@ -2,8 +2,13 @@ package com.txy.fragment;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,6 +21,7 @@ import com.txy.udp.InitData.StringMerge;
 import com.txy.txy_mcs.R;
 import com.txy.udp.Sender;
 import com.txy.utils.SPUtils;
+
 
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass.
@@ -46,6 +52,19 @@ public class HomeFragment extends Fragment implements OnClickListener {
         initListener();
         initStatus();
         return layout;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        BroadcastReceiver updateSituationReceive = new UpdateSituationReceive();
+        IntentFilter intentfilter = new IntentFilter("txPark.updateSituation");
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(updateSituationReceive,intentfilter);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 
     private void initStatus() {
@@ -138,7 +157,9 @@ public class HomeFragment extends Fragment implements OnClickListener {
 
             case R.id.btn_powerdownok:
                 mSituationMode = Constants.OFFMODE;
+                mMode = Constants.OFFMODE;
                 modeSetBG(mSituationMode);
+                setMode(mMode);
                 send();
                 mDialog.dismiss();
                 break;
@@ -208,6 +229,11 @@ public class HomeFragment extends Fragment implements OnClickListener {
                 mNightModeButton.setBackgroundResource(R.drawable.btn_yw_on);
                 break;
 
+            case 4:// 总关模式
+                mDayModeButton.setBackgroundResource(R.drawable.btn_bt_off);
+                mNightModeButton.setBackgroundResource(R.drawable.btn_yw_off);
+                break;
+
             default:
                 break;
         }
@@ -252,6 +278,62 @@ public class HomeFragment extends Fragment implements OnClickListener {
                 break;
             default:
                 break;
+        }
+    }
+
+    class UpdateSituationReceive extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String updateSituation = intent.getStringExtra("updateSituation");
+            if (updateSituation.equalsIgnoreCase("00"))// 白天模式1
+            {
+                mSituationMode = 0;
+                mMode = 0;
+
+            }
+            else if (updateSituation.equalsIgnoreCase("01"))// 白天模式2
+            {
+                mSituationMode = 1;
+                mMode = 0;
+            }
+            else if (updateSituation.equalsIgnoreCase("02"))// 白天模式3
+            {
+                mSituationMode = 2;
+                mMode = 0;
+            }
+            else if (updateSituation.equalsIgnoreCase("03"))// 白天模式4
+            {
+                mSituationMode = 3;
+                mMode = 0;
+            }
+            else if (updateSituation.equalsIgnoreCase("80"))// 夜间模式1
+            {
+                mSituationMode = 0;
+                mMode = 1;
+            }
+            else if (updateSituation.equalsIgnoreCase("81"))// 夜间模式2
+            {
+                mSituationMode = 2;
+                mMode = 1;
+            }
+            else if (updateSituation.equalsIgnoreCase("82"))// 夜间模式3
+            {
+                mSituationMode = 3;
+                mMode = 1;
+            }
+            else if (updateSituation.equalsIgnoreCase("83"))// 夜间模式4
+            {
+                mSituationMode = 4;
+                mMode = 1;
+            }
+            else if (updateSituation.equalsIgnoreCase("04"))// 总关模式
+            {
+                mSituationMode = Constants.OFFMODE;
+                mMode = Constants.OFFMODE;
+            }
+            setMode(mMode);
+            modeSetBG(mSituationMode);
         }
     }
 
