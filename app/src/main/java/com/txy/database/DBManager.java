@@ -32,6 +32,15 @@ public class DBManager {
     }
 
     /**
+     * 删除所有的房间列表
+     */
+    public static void deleteAllRoonList() {
+        new Delete()
+                .from(RoomList.class)
+                .execute();
+    }
+
+    /**
      * 查询所有的房间列表
      * @return
      */

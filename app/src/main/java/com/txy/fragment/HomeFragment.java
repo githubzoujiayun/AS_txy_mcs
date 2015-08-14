@@ -43,6 +43,7 @@ public class HomeFragment extends Fragment implements OnClickListener {
     private ImageButton mOkButton;
     private ImageButton mCancelButton;
     private Dialog mDialog;
+    private BroadcastReceiver updateSituationReceive;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,7 +58,7 @@ public class HomeFragment extends Fragment implements OnClickListener {
     @Override
     public void onStart() {
         super.onStart();
-        BroadcastReceiver updateSituationReceive = new UpdateSituationReceive();
+        updateSituationReceive = new UpdateSituationReceive();
         IntentFilter intentfilter = new IntentFilter("txPark.updateSituation");
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver(updateSituationReceive,intentfilter);
     }
@@ -65,6 +66,7 @@ public class HomeFragment extends Fragment implements OnClickListener {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(updateSituationReceive);// 注销本地广播
     }
 
     private void initStatus() {

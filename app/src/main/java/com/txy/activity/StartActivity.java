@@ -18,7 +18,10 @@ import com.txy.constants.Constants;
 import com.txy.database.DBManager;
 import com.txy.database.MyMusic;
 import com.txy.database.RoomList;
+import com.txy.gson.GsonUtils;
 import com.txy.txy_mcs.R;
+import com.txy.udp.InitData.StringMerge;
+import com.txy.udp.Sender;
 import com.txy.utils.SPUtils;
 import com.txy.utils.ToastUtils;
 import com.txy.volley.HttpUtils;
@@ -32,13 +35,14 @@ public class StartActivity extends Activity implements View.OnClickListener {
     private EditText edtText_ipSet;
     private EditText edtText_portSet;
     private AlertDialog mIpSetDialog;
-    private ArrayList<RoomList> mRoomList = new ArrayList<RoomList>();
+    private List<RoomList> mRoomList = new ArrayList<RoomList>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
+
 
         boolean isFirstTime = (Boolean) SPUtils.get(this, "isFirstTime", true);
         if (isFirstTime){
@@ -90,15 +94,6 @@ public class StartActivity extends Activity implements View.OnClickListener {
         edtText_ipSet = (EditText) ipSetLayout.findViewById(R.id.edtText_ipset);
         edtText_portSet = (EditText) ipSetLayout.findViewById(R.id.edtText_portset);
 
-        String ip = (String) SPUtils.get(this, Constants.SERVERIP, Constants.DEFAULT_SERVER_IP);
-        if (!ip.equalsIgnoreCase(Constants.DEFAULT_SERVER_IP)) {
-            edtText_ipSet.setText(ip);
-        }
-        String port = (String) SPUtils.get(this, Constants.SERVERPORT, Constants.DEFAULT_SERVER_PORT);
-        if (!port.equalsIgnoreCase(Constants.DEFAULT_SERVER_PORT)) {
-            edtText_portSet.setText(port);
-        }
-
         ImageButton imgBtn_ipSubmit = (ImageButton) ipSetLayout.findViewById(R.id.imgBtn_ipsubmit);
         ImageButton imgBtn_ipCancel = (ImageButton) ipSetLayout.findViewById(R.id.imgBtn_ipcancel);
 
@@ -125,12 +120,12 @@ public class StartActivity extends Activity implements View.OnClickListener {
     }
 
     private void submitButton() {
-        if (edtText_ipSet.getText().equals("")) {
+        if (edtText_ipSet.getText().equals("") || edtText_ipSet.getText() == null) {
             ToastUtils.showShort(StartActivity.this, "请输入服务器IP地址!");
             return;
         }
 
-        if (edtText_portSet.getText().equals("")) {
+        if (edtText_portSet.getText().equals("") || edtText_portSet.getText() == null) {
             ToastUtils.showShort(StartActivity.this, "请输入端口号!");
             return;
         }
@@ -143,7 +138,7 @@ public class StartActivity extends Activity implements View.OnClickListener {
 
         mIpSetDialog.dismiss();
 
-        go2indext();
+        getData();
         SPUtils.put(StartActivity.this,"isFirstTime",false);
     }
 
@@ -151,12 +146,21 @@ public class StartActivity extends Activity implements View.OnClickListener {
         HttpUtils.get(this, Constants.URL.INIT_DATA, new VolleyListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                
+                go2indext();
             }
 
             @Override
             public void onResponse(String response) {
-
+                mRoomList.clear();
+                mRoomList = (List<RoomList>) GsonUtils.parseJSON(response,RoomList.class);
+                if (mRoomList != null) {
+                    DBManager.deleteAllRoonList();// 删除所有的房间信息
+                    int size = mRoomList.size();
+                    for (int i = 0;i < size;i++) {
+                        DBManager.saveRoomList(mRoomList.get(i));
+                    }
+                }
+                go2indext();
             }
         });
     }

@@ -23,7 +23,9 @@ import android.widget.TextView;
 
 import com.txy.adapter.MenuListViewAdapter;
 import com.txy.constants.Constants;
+import com.txy.database.DBManager;
 import com.txy.database.RoomList;
+import com.txy.udp.InitData.StringMerge;
 import com.txy.udp.InitData.UdpSend;
 import com.txy.services.ReceiverService;
 import com.txy.services.ReceiverService.MyBinder;
@@ -38,7 +40,7 @@ import com.txy.tabfragment.TabTV;
 import com.txy.tabfragment.TabCurtain;
 import com.txy.tools.PopMenu;
 import com.txy.txy_mcs.R;
-import com.txy.utils.BytesUtils;
+import com.txy.udp.Sender;
 import com.txy.utils.SPUtils;
 
 import java.util.ArrayList;
@@ -80,7 +82,7 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
         super.onStart();
 
         Intent service = new Intent(this,ReceiverService.class);
-        startService(service );
+        startService(service);
         bindService(service, conn, Context.BIND_AUTO_CREATE);
     }
 
@@ -107,6 +109,9 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
      * 初始化参数
      */
     private void initParameter() {
+
+        mRoomList = (ArrayList<RoomList>) DBManager.getAllRoomList();
+
         mEquipList = new ArrayList<Integer>();
         mEquipList.add(Constants.EQUIPMENT.CTR_MODE);
         mEquipList.add(Constants.EQUIPMENT.CTR_WINDOW);
@@ -290,6 +295,26 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
     }
 
     /**
+     * 发送命令去获取所有设备的状态
+     */
+    private void getAllEquipStatus() {
+        String allEquipStatus = StringMerge.getAllEquipMentStatus();
+        String ip = (String) SPUtils.get(this, Constants.IP, Constants.DEFAULT_IP);
+        int port =(Integer) SPUtils.get(this, Constants.SENDPORT, Constants.DEFAULT_SENDPORT);
+        new Sender(allEquipStatus,ip,port).send();
+    }
+
+    /**
+     * 获取当前的情景模式
+     */
+    private void getSituation() {
+        String situation = StringMerge.getSituation();
+        String ip = (String) SPUtils.get(this, Constants.IP, Constants.DEFAULT_IP);
+        int port =(Integer) SPUtils.get(this, Constants.SENDPORT, Constants.DEFAULT_SENDPORT);
+        new Sender(situation,ip,port).send();
+    }
+
+    /**
      * 跟服务的绑定的连接
      * 通过这个类可以跟服务进行数据的交互
      */
@@ -301,6 +326,9 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
             receiveService = myBinder.getReceiveService();
             receiveService.startTask();
             receiveService.setOnReceiveSuccessListener(this);
+
+            getAllEquipStatus();
+            getSituation();
         }
 
         @Override
@@ -330,7 +358,6 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
             {
 
                 String data = msg.substring(44);
-//                byte[] bytes = BytesUtils.hexStringToBytes(data);// 把为字符串转化为字节数组
                 SPUtils.put(IndexActivity.this, "equipStatus", data);// 保存到SP
                 Intent intent = new Intent("txPark.updateEquipStatus");
                 intent.putExtra("equipStatus",data);
@@ -359,5 +386,7 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
             }
         }
     }
+
+
 
 }

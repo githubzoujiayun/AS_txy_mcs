@@ -63,6 +63,11 @@ public class StringMerge {
         return msg;
     }
 
+
+    /**
+     * 获取所有设备的状态
+     * @return
+     */
     public static String getAllEquipMentStatus(){
         String msg = UdpSend.GET_EQUIPMENT_STATUS_FRAME_LENGTH
                 + UdpSend.HMIS

@@ -32,6 +32,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="300dp"
                     android:layout_marginTop="20dp"
+                    android:visibility="invisible"
                     android:src="@drawable/fs1" />
 
                 <ImageView
@@ -42,6 +43,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="13dp"
                     android:layout_toRightOf="@+id/view_fs1"
+                    android:visibility="invisible"
                     android:src="@drawable/fs2" />
 
                 <ImageView
@@ -52,6 +54,7 @@
                     android:layout_alignTop="@+id/btn_kgwf"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="4dp"
+                    android:visibility="invisible"
                     android:layout_toRightOf="@+id/view_fs2"
                     android:src="@drawable/fs3" />
             </LinearLayout>
@@ -95,7 +98,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="fill_parent"
                     android:layout_gravity="center"
-                    android:text="22°"
+                    android:text=""
                     android:textColor="#ffffff"
                     android:textSize="60sp" />
             </LinearLayout>
@@ -273,7 +276,7 @@
             android:layout_above="@+id/closeWindow"
             android:layout_marginLeft="62dp"
             android:layout_toRightOf="@+id/btn_kgpower"
-            android:background="@drawable/btn_style_tymode" />
+            android:background="@drawable/btn_style_ktyy" />
 
         <ImageButton
             android:id="@+id/btn_kgpower"
@@ -292,6 +295,7 @@
             android:layout_above="@+id/closeWindow"
             android:layout_marginLeft="66dp"
             android:layout_toRightOf="@+id/btn_kgwf"
+            android:visibility="invisible"
             android:background="@drawable/btn_style_ktyy" />
 
         <ImageButton

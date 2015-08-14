@@ -1,6 +1,9 @@
 package com.txy.fragment;
 
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -29,7 +32,7 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
     private int mFanSpeed;// 风速
     private int mMode;// 模式
     private int mNowTemperature = 22;// 当前的温度
-    private int mStatus;
+    private int mStatus = 0;// 开/关状态
 
     private ImageButton mFanLow;
     private ImageButton mFanMid;
@@ -45,6 +48,7 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
     private ImageButton mTemperatureDown;
     private TextView mNowTemperatureShow;
     private ImageButton mUseAll;
+    private ImageButton mSwitchButton;
 
 
     @Override
@@ -54,7 +58,20 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
         initParams();
         initUI(layout);
         initListener();
+        initAirConditionStatus();
         return layout;
+    }
+
+    /**
+     * 判断空调是否开机，若光机则关闭显示
+     */
+    private void initAirConditionStatus() {
+
+        if (mStatus == 0) {
+
+        } else {
+
+        }
     }
 
     @Override
@@ -78,6 +95,8 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
         mTemperatureDown.setOnClickListener(this);
 
         mUseAll.setOnClickListener(this);
+
+        mSwitchButton.setOnClickListener(this);
     }
 
     private void initUI(View layout) {
@@ -93,7 +112,7 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
         mTemperatureUp = (ImageButton) layout.findViewById(R.id.tempup);
         mTemperatureDown = (ImageButton) layout.findViewById(R.id.tempdown);
 
-        mUseAll = (ImageButton) layout.findViewById(R.id.imgBtn_kgyy);
+        mUseAll = (ImageButton) layout.findViewById(R.id.btn_kgmode);
 
         mImageFanSpeedLow = (ImageView) layout.findViewById(R.id.view_fs1);
         mImageFanSpeedMid = (ImageView) layout.findViewById(R.id.view_fs2);
@@ -102,6 +121,8 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
         mImageMode = (ImageView) layout.findViewById(R.id.view_sf);
 
         mNowTemperatureShow = (TextView) layout.findViewById(R.id.txt_temp);
+
+        mSwitchButton = (ImageButton) layout.findViewById(R.id.btn_kgpower);
 
     }
 
@@ -113,49 +134,84 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
 
     @Override
     public void onClick(View view) {
+
         switch (view.getId()) {
+            case R.id.btn_kgpower:
+                if (mStatus == 0) {
+                    mStatus = 1;
+                    openAirCondition();
+                } else {
+                    mStatus = 0;
+                    closeAirCondition();
+                }
+                break;
+
             case R.id.btn_kgwf:
+                if (mStatus == 0) {
+                    return;
+                }
                 mFanSpeed = 0;
                 setFanSpeedBackGround();
                 send(mPosition);
                 break;
             case R.id.btn_kgzf:
+                if (mStatus == 0) {
+                    return;
+                }
                 mFanSpeed = 1;
                 setFanSpeedBackGround();
                 break;
             case R.id.btn_kgdf:
+                if (mStatus == 0) {
+                    return;
+                }
                 mFanSpeed = 2;
                 setFanSpeedBackGround();
                 break;
             case R.id.imgBtn_sf:
+                if (mStatus == 0) {
+                    return;
+                }
                 mMode = 0;
                 setModeBackGround();
                 break;
             case R.id.imgBtn_zr:
+                if (mStatus == 0) {
+                    return;
+                }
                 mMode = 1;
                 setModeBackGround();
                 break;
             case R.id.imgBtn_zl:
+                if (mStatus == 0) {
+                    return;
+                }
                 mMode = 2;
                 setModeBackGround();
                 break;
 
             case R.id.tempup:
-                if (mNowTemperature == 29) {
+                if (mStatus == 0) {
+                    return;
+                }
+                if (mNowTemperature == 30) {
                     return;
                 }
                 mNowTemperature++;
                 upDataTemperatureShow();
                 break;
             case R.id.tempdown:
-                if (mNowTemperature == 22) {
+                if (mStatus == 0) {
+                    return;
+                }
+                if (mNowTemperature == 18) {
                     return;
                 }
                 mNowTemperature--;
                 upDataTemperatureShow();
                 break;
 
-            case R.id.imgBtn_kgyy:
+            case R.id.btn_kgmode:
                 useToAll();
                 break;
         }
@@ -180,6 +236,10 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
     }
 
 
+    /**
+     * 发送控制命令
+     * @param position
+     */
     private void send(int position) {
         AirCondition airCondition = new AirCondition();
         airCondition.position = position;
@@ -225,7 +285,9 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
         new Sender(msg, ip,port).send();
     }
 
-
+    /**
+     * 设置模式按钮的选中图片
+     */
     private void setModeBackGround() {
         if (mMode == 0)
         {
@@ -254,6 +316,33 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
     }
 
     /**
+     * 关闭空调
+     */
+    private void closeAirCondition() {
+        mImageMode.setBackground(null);
+        mImageFanSpeedLow.setVisibility(View.INVISIBLE);
+        mImageFanSpeedMid.setVisibility(View.INVISIBLE);
+        mImageFanSpeedHigh.setVisibility(View.INVISIBLE);
+        mNowTemperatureShow.setText("");
+
+        mFanLow.setBackgroundResource(R.drawable.btn_wf_off);
+        mFanMid.setBackgroundResource(R.drawable.btn_zf_off);
+        mFanHig.setBackgroundResource(R.drawable.btn_df_off);
+
+        mFanSong.setBackgroundResource(R.drawable.btn_sf_off);
+        mHot.setBackgroundResource(R.drawable.btn_zr_off);
+        mCold.setBackgroundResource(R.drawable.btn_zl_off);
+    }
+
+    private void openAirCondition() {
+        setModeBackGround();
+        upDataTemperatureShow();
+        setFanSpeedBackGround();
+    }
+
+
+
+    /**
      * 设置风速的背景
      */
     private void setFanSpeedBackGround() {
@@ -263,6 +352,7 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
             mFanMid.setBackgroundResource(R.drawable.btn_zf_off);
             mFanHig.setBackgroundResource(R.drawable.btn_df_off);
 
+            mImageFanSpeedLow.setVisibility(View.VISIBLE);
             mImageFanSpeedMid.setVisibility(View.INVISIBLE);
             mImageFanSpeedHigh.setVisibility(View.INVISIBLE);
         }
@@ -273,6 +363,7 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
             mFanMid.setBackgroundResource(R.drawable.btn_zf_on);
             mFanHig.setBackgroundResource(R.drawable.btn_df_off);
 
+            mImageFanSpeedLow.setVisibility(View.VISIBLE);
             mImageFanSpeedMid.setVisibility(View.VISIBLE);
             mImageFanSpeedHigh.setVisibility(View.INVISIBLE);
         }
@@ -283,8 +374,17 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
             mFanMid.setBackgroundResource(R.drawable.btn_zf_off);
             mFanHig.setBackgroundResource(R.drawable.btn_df_on);
 
+            mImageFanSpeedLow.setVisibility(View.VISIBLE);
             mImageFanSpeedMid.setVisibility(View.VISIBLE);
             mImageFanSpeedHigh.setVisibility(View.VISIBLE);
+        }
+    }
+
+    class UpdateAirConditionStatus extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
         }
     }
 }

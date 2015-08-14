@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +29,7 @@ public class LightControlFragment extends Fragment {
     private ArrayList<Boolean> mLightStatus = new ArrayList<Boolean>();// 灯的状态
     private ArrayList<String> mLightName;// 灯的名字
     private LightGridAdapter mLightGridAdapter;
+    private BroadcastReceiver receive;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -45,6 +48,20 @@ public class LightControlFragment extends Fragment {
         getEquipStatus();
         updateLightStatus();
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        receive = new UpdateLightStatusReceive();
+        IntentFilter filter = new IntentFilter("txPark.updateEquipStatus");
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(receive,filter);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(receive);
     }
 
     @Override
