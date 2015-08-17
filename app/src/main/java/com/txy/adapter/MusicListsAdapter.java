@@ -64,7 +64,7 @@ public class MusicListsAdapter extends BaseAdapter {
             view = LayoutInflater.from(mContext).inflate(R.layout.playlist_item, null);
             viewHolder.musicName = (TextView) view.findViewById(R.id.txt_musicname);
             viewHolder.musicTime = (TextView) view.findViewById(R.id.txt_musictime);
-            viewHolder.deleteButton = (Button) view.findViewById(R.id.btn_jian);
+            viewHolder.deleteButton = (ImageButton) view.findViewById(R.id.btn_jian);
             view.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) view.getTag();
@@ -91,7 +91,7 @@ public class MusicListsAdapter extends BaseAdapter {
     class ViewHolder{
         TextView musicName;
         TextView musicTime;
-        Button deleteButton;
+        ImageButton deleteButton;
     }
 
     public List<MyMusic> getmMusicList() {

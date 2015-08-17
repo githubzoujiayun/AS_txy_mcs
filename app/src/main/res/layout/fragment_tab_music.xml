@@ -154,6 +154,7 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/imgBtn_Meet"
             android:thumb="@drawable/music_thumb"
+            android:thumbOffset="@dimen/dip2pix"
             android:progressDrawable="@drawable/music_seek_bar"
             android:layout_alignTop="@+id/ll_currentmusic"
             android:indeterminate="false" />
@@ -167,6 +168,7 @@
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
             android:text="添加音乐"
+            android:textColor="#00cdcd"
             android:textAppearance="?android:attr/textAppearanceLargeInverse" />
 
         <LinearLayout
