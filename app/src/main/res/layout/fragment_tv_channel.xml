@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="620dp"
+        android:layout_height="300dp">
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/linearLayout">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="right">
+                <ImageButton
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/allChannelButton"
+                    android:background="@drawable/all_channel_selector"/>
+                </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:gravity="right">
+                <ImageButton
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/newsChannelButton"
+                    android:background="@drawable/news_channel_selector"/>
+                </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:gravity="right">
+                <ImageButton
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/sportChannelButton"
+                    android:background="@drawable/sports_channel_selector"/>
+                </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:gravity="right">
+                <ImageButton
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/childChannegButton"
+                    android:background="@drawable/child_channel_selector"/>
+                </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+
+                android:gravity="right">
+                <ImageButton
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/varietyChannelButton"
+                    android:background="@drawable/variety_channel_selector"/>
+                </RelativeLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="240dp"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/view_pd"
+            android:layout_marginTop="12dp"
+            android:layout_below="@+id/linearLayout">
+
+            <GridView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/channelGridView"
+
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:numColumns="5" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+</FrameLayout>

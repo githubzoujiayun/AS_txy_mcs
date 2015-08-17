@@ -112,7 +112,6 @@ public class TabMusic extends Fragment implements View.OnClickListener, AdapterV
         mMusicList = (ListView) layout.findViewById(R.id.lv_playlist);
         mMusicListAdapter = new MusicListsAdapter(getActivity(), mBefore, mNowMode);
         mMusicList.setAdapter(mMusicListAdapter);
-
         mMusicList.setOnItemClickListener(this);
     }
 
@@ -402,7 +401,7 @@ public class TabMusic extends Fragment implements View.OnClickListener, AdapterV
 
     @Override
     public void onPositionChange(int position) {
-        mSeekBar.setMax(musicService.getDuration());
+//        mSeekBar.setMax(musicService.getDuration());
         mMusicName.setText(mBefore.get(musicService.getPosition()).getTitle());
         mSingerName.setText(mBefore.get(musicService.getPosition()).getArtist());
     }

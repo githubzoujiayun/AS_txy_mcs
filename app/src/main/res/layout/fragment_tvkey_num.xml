@@ -6,8 +6,7 @@
         android:id="@+id/relativeLayout1"
         android:layout_width="620dp"
         android:layout_height="300dp"
-        android:layout_marginLeft="63dp"
-        android:layout_marginTop="133dp" >
+        android:layout_gravity="left|top">
 
         <TableLayout
             android:id="@+id/tableLayout1"
