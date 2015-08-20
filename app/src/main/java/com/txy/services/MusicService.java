@@ -20,6 +20,9 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
     private boolean isPlaying = false;// 是否在播放
     private int mPosition;// 位置
     private OnPositionChangeListener mOnPositionChangeListener;
+    private boolean mComplete;// 播放是否完成
+
+    private boolean mFirstTime = true;// 第一次播放
 
 
     public MusicService() {
@@ -62,6 +65,7 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
 
     public void playMusic(){
         mMyMediaPlayer.start(); // 歌曲开始
+        mOnPositionChangeListener.onStartMusic(true);
     }
 
     public void startPlay() {
@@ -70,6 +74,7 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
 
     public void pauseMusic() {
         mMyMediaPlayer.pause();
+        mOnPositionChangeListener.onStartMusic(true);
     }
 
     public boolean isPlaying(){
@@ -107,7 +112,7 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
     }
 
     public int getCurrentDuration(){
-        return 10;
+        return mMyMediaPlayer.getCurrentPosition();
     }
 
     public void changProgress(int progress){
@@ -123,11 +128,13 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
     @Override
     public void onPrepared(MediaPlayer mediaPlayer) {
         playMusic();
+        mFirstTime = false;
     }
 
     // 播放完一首歌
     @Override
     public void onCompletion(MediaPlayer mediaPlayer) {
+        mComplete = true;
         nextMusic();
         mOnPositionChangeListener.onPositionChange(mPosition);
     }
@@ -144,6 +151,10 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
         this.myMusicList.addAll(myMusicList);
     }
 
+    public MediaPlayer getMusicPlayer() {
+        return mMyMediaPlayer;
+    }
+
     public void setPosition(int position){
         mPosition = position;
     }
@@ -158,6 +169,15 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
 
     public interface OnPositionChangeListener{
         void onPositionChange(int position);
+        void onStartMusic(boolean start);
+    }
+
+    public boolean isComplete() {
+        return mComplete;
+    }
+
+    public boolean ismFirstTime() {
+        return mFirstTime;
     }
 
 

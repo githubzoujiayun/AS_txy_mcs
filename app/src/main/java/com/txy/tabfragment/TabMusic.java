@@ -20,6 +20,7 @@ import android.os.IBinder;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +48,8 @@ public class TabMusic extends Fragment implements View.OnClickListener, AdapterV
     private List<MyMusic> mBefore = new ArrayList<MyMusic>();// 会议前
 
     private int mNowMode = 0; // 当前的模式
+    private boolean mSeekBarTouch = false;// seekBar是否被拖动
+    private boolean mRunning;
 
     private ListView mMusicListView;
     private PopupWindow mPopUpWindow;
@@ -89,13 +92,14 @@ public class TabMusic extends Fragment implements View.OnClickListener, AdapterV
         Intent service = new Intent(mActivity, MusicService.class);
         mActivity.startService(service);
         conn = new MyServicesConnect();
-        mActivity.bindService(service,conn, Context.BIND_AUTO_CREATE);
+        mActivity.bindService(service, conn, Context.BIND_AUTO_CREATE);
     }
 
     @Override
     public void onStop() {
         super.onStop();
         mActivity.unbindService(conn);
+        mRunning = false;
     }
 
     /**
@@ -399,26 +403,41 @@ public class TabMusic extends Fragment implements View.OnClickListener, AdapterV
         mSingerName.setText(mBefore.get(i).getArtist());
     }
 
+    /**
+     * 歌曲播放完毕的监听事件
+     * @param position
+     */
     @Override
     public void onPositionChange(int position) {
-//        mSeekBar.setMax(musicService.getDuration());
         mMusicName.setText(mBefore.get(musicService.getPosition()).getTitle());
         mSingerName.setText(mBefore.get(musicService.getPosition()).getArtist());
     }
 
     @Override
+    public void onStartMusic(boolean start) {
+        if (start) {
+            refreshSeekBar();
+        }
+    }
+
+    @Override
     public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-        musicService.changProgress(i);
+
     }
 
     @Override
     public void onStartTrackingTouch(SeekBar seekBar) {
-
+        mSeekBarTouch = true;
     }
 
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
+        musicService.changProgress(seekBar.getProgress());
+        mSeekBarTouch = false;
+        // 如果为暂停状态，则继续播放
+        if (!musicService.isPlaying()) {
 
+        }
     }
 
     class MyServicesConnect implements ServiceConnection {
@@ -430,14 +449,15 @@ public class TabMusic extends Fragment implements View.OnClickListener, AdapterV
             musicService.setMyMusicList(mBefore);
             musicService.setOnPositionChangeListener(TabMusic.this);
 
-            if (musicService.isPlaying()) {
-                mPlayButton.setBackgroundResource(R.drawable.btn_play_on);
-//                mSeekBar.setMax(musicService.getDuration());
-//                int currentDuration = musicService.getCurrentDuration();
-//                if (currentDuration > 0) {
-//                    mSeekBar.setProgress(currentDuration);
-//                }
+            if (!musicService.ismFirstTime()) {
+                refreshSeekBar();
+                mMusicName.setText(mBefore.get(musicService.getPosition()).getTitle());
+                mSingerName.setText(mBefore.get(musicService.getPosition()).getArtist());
+                if (musicService.isPlaying()) {
+                    mPlayButton.setBackgroundResource(R.drawable.btn_play_on);
+                }
             }
+
 
 
         }
@@ -446,5 +466,33 @@ public class TabMusic extends Fragment implements View.OnClickListener, AdapterV
         public void onServiceDisconnected(ComponentName componentName) {
 
         }
+    }
+
+    /**
+     * 刷新SeekBar
+     */
+    private void refreshSeekBar() {
+        mRunning = true;
+        mSeekBar.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                if (!mRunning) {
+                    return;
+                }
+
+                mSeekBar.setMax(musicService.getDuration());
+                if (!mSeekBarTouch) {
+                    Log.e("11111111111111111", ""+musicService.getCurrentDuration());
+                    mSeekBar.setProgress(musicService.getCurrentDuration());
+                }
+
+                if (!musicService.isPlaying()) {
+                    return;
+                }
+                Log.e("22222222222",""+musicService.isPlaying());
+                mSeekBar.postDelayed(this, 1000);
+            }
+        }, 0);
     }
 }

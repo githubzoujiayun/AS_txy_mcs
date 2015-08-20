@@ -168,7 +168,7 @@
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
             android:text="添加音乐"
-            android:textColor="#00cdcd"
+            android:textColor="#ff5f7ecd"
             android:textAppearance="?android:attr/textAppearanceLargeInverse" />
 
         <LinearLayout
