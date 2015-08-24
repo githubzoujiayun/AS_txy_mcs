@@ -2,4 +2,8 @@
 <resources>
     <color name="touming">#4affffff</color>
     <color name="light_blue">#4ca7cd</color>
+
+    <color name="black">#000000</color>
+    <color name="blue">#4d6dcd</color>
+
 </resources>

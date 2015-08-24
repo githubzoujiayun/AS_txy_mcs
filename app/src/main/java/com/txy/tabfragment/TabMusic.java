@@ -1,6 +1,7 @@
 package com.txy.tabfragment;
 
 import com.txy.MusicContentProvider.ReadDataFromContentProvider;
+import com.txy.SPdata;
 import com.txy.adapter.MusicListsAdapter;
 import com.txy.adapter.MusicQueryListAdapter;
 import com.txy.database.DBManager;
@@ -41,7 +42,7 @@ import dmax.dialog.SpotsDialog;
  * A simple {@link android.support.v4.app.Fragment} subclass.
  * 
  */
-public class TabMusic extends Fragment implements View.OnClickListener, AdapterView.OnItemClickListener, MusicService.OnPositionChangeListener, SeekBar.OnSeekBarChangeListener {
+public class TabMusic extends Fragment implements View.OnClickListener, AdapterView.OnItemClickListener, MusicService.OnPositionChangeListener, SeekBar.OnSeekBarChangeListener, MusicService.OnStartMusicListener {
 
     private TextView mAddMusicButton;
     private List<MyMusic> mAllMusicList;// 扫描到的音乐
@@ -253,7 +254,7 @@ public class TabMusic extends Fragment implements View.OnClickListener, AdapterV
 
         DBManager.saveMusicList(mBefore);
 
-        mMusicListAdapter.setmMusicList(mBefore);
+        mMusicListAdapter.setMusicList(mBefore);
         mMusicListAdapter.notifyDataSetChanged();
 
         dismiss();
@@ -316,8 +317,8 @@ public class TabMusic extends Fragment implements View.OnClickListener, AdapterV
         mBefore.clear();
         mBefore.addAll(musicLists);
 
-        mMusicListAdapter.setmMusicList(mBefore);
-        mMusicListAdapter.setmMode(mNowMode);
+        mMusicListAdapter.setMusicList(mBefore);
+        mMusicListAdapter.setMode(mNowMode);
         mMusicListAdapter.notifyDataSetChanged();
 
         musicService.setMyMusicList(mBefore);// 更新服务里面的播放列表
@@ -401,6 +402,9 @@ public class TabMusic extends Fragment implements View.OnClickListener, AdapterV
         mPlayButton.setBackgroundResource(R.drawable.btn_play_on);
         mMusicName.setText(mBefore.get(i).getTitle());
         mSingerName.setText(mBefore.get(i).getArtist());
+        SPdata.writeMusicMode(getActivity(), mNowMode);
+        mMusicListAdapter.setPressPosition(i);
+        mMusicListAdapter.notifyDataSetChanged();
     }
 
     /**
@@ -448,6 +452,7 @@ public class TabMusic extends Fragment implements View.OnClickListener, AdapterV
             musicService = musicBinder.getMusicService();
             musicService.setMyMusicList(mBefore);
             musicService.setOnPositionChangeListener(TabMusic.this);
+            musicService.setOnStartMusicListener(TabMusic.this);
 
             if (!musicService.ismFirstTime()) {
                 refreshSeekBar();

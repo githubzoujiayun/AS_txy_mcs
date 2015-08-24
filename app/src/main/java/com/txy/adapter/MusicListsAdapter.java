@@ -11,9 +11,11 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.txy.SPdata;
 import com.txy.database.DBManager;
 import com.txy.database.MyMusic;
 import com.txy.txy_mcs.R;
+import com.txy.utils.SPUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -31,6 +33,7 @@ public class MusicListsAdapter extends BaseAdapter {
     private ImageButton mOkButton;
     private ImageButton mCancelButton;
     private AlertDialog mDialog;
+    private int mPressPosition = -1;// 被选中歌曲的位置
 
     public MusicListsAdapter(Context context, List<MyMusic> musicList, int mode){
         mContext = context;
@@ -57,7 +60,6 @@ public class MusicListsAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View view, ViewGroup viewGroup) {
-
         ViewHolder viewHolder = null;
         if (view == null) {
             viewHolder = new ViewHolder();
@@ -85,6 +87,17 @@ public class MusicListsAdapter extends BaseAdapter {
             }
         });
 
+        if (changeTextColor()) {
+            if (mPressPosition == position) {
+                viewHolder.musicName.setTextColor(mContext.getResources().getColor(R.color.blue));
+                viewHolder.musicTime.setTextColor(mContext.getResources().getColor(R.color.blue));
+            } else {
+                viewHolder.musicName.setTextColor(mContext.getResources().getColor(R.color.black));
+                viewHolder.musicTime.setTextColor(mContext.getResources().getColor(R.color.black));
+            }
+        }
+
+
         return view;
     }
 
@@ -98,12 +111,12 @@ public class MusicListsAdapter extends BaseAdapter {
         return mMusicList;
     }
 
-    public void setmMusicList(List<MyMusic> mMusicList) {
+    public void setMusicList(List<MyMusic> mMusicList) {
         this.mMusicList.clear();
         this.mMusicList.addAll(mMusicList);
     }
 
-    public void setmMode(int mMode) {
+    public void setMode(int mMode) {
         this.mMode = mMode;
     }
 
@@ -137,6 +150,17 @@ public class MusicListsAdapter extends BaseAdapter {
                 mDialog.dismiss();
             }
         });
+    }
+
+    public void setPressPosition(int position) {
+        mPressPosition = position;
+    }
+
+    public boolean changeTextColor(){
+        if (SPdata.readMusicMode(mContext) == (Integer)SPUtils.get(mContext, "musicMode", 0)) {
+            return true;
+        }
+        return false;
     }
 }
 

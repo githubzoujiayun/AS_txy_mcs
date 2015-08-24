@@ -20,6 +20,7 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
     private boolean isPlaying = false;// 是否在播放
     private int mPosition;// 位置
     private OnPositionChangeListener mOnPositionChangeListener;
+    private OnStartMusicListener mOnStartMusicListener;
     private boolean mComplete;// 播放是否完成
 
     private boolean mFirstTime = true;// 第一次播放
@@ -65,7 +66,7 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
 
     public void playMusic(){
         mMyMediaPlayer.start(); // 歌曲开始
-        mOnPositionChangeListener.onStartMusic(true);
+        mOnStartMusicListener.onStartMusic(true);
     }
 
     public void startPlay() {
@@ -74,7 +75,7 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
 
     public void pauseMusic() {
         mMyMediaPlayer.pause();
-        mOnPositionChangeListener.onStartMusic(true);
+        mOnStartMusicListener.onStartMusic(true);
     }
 
     public boolean isPlaying(){
@@ -169,7 +170,15 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
 
     public interface OnPositionChangeListener{
         void onPositionChange(int position);
+
+    }
+
+    public interface OnStartMusicListener {
         void onStartMusic(boolean start);
+    }
+
+    public void setOnStartMusicListener(OnStartMusicListener onStartMusicListener) {
+        mOnStartMusicListener = onStartMusicListener;
     }
 
     public boolean isComplete() {
