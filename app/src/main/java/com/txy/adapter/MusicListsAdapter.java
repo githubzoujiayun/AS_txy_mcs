@@ -157,7 +157,7 @@ public class MusicListsAdapter extends BaseAdapter {
     }
 
     public boolean changeTextColor(){
-        if (SPdata.readMusicMode(mContext) == (Integer)SPUtils.get(mContext, "musicMode", 0)) {
+        if (SPdata.readMusicMode(mContext) == mMode) {
             return true;
         }
         return false;

@@ -474,6 +474,13 @@ public class TabMusic extends Fragment implements View.OnClickListener, AdapterV
     }
 
     /**
+     * 停止刷新
+     */
+    private void stopRefreshSeekBar() {
+        mRunning = false;
+    }
+
+    /**
      * 刷新SeekBar
      */
     private void refreshSeekBar() {
@@ -485,17 +492,17 @@ public class TabMusic extends Fragment implements View.OnClickListener, AdapterV
                 if (!mRunning) {
                     return;
                 }
-
-                mSeekBar.setMax(musicService.getDuration());
+                if (musicService.canSetProgressMax()) {
+                    mSeekBar.setMax(musicService.getDuration());
+                    musicService.setProgressMax();
+                }
                 if (!mSeekBarTouch) {
-                    Log.e("11111111111111111", ""+musicService.getCurrentDuration());
                     mSeekBar.setProgress(musicService.getCurrentDuration());
                 }
 
                 if (!musicService.isPlaying()) {
                     return;
                 }
-                Log.e("22222222222",""+musicService.isPlaying());
                 mSeekBar.postDelayed(this, 1000);
             }
         }, 0);

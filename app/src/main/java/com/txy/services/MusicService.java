@@ -24,6 +24,7 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
     private boolean mComplete;// 播放是否完成
 
     private boolean mFirstTime = true;// 第一次播放
+    private boolean mSetProgressMax;
 
 
     public MusicService() {
@@ -129,6 +130,7 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
     @Override
     public void onPrepared(MediaPlayer mediaPlayer) {
         playMusic();
+        mSetProgressMax = true;
         mFirstTime = false;
     }
 
@@ -189,5 +191,11 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
         return mFirstTime;
     }
 
+    public boolean canSetProgressMax() {
+        return mSetProgressMax;
+    }
 
+    public void setProgressMax() {
+        mSetProgressMax = false;
+    }
 }
