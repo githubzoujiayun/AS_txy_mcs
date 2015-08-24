@@ -139,7 +139,13 @@ public class TabProjector extends Fragment implements View.OnClickListener {
 	 * 发送指令
 	 */
 	private void send(int position,String orderCode) {
-		String msg = StringMerge.infrafedControl(UdpSend.PROJECTION.PROJECTION,String.valueOf(position),orderCode);
+		String s = null;
+		if (position < 10) {
+			s = "0"+String.valueOf(position);
+		} else {
+			s = String.valueOf(position);
+		}
+		String msg = StringMerge.infrafedControl(UdpSend.PROJECTION.PROJECTION,s,orderCode);
 		String ip = (String) SPUtils.get(getActivity(), Constants.IP, Constants.DEFAULT_IP);
 		int port =(Integer) SPUtils.get(getActivity(), Constants.SENDPORT, Constants.DEFAULT_SENDPORT);
 		new Sender(msg, ip,port).send();
