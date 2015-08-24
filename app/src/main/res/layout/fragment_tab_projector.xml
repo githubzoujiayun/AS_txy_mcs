@@ -16,7 +16,7 @@
             android:layout_height="56dp"
             android:layout_below="@+id/btn_tymode"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/btn_style_tyup" />
 
         <ImageButton
@@ -74,7 +74,7 @@
             android:layout_width="84dp"
             android:layout_height="42dp"
             android:layout_below="@+id/btn_tydown"
-            android:layout_marginTop="38dp"
+            android:layout_marginTop="10dp"
             android:layout_toLeftOf="@+id/btn_tyenter"
             android:background="@drawable/btn_style_tyvoldown" />
 

@@ -148,6 +148,13 @@ public class StringMerge {
         return msg + CRC16.ccr16(msg);
     }
 
+    /**
+     * 红外控制
+     * @param equip
+     * @param position
+     * @param orderCode
+     * @return
+     */
     public static String infrafedControl(String equip,String position,String orderCode){
         String msg = UdpSend.INFRARED_CONTROL_FRAME_LENGTH
                 + UdpSend.HMIS
