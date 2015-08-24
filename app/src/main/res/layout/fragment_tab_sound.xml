@@ -14,23 +14,23 @@
             android:id="@+id/btn_soundmode"
             android:layout_width="100dp"
             android:layout_height="75dp"
-            android:layout_marginLeft="42dp"
             android:background="@drawable/btn_style_tymode"
             android:layout_alignTop="@+id/closeWindow"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="42dp" />
+            android:layout_toLeftOf="@+id/closeWindow"
+            android:layout_toStartOf="@+id/closeWindow"
+            android:layout_marginRight="69dp"
+            android:layout_marginEnd="69dp" />
 
         <ImageButton
             android:id="@+id/btn_soundpower"
             android:layout_width="100dp"
             android:layout_height="75dp"
             android:background="@drawable/btn_style_typower"
+            android:layout_marginLeft="78dp"
+            android:layout_marginStart="78dp"
             android:layout_alignTop="@+id/closeWindow"
             android:layout_toRightOf="@+id/closeWindow"
-            android:layout_toEndOf="@+id/closeWindow"
-            android:layout_marginLeft="35dp"
-            android:layout_marginStart="35dp" />
+            android:layout_toEndOf="@+id/closeWindow" />
 
         <RelativeLayout
             android:id="@+id/closeWindow"
@@ -45,8 +45,9 @@
                 android:id="@+id/wheelMenu"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true" />
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="25dp"/>
+
             
         </RelativeLayout>
     </RelativeLayout>
