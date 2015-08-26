@@ -37,6 +37,7 @@ import com.txy.fragment.SetEquipmentFragment;
 import com.txy.fragment.SetIPFragment;
 import com.txy.fragment.SetNameFragment;
 import com.txy.fragment.SetProjectionTimeFragment;
+import com.txy.fragment.SettingFragment;
 import com.txy.txy_mcs.R;
 import com.txy.utils.SPUtils;
 import com.txy.utils.ToastUtils;
@@ -56,8 +57,8 @@ public class SetActivity extends FragmentActivity implements OnClickListener, On
     private RoomListAdapter mRoomListAdapter;
     private int mPosition;// 当前选中的房间
     private int mNowSetButton;// 当前设置的按钮
-    private boolean canRetrue = false;
-    private MyBrocast receiver = new MyBrocast();
+    private boolean canReturn = false;
+    private MyBroadCast receiver = new MyBroadCast();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +70,7 @@ public class SetActivity extends FragmentActivity implements OnClickListener, On
 
         getRoomList();
         initListView();
-        initOprate();// 初始化操作的界面
+        initOperate();// 初始化操作的界面
     }
 
     @Override
@@ -97,9 +98,9 @@ public class SetActivity extends FragmentActivity implements OnClickListener, On
      * 判断是否可以返回
      */
     private boolean canReturn() {
-        if (canRetrue){
+        if (canReturn){
             replaceFragment(new HomeSetFragment());
-            canRetrue = false;
+            canReturn = false;
             return true;
         }
         return false;
@@ -108,10 +109,10 @@ public class SetActivity extends FragmentActivity implements OnClickListener, On
     /**
      * 初始化操作的界面
      */
-    private void initOprate() {
+    private void initOperate() {
+        replaceFragment(new SettingFragment());
         if(mRoomListData != null && mRoomListData.size() > 0 ){
-            HomeSetFragment setFragment = new HomeSetFragment();
-            replaceFragment(setFragment);
+//            replaceFragment(new SettingFragment());
         }
     }
 
@@ -150,7 +151,6 @@ public class SetActivity extends FragmentActivity implements OnClickListener, On
 
     private void initListener() {
         findViewById(R.id.btn_back).setOnClickListener(this);
-        findViewById(R.id.btn_addroom).setOnClickListener(this);
         findViewById(R.id.btn_saveset).setOnClickListener(this);
     }
 
@@ -169,15 +169,12 @@ public class SetActivity extends FragmentActivity implements OnClickListener, On
 
             case R.id.btn_saveset:// 保存
                 // 如果可以返回，说明正在进行设置操作,就可以保存
-                if (canRetrue){
+                if (canReturn){
                     sendSaveOrder();
                     ToastUtils.showLong(this, "保存成功");
                 }
                 break;
 
-            case R.id.btn_addroom:// 添加房间按键
-                showAddDialog();
-                break;
             case R.id.btn_sure:// Dialog确定按钮
                 if (judge()){
                     save2DB();
@@ -308,7 +305,7 @@ public class SetActivity extends FragmentActivity implements OnClickListener, On
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position,
                             long id) {
-        canRetrue = false;
+        canReturn = false;
         mPosition = position;
 //		int roomid = mRoomListData.get(position).roomid;
         mRoomListAdapter.setPosition(position);
@@ -322,11 +319,11 @@ public class SetActivity extends FragmentActivity implements OnClickListener, On
         return false;
     }
 
-    class MyBrocast extends BroadcastReceiver{
+    class MyBroadCast extends BroadcastReceiver{
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            canRetrue = true;
+            canReturn = true;
             mNowSetButton = intent.getIntExtra("position", 0);
             switch (mNowSetButton) {
                 case 0:
