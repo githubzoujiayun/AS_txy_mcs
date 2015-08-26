@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -49,13 +50,7 @@ public class StartActivity extends Activity implements View.OnClickListener {
             show();
             createMusicDB();
         } else {
-            new Handler().postDelayed(new Runnable(){
-                @Override
-                public void run() {
-                    go2indext();
-                }
-
-            },Constants.STARTAPP_DELAY);
+            getData();
         }
 
     }
@@ -146,21 +141,29 @@ public class StartActivity extends Activity implements View.OnClickListener {
         HttpUtils.get(this, Constants.URL.INIT_DATA, new VolleyListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Log.e("22222222222222","2222222222222");
                 go2indext();
             }
 
             @Override
             public void onResponse(String response) {
-                mRoomList.clear();
-                mRoomList = (List<RoomList>) GsonUtils.parseJSON(response,RoomList.class);
-                if (mRoomList != null) {
-                    DBManager.deleteAllRoonList();// 删除所有的房间信息
-                    int size = mRoomList.size();
-                    for (int i = 0;i < size;i++) {
-                        DBManager.saveRoomList(mRoomList.get(i));
+                Log.e("111111111111111111111",response);
+//                mRoomList.clear();
+//                mRoomList = (List<RoomList>) GsonUtils.parseJSON(response,RoomList.class);
+//                if (mRoomList != null) {
+//                    DBManager.deleteAllRoonList();// 删除所有的房间信息
+//                    int size = mRoomList.size();
+//                    for (int i = 0;i < size;i++) {
+//                        DBManager.saveRoomList(mRoomList.get(i));
+//                    }
+//                }
+                new Handler().postDelayed(new Runnable(){
+                    @Override
+                    public void run() {
+                        go2indext();
                     }
-                }
-                go2indext();
+
+                },Constants.STARTAPP_DELAY);
             }
         });
     }

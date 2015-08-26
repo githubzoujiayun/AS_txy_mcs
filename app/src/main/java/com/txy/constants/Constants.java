@@ -2,7 +2,7 @@ package com.txy.constants;
 
 public final class Constants {
 
-    public static int STARTAPP_DELAY = 3000;// 延时3秒
+    public static int STARTAPP_DELAY = 2000;// 延时3秒
     public static int MY_SOCKET_TIMEOUT_MS = 3000;
 
     public static int DAYMODE = 0;// 白天模式
@@ -63,7 +63,7 @@ public final class Constants {
     }
 
     public static final class URL{
-        public static String INIT_DATA = "";
+        public static String INIT_DATA = "http://192.168.1.248:8820/tx/api/getAppStatus.action";
     }
 
 }
