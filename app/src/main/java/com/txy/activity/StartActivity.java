@@ -15,19 +15,19 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import com.android.volley.VolleyError;
+import com.google.gson.reflect.TypeToken;
 import com.txy.constants.Constants;
 import com.txy.database.DBManager;
 import com.txy.database.MyMusic;
-import com.txy.database.RoomList;
+import com.txy.gson.BoardRoom;
 import com.txy.gson.GsonUtils;
 import com.txy.txy_mcs.R;
-import com.txy.udp.InitData.StringMerge;
-import com.txy.udp.Sender;
 import com.txy.utils.SPUtils;
 import com.txy.utils.ToastUtils;
 import com.txy.volley.HttpUtils;
 import com.txy.volley.VolleyListener;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +36,7 @@ public class StartActivity extends Activity implements View.OnClickListener {
     private EditText edtText_ipSet;
     private EditText edtText_portSet;
     private AlertDialog mIpSetDialog;
-    private List<RoomList> mRoomList = new ArrayList<RoomList>();
+    private ArrayList<BoardRoom> mBoardRoomLists;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,22 +141,17 @@ public class StartActivity extends Activity implements View.OnClickListener {
         HttpUtils.get(this, Constants.URL.INIT_DATA, new VolleyListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("22222222222222","2222222222222");
                 go2indext();
             }
 
             @Override
             public void onResponse(String response) {
-                Log.e("111111111111111111111",response);
-//                mRoomList.clear();
-//                mRoomList = (List<RoomList>) GsonUtils.parseJSON(response,RoomList.class);
-//                if (mRoomList != null) {
-//                    DBManager.deleteAllRoonList();// 删除所有的房间信息
-//                    int size = mRoomList.size();
-//                    for (int i = 0;i < size;i++) {
-//                        DBManager.saveRoomList(mRoomList.get(i));
-//                    }
-//                }
+
+                BoardRoom boardRoom = GsonUtils.parseJSON(response, BoardRoom.class);
+                Type type = new TypeToken<ArrayList<BoardRoom>>(){}.getType();
+                mBoardRoomLists = GsonUtils.parseJSONArray(response, type);
+                String name = mBoardRoomLists.get(0).getAir().get(0).getName();
+                Log.e("111111111111111111111",name);
                 new Handler().postDelayed(new Runnable(){
                     @Override
                     public void run() {
