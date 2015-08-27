@@ -154,6 +154,10 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
         this.myMusicList.addAll(myMusicList);
     }
 
+    public List<MyMusic> getMyMusicList() {
+        return this.myMusicList;
+    }
+
     public MediaPlayer getMusicPlayer() {
         return mMyMediaPlayer;
     }
@@ -195,7 +199,11 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
         return mSetProgressMax;
     }
 
-    public void setProgressMax() {
+    public void setProgressMaxFalse() {
         mSetProgressMax = false;
+    }
+
+    public void setProgressMaxTrue() {
+        mSetProgressMax = true;
     }
 }

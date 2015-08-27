@@ -21,7 +21,6 @@ import android.os.IBinder;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -206,12 +205,13 @@ public class TabMusic extends Fragment implements View.OnClickListener, AdapterV
                     return;
                 }
                 musicService.preMusic();
-                mMusicName.setText(mBefore.get(musicService.getPosition()).getTitle());
-                mSingerName.setText(mBefore.get(musicService.getPosition()).getArtist());
+                notifyMusicAdapter(musicService.getPosition());
+                mMusicName.setText(musicService.getMyMusicList().get(musicService.getPosition()).getTitle());
+                mSingerName.setText(musicService.getMyMusicList().get(musicService.getPosition()).getArtist());
                 break;
             case R.id.imgBtn_play:// 播放/暂停
 
-                if (mBefore == null || mBefore.size() == 0) {
+                if (musicService.getMyMusicList() == null || musicService.getMyMusicList().size() == 0) {
                     return;
                 }
 
@@ -225,12 +225,13 @@ public class TabMusic extends Fragment implements View.OnClickListener, AdapterV
 
                 break;
             case R.id.imgBtn_next:// 下一首
-                if (mBefore == null || mBefore.size() == 0) {
+                if (musicService.getMyMusicList() == null || musicService.getMyMusicList().size() == 0) {
                     return;
                 }
                 musicService.nextMusic();
-                mMusicName.setText(mBefore.get(musicService.getPosition()).getTitle());
-                mSingerName.setText(mBefore.get(musicService.getPosition()).getArtist());
+                notifyMusicAdapter(musicService.getPosition());
+                mMusicName.setText(musicService.getMyMusicList().get(musicService.getPosition()).getTitle());
+                mSingerName.setText(musicService.getMyMusicList().get(musicService.getPosition()).getArtist());
                 break;
         }
     }
@@ -252,6 +253,7 @@ public class TabMusic extends Fragment implements View.OnClickListener, AdapterV
             mBefore.get(i).setMode(mNowMode);
         }
 
+        DBManager.removeAllMusic(mNowMode);
         DBManager.saveMusicList(mBefore);
 
         mMusicListAdapter.setMusicList(mBefore);
@@ -321,7 +323,6 @@ public class TabMusic extends Fragment implements View.OnClickListener, AdapterV
         mMusicListAdapter.setMode(mNowMode);
         mMusicListAdapter.notifyDataSetChanged();
 
-        musicService.setMyMusicList(mBefore);// 更新服务里面的播放列表
     }
 
     /**
@@ -397,14 +398,14 @@ public class TabMusic extends Fragment implements View.OnClickListener, AdapterV
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        musicService.setMyMusicList(mBefore);// 更新服务里面的播放列表
         musicService.setPosition(i);
         musicService.startPlay();
         mPlayButton.setBackgroundResource(R.drawable.btn_play_on);
-        mMusicName.setText(mBefore.get(i).getTitle());
-        mSingerName.setText(mBefore.get(i).getArtist());
+        mMusicName.setText(musicService.getMyMusicList().get(i).getTitle());
+        mSingerName.setText(musicService.getMyMusicList().get(i).getArtist());
         SPdata.writeMusicMode(getActivity(), mNowMode);
-        mMusicListAdapter.setPressPosition(i);
-        mMusicListAdapter.notifyDataSetChanged();
+        notifyMusicAdapter(i);
     }
 
     /**
@@ -413,8 +414,14 @@ public class TabMusic extends Fragment implements View.OnClickListener, AdapterV
      */
     @Override
     public void onPositionChange(int position) {
-        mMusicName.setText(mBefore.get(musicService.getPosition()).getTitle());
-        mSingerName.setText(mBefore.get(musicService.getPosition()).getArtist());
+        notifyMusicAdapter(position);
+        mMusicName.setText(musicService.getMyMusicList().get(musicService.getPosition()).getTitle());
+        mSingerName.setText(musicService.getMyMusicList().get(musicService.getPosition()).getArtist());
+    }
+
+    private void notifyMusicAdapter(int position) {
+        mMusicListAdapter.setPressPosition(position);
+        mMusicListAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -451,16 +458,19 @@ public class TabMusic extends Fragment implements View.OnClickListener, AdapterV
             MusicService.MusicBinder musicBinder = (MusicService.MusicBinder) iBinder;
             musicService = musicBinder.getMusicService();
             musicService.setMyMusicList(mBefore);
+            mMusicListAdapter.setPressPosition(0);
             musicService.setOnPositionChangeListener(TabMusic.this);
             musicService.setOnStartMusicListener(TabMusic.this);
 
             if (!musicService.ismFirstTime()) {
+                musicService.setProgressMaxTrue();
                 refreshSeekBar();
-                mMusicName.setText(mBefore.get(musicService.getPosition()).getTitle());
-                mSingerName.setText(mBefore.get(musicService.getPosition()).getArtist());
+                mMusicName.setText(musicService.getMyMusicList().get(musicService.getPosition()).getTitle());
+                mSingerName.setText(musicService.getMyMusicList().get(musicService.getPosition()).getArtist());
                 if (musicService.isPlaying()) {
                     mPlayButton.setBackgroundResource(R.drawable.btn_play_on);
                 }
+                notifyMusicAdapter(musicService.getPosition());
             }
 
 
@@ -494,7 +504,7 @@ public class TabMusic extends Fragment implements View.OnClickListener, AdapterV
                 }
                 if (musicService.canSetProgressMax()) {
                     mSeekBar.setMax(musicService.getDuration());
-                    musicService.setProgressMax();
+                    musicService.setProgressMaxFalse();
                 }
                 if (!mSeekBarTouch) {
                     mSeekBar.setProgress(musicService.getCurrentDuration());

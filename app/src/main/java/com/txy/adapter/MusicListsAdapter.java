@@ -95,6 +95,9 @@ public class MusicListsAdapter extends BaseAdapter {
                 viewHolder.musicName.setTextColor(mContext.getResources().getColor(R.color.black));
                 viewHolder.musicTime.setTextColor(mContext.getResources().getColor(R.color.black));
             }
+        } else {
+            viewHolder.musicName.setTextColor(mContext.getResources().getColor(R.color.black));
+            viewHolder.musicTime.setTextColor(mContext.getResources().getColor(R.color.black));
         }
 
 

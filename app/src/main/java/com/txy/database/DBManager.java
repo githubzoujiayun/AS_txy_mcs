@@ -94,6 +94,13 @@ public class DBManager {
                 .execute();
     }
 
+    public static void removeAllMusic(int mode) {
+        new Delete()
+                .from(MyMusic.class)
+                .where("mode = ?",new Object[] {mode})
+                .execute();
+    }
+
 
 
 }

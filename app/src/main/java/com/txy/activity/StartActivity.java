@@ -147,11 +147,6 @@ public class StartActivity extends Activity implements View.OnClickListener {
             @Override
             public void onResponse(String response) {
 
-                BoardRoom boardRoom = GsonUtils.parseJSON(response, BoardRoom.class);
-                Type type = new TypeToken<ArrayList<BoardRoom>>(){}.getType();
-                mBoardRoomLists = GsonUtils.parseJSONArray(response, type);
-                String name = mBoardRoomLists.get(0).getAir().get(0).getName();
-                Log.e("111111111111111111111",name);
                 new Handler().postDelayed(new Runnable(){
                     @Override
                     public void run() {
