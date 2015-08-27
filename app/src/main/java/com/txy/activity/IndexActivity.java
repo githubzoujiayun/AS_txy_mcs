@@ -23,15 +23,19 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import com.txy.SPdata;
 import com.txy.adapter.MenuListViewAdapter;
 import com.txy.constants.Constants;
 import com.txy.database.BoardRoomDB;
-import com.txy.database.DBManager;
 import com.txy.database.RoomList;
+import com.txy.database.httpdata.AirEntity;
 import com.txy.database.httpdata.BoardRoomEntity;
+import com.txy.database.httpdata.CurtainEntity;
+import com.txy.database.httpdata.ModelEntity;
+import com.txy.database.httpdata.ProjectorEntity;
+import com.txy.database.httpdata.TvEntity;
 import com.txy.udp.InitData.StringMerge;
 import com.txy.udp.InitData.UdpSend;
 import com.txy.services.ReceiverService;
@@ -71,6 +75,9 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
     private ArrayList<Integer> mEquipList; // 当前房间拥有的设备
 
     private ArrayList<RoomList> mRoomList = new ArrayList<RoomList>();// 所有房间的的信息
+    private TextView mTextModeSheet;
+    private List<BoardRoomEntity> mBoardRoomList;
+    private PopupWindow mRoomPopupWindow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +87,7 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
 
         initUI();
         initListener();
-        initParameter();
+        initParameter(0);
         initListView();
         initFragment();
     }
@@ -116,20 +123,50 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
     /**
      * 初始化参数
      */
-    private void initParameter() {
-
-
-
-        mRoomList = (ArrayList<RoomList>) DBManager.getAllRoomList();
-
+    private void initParameter(int position) {
         mEquipList = new ArrayList<Integer>();
-        mEquipList.add(Constants.EQUIPMENT.CTR_MODE);
-        mEquipList.add(Constants.EQUIPMENT.CTR_WINDOW);
-        mEquipList.add(Constants.EQUIPMENT.CTR_TV);
-        mEquipList.add(Constants.EQUIPMENT.CTR_PROJECTION);
-        mEquipList.add(Constants.EQUIPMENT.CTR_AIR);
+        mBoardRoomList = BoardRoomDB.getBoardRoomList();
+        if (mBoardRoomList == null || mBoardRoomList.size() == 0) {
+            return;
+        }
+
+        int i = SPdata.readSelectBoardRoomPosition(this);
+        int size = mBoardRoomList.size();
+        BoardRoomEntity boardRoomEntity;
+        if (size < i) {
+            boardRoomEntity = mBoardRoomList.get(position);
+        } else {
+            boardRoomEntity = mBoardRoomList.get(i);
+        }
+
+        mTVHeader.setText(boardRoomEntity.getTypeName());
+        List<ModelEntity> model = BoardRoomDB.getModel(boardRoomEntity.getTypeId());
+        if (model != null && model.size() != 0) {
+            mEquipList.add(Constants.EQUIPMENT.CTR_MODE);
+        }
+
+        List<CurtainEntity> curtain = BoardRoomDB.getCurtain(boardRoomEntity.getTypeId());
+        if (curtain != null && curtain.size() != 0) {
+            mEquipList.add(Constants.EQUIPMENT.CTR_WINDOW);
+        }
+
+        List<TvEntity> tv = BoardRoomDB.getTv(boardRoomEntity.getTypeId());
+        if (tv != null && tv.size() != 0) {
+            mEquipList.add(Constants.EQUIPMENT.CTR_TV);
+        }
+
+        List<ProjectorEntity> projector = BoardRoomDB.getProjector(boardRoomEntity.getTypeId());
+        if (projector != null && projector.size() != 0) {
+            mEquipList.add(Constants.EQUIPMENT.CTR_PROJECTION);
+        }
+
+        List<AirEntity> air = BoardRoomDB.getAir(boardRoomEntity.getTypeId());
+        if (air != null && air.size() != 0) {
+            mEquipList.add(Constants.EQUIPMENT.CTR_AIR);
+        }
 
         mEquipList.add(Constants.EQUIPMENT.CTR_MUSIC);
+
         mEquipList.add(Constants.EQUIPMENT.CTR_PPT);
     }
 
@@ -159,13 +196,14 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
         mIbHome = (ImageButton) findViewById(R.id.btn_selectarea);
         mIbSetting = (ImageButton) findViewById(R.id.menubtn);
         mImAddButton = (ImageView) findViewById(R.id.im_addbutton);
+        mTextModeSheet = (TextView) findViewById(R.id.txt_modesheet);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_selectarea:// 区域选择
-                showRoomList();
+                showRoomList(v);
                 break;
             case R.id.menubtn:// 设置
                 showSetMenu(v);
@@ -176,24 +214,27 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
         }
     }
 
-    private void showRoomList() {
-        View view = getLayoutInflater().from(this).inflate(R.layout.poplist, null);
+    private void showRoomList(View v) {
+
+        View view = getLayoutInflater().from(this).inflate(R.layout.room_list_menu_pop, null);
         ListView listView = (ListView) view.findViewById(R.id.menu_listview);
-        List<BoardRoomEntity> boardRoomList = BoardRoomDB.getBoardRoomList();
-        if (boardRoomList == null || boardRoomList.size() == 0) {
+        if (mBoardRoomList == null || mBoardRoomList.size() == 0) {
             return;
         }
-        String[] str = new String[]{};
-        for (int i = 0; i < boardRoomList.size(); i++) {
-            str[i] = boardRoomList.get(i).getTypeName();
+        ArrayList<String> stringArrayList = new ArrayList<>();
+        for (int i = 0; i < mBoardRoomList.size(); i++) {
+            stringArrayList.add(mBoardRoomList.get(i).getTypeName());
         }
-        listView.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,str));
-        PopupWindow popupWindow = new PopupWindow(view, this.getResources()
+        listView.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,stringArrayList));
+        listView.setOnItemClickListener(this);
+        mRoomPopupWindow = new PopupWindow(view, this.getResources()
                 .getDimensionPixelSize(R.dimen.popmenu_width),
-                LinearLayout.LayoutParams.WRAP_CONTENT);/**/
+                LinearLayout.LayoutParams.WRAP_CONTENT);
 
+        mRoomPopupWindow.setFocusable(true);
         // 这个是为了点击“返回Back”也能使其消失，并且并不会影响你的背景（很神奇的）
-        popupWindow.setBackgroundDrawable(new BitmapDrawable());
+        mRoomPopupWindow.setBackgroundDrawable(new BitmapDrawable());
+        mRoomPopupWindow.showAsDropDown(v);
     }
 
     /**
@@ -228,14 +269,27 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
                 }
                 break;
 
-            case R.id.menu_listview:
+            case R.id.room_menu_listview:
                 setMenuItemClick(position);
+                break;
+
+            case R.id.menu_listview:
+
+                closeRoomPopUpWindow();
+                SPdata.writeSelectBoardRoomPosition(this,position);
+                initParameter(position);
+                mMenuListViewAdapter.notifyDataSetChanged();
+
                 break;
 
             default:
                 break;
         }
 
+    }
+
+    private void closeRoomPopUpWindow() {
+        mRoomPopupWindow.dismiss();
     }
 
     /**
@@ -283,27 +337,35 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
         switch (mEquipList.get(position)) {
             case 0:// 情景控制
                 fragment = new TabSituation();
+                mTextModeSheet.setText(R.string.situation_sheet);
                 break;
             case 1:// 窗帘控制
                 fragment = new TabCurtain();
+                mTextModeSheet.setText(R.string.curtain_sheet);
                 break;
             case 2:// 投影控制
                 fragment = new TabProjector();
+                mTextModeSheet.setText(R.string.projector_sheet);
                 break;
             case 3:// 空调控制
                 fragment = new TabAirCondition();
+                mTextModeSheet.setText(R.string.air_sheet);
                 break;
             case 4:// 电视控制
                 fragment = new TabTV();
+                mTextModeSheet.setText(R.string.tv_sheet);
                 break;
             case 5:// 音响输出
                 fragment = new TabSound();
+                mTextModeSheet.setText(R.string.sound_sheet);
                 break;
             case 6:// 音乐控制
                 fragment = new TabMusic();
+                mTextModeSheet.setText(R.string.music_sheet);
                 break;
             case 7:// 同屏输出
                 fragment = new TabScreen();
+                mTextModeSheet.setText(R.string.tong_sheet);
                 break;
 
             default:

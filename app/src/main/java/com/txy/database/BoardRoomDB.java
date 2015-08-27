@@ -8,6 +8,7 @@ import com.txy.database.httpdata.BoardRoomEntity;
 import com.txy.database.httpdata.CurtainEntity;
 import com.txy.database.httpdata.LightEntity;
 import com.txy.database.httpdata.MachineCode;
+import com.txy.database.httpdata.ModelEntity;
 import com.txy.database.httpdata.ProjectorEntity;
 import com.txy.database.httpdata.TvEntity;
 
@@ -145,7 +146,7 @@ public class BoardRoomDB {
     public static List<LightEntity> getLight(int typeId) {
         return new Select()
                 .from(LightEntity.class)
-                .where("boardRoomId = ?",typeId)
+                .where("boardRoomId = ?", typeId)
                 .execute();
     }
 
@@ -173,6 +174,13 @@ public class BoardRoomDB {
     public static List<CurtainEntity> getCurtain(int typeId) {
         return new Select()
                 .from(CurtainEntity.class)
+                .where("boardRoomId = ?",typeId)
+                .execute();
+    }
+
+    public static List<ModelEntity> getModel(int typeId) {
+        return new Select()
+                .from(ModelEntity.class)
                 .where("boardRoomId = ?",typeId)
                 .execute();
     }

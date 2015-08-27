@@ -127,8 +127,8 @@ public class StartAppActivity extends Activity implements View.OnClickListener {
 
         String ip = edtText_ipSet.getText().toString();
         String port = edtText_portSet.getText().toString();
-        SPUtils.put(StartAppActivity.this, Constants.SERVERIP, Constants.DEFAULT_SERVER_IP);
-        SPUtils.put(StartAppActivity.this, Constants.SERVERPORT, Constants.DEFAULT_SERVER_PORT);
+        SPUtils.put(StartAppActivity.this, Constants.SERVERIP, ip);
+        SPUtils.put(StartAppActivity.this, Constants.SERVERPORT, port);
         ToastUtils.showShort(StartAppActivity.this, "设置成功!");
 
         mIpSetDialog.dismiss();
@@ -140,7 +140,7 @@ public class StartAppActivity extends Activity implements View.OnClickListener {
     public void getData(){
         String ip = (String) SPUtils.get(this, Constants.SERVERIP, Constants.DEFAULT_SERVER_IP);
         String port = (String) SPUtils.get(this, Constants.SERVERPORT, Constants.DEFAULT_SERVER_PORT);
-        String url = ip + ":" + port + Constants.URL.INIT_DATA;
+        String url = "http://" + ip + ":" + port + Constants.URL.INIT_DATA;
         HttpUtils.get(this, url, new VolleyListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
@@ -151,7 +151,7 @@ public class StartAppActivity extends Activity implements View.OnClickListener {
             public void onResponse(String response) {
                 String ip = (String) SPUtils.get(StartAppActivity.this, Constants.SERVERIP, Constants.DEFAULT_SERVER_IP);
                 String port = (String) SPUtils.get(StartAppActivity.this, Constants.SERVERPORT, Constants.DEFAULT_SERVER_PORT);
-                String url = ip + ":" + port + Constants.URL.INIT_CODE;
+                String url = "http://" + ip + ":" + port + Constants.URL.INIT_CODE;
                 HttpUtils.get(StartAppActivity.this, url, new VolleyListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {

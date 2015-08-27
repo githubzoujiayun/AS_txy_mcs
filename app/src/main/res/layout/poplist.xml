@@ -7,7 +7,7 @@
     android:gravity="right" 
     android:id="@+id/hotalk_menu_view_layout" >      
     <!-- 显示的listview -->  
-        <ListView android:id="@+id/menu_listview" 
+        <ListView android:id="@+id/room_menu_listview"
             android:layout_width="fill_parent"  
             android:layout_height="wrap_content" 
             android:paddingLeft="0dip"     

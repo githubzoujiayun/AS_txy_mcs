@@ -27,7 +27,7 @@ public class PopMenu {
         View view = LayoutInflater.from(context).inflate(R.layout.poplist, null);
 
         // 设置 listview
-        listView = (ListView) view.findViewById(R.id.menu_listview);
+        listView = (ListView) view.findViewById(R.id.room_menu_listview);
         listView.setAdapter(new PopMenuAdapter(context,itemList));
         listView.setFocusableInTouchMode(true);
         listView.setFocusable(true);/**/

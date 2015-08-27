@@ -19,6 +19,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:text=""
+            android:textColor="@color/white"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <ImageButton

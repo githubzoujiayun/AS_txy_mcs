@@ -9,5 +9,13 @@
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-
+    
+    <string name="situation_sheet">情景切换模式</string>
+    <string name="curtain_sheet">窗帘控制模式</string>
+    <string name="projector_sheet">投影控制模式</string>
+    <string name="air_sheet">空调控制模式</string>
+    <string name="tv_sheet">电视控制模式</string>
+    <string name="sound_sheet">音响控制模式</string>
+    <string name="music_sheet">音乐控制模式</string>
+    <string name="tong_sheet">同屏控制模式</string>
 </resources>
