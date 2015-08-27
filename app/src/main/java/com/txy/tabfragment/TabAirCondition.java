@@ -8,8 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.txy.SPdata;
 import com.txy.adapter.AirConditionAdapter;
+import com.txy.database.BoardRoomDB;
+import com.txy.database.httpdata.AirEntity;
+import com.txy.database.httpdata.BoardRoomEntity;
+import com.txy.database.httpdata.CurtainEntity;
 import com.txy.txy_mcs.R;
+
+import java.util.List;
 
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass.
@@ -37,8 +44,12 @@ public class TabAirCondition extends Fragment {
 
 
 	private void initViewPager() {
+        List<BoardRoomEntity> boardRoomList = BoardRoomDB.getBoardRoomList();
+        int selectBoardRoomPosition = SPdata.readSelectBoardRoomPosition(getActivity());
+        List<AirEntity> air = BoardRoomDB.getAir(boardRoomList.get(selectBoardRoomPosition).getTypeId());
+
 		ViewPager mViewPager = (ViewPager) layout.findViewById(R.id.airConditionViewPager);
-        mAirConditionAdapter = new AirConditionAdapter(getChildFragmentManager(), 4);
+        mAirConditionAdapter = new AirConditionAdapter(getChildFragmentManager(), air.size());
         mViewPager.setAdapter(mAirConditionAdapter);
     }
 

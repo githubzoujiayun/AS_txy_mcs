@@ -13,7 +13,7 @@ import com.txy.fragment.HomeFragment;
  */
 public class AirConditionAdapter extends FragmentPagerAdapter {
 
-    private int mAirConditionNum = 3;// 空调的数量
+    private int mAirConditionNum;// 空调的数量
 
     public AirConditionAdapter(FragmentManager fm, int num) {
         super(fm);

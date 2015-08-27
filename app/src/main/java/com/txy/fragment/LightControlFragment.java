@@ -1,6 +1,7 @@
 package com.txy.fragment;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -14,7 +15,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 
+import com.txy.SPdata;
 import com.txy.adapter.LightGridAdapter;
+import com.txy.database.BoardRoomDB;
+import com.txy.database.httpdata.BoardRoomEntity;
+import com.txy.database.httpdata.LightEntity;
 import com.txy.txy_mcs.R;
 import com.txy.udp.InitData.ByteMerge;
 import com.txy.utils.SPUtils;
@@ -27,7 +32,7 @@ public class LightControlFragment extends Fragment {
 
     private GridView mGridView;
     private ArrayList<Boolean> mLightStatus = new ArrayList<Boolean>();// 灯的状态
-    private ArrayList<String> mLightName;// 灯的名字
+    private int mLightNum;// 灯的數量
     private LightGridAdapter mLightGridAdapter;
     private BroadcastReceiver receive;
 
@@ -36,18 +41,7 @@ public class LightControlFragment extends Fragment {
         View layout = inflater.inflate(R.layout.fragment_light_control, null);
 
         initGridView(layout);
-        initParameter();
         return layout;
-    }
-
-    /**
-     * 初始化参数
-     */
-    private void initParameter() {
-
-        getEquipStatus();
-        updateLightStatus();
-
     }
 
     @Override
@@ -69,8 +63,11 @@ public class LightControlFragment extends Fragment {
         super.setUserVisibleHint(isVisibleToUser);
 
         if (isVisibleToUser) {
+            List<BoardRoomEntity> boardRoomList = BoardRoomDB.getBoardRoomList();
+            int selectBoardRoomPosition = SPdata.readSelectBoardRoomPosition(getActivity());
+            List<LightEntity> light = BoardRoomDB.getLight(boardRoomList.get(selectBoardRoomPosition).getTypeId());
             getEquipStatus();
-            updateLightStatus();
+            updateLightStatus(light);
         }
 
     }
@@ -83,7 +80,7 @@ public class LightControlFragment extends Fragment {
     private void initGridView(View layout) {
 
         mGridView = (GridView) layout.findViewById(R.id.gridView);
-        mLightGridAdapter = new LightGridAdapter(getActivity(), mLightStatus, mLightName);
+        mLightGridAdapter = new LightGridAdapter(getActivity(), mLightStatus);
         mGridView.setAdapter(mLightGridAdapter);
 
     }
@@ -104,8 +101,10 @@ public class LightControlFragment extends Fragment {
 
     }
 
-    private void updateLightStatus() {
-
+    private void updateLightStatus(List<LightEntity> light) {
+        if (light != null) {
+            mLightGridAdapter.setLightList(light);
+        }
         mLightGridAdapter.setLightStatus(mLightStatus);
         mLightGridAdapter.notifyDataSetChanged();
 
@@ -123,7 +122,7 @@ public class LightControlFragment extends Fragment {
                 mLightStatus.addAll(ByteMerge.parseByteToBit(bytes[i]));
             }
 
-            updateLightStatus();
+            updateLightStatus(null);
         }
     }
 }

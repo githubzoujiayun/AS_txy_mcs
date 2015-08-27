@@ -16,4 +16,8 @@ public class SPdata {
     public static int readMusicMode(Context context) {
         return (Integer)SPUtils.get(context,"nowMusicPlayMode",0);
     }
+
+    public static int readSelectBoardRoomPosition(Context context) {
+        return (int) SPUtils.get(context, "selectBoardRoomPosition", 0);
+    }
 }

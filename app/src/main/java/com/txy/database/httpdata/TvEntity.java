@@ -15,6 +15,16 @@ public  class TvEntity extends Model{
             private String name;
             @Column
             private String code;
+    @Column
+    private int boardRoomId;
+
+    public int getBoardRoomId() {
+        return boardRoomId;
+    }
+
+    public void setBoardRoomId(int boardRoomId) {
+        this.boardRoomId = boardRoomId;
+    }
 
             public void setName(String name) {
                 this.name = name;

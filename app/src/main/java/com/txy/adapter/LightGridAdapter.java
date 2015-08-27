@@ -1,6 +1,7 @@
 package com.txy.adapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,7 +11,9 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import com.activeandroid.util.Log;
 import com.txy.constants.Constants;
+import com.txy.database.httpdata.LightEntity;
 import com.txy.txy_mcs.R;
 import com.txy.udp.InitData.StringMerge;
 import com.txy.udp.Sender;
@@ -19,19 +22,21 @@ import com.txy.utils.SPUtils;
 public class LightGridAdapter extends BaseAdapter{
 
     private Context mContext;
-    private int mLightNum = 0;// 灯光的数量
     private ArrayList<Boolean> mLightStatus = new ArrayList<Boolean>();// 灯的状态
-    private ArrayList<String> mLightName;// 灯的名字
+    private List<LightEntity> mLightList;// 灯
 
-    public LightGridAdapter(Context context, ArrayList<Boolean> lightStatus, ArrayList<String> lightName) {
+    public LightGridAdapter(Context context, ArrayList<Boolean> lightStatus) {
         mContext  = context;
         mLightStatus = lightStatus;
-        mLightName = lightName;
+    }
+
+    public void setLightList(List<LightEntity> lightList) {
+        this.mLightList = lightList;
     }
 
     @Override
     public int getCount() {
-        return mLightNum;
+        return mLightList == null ? 0 : mLightList.size();
     }
 
     @Override
@@ -58,13 +63,23 @@ public class LightGridAdapter extends BaseAdapter{
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.name.setText("灯"+position);
-
-        if (mLightStatus.get(position)) {
-            holder.button.setChecked(true);
+        if (mLightList == null) {
+            holder.name.setText("灯"+position);
         } else {
-            holder.button.setChecked(false);
+            holder.name.setText(mLightList.get(position).getName());
         }
+
+
+        if (mLightStatus.size() != 0) {
+            if (mLightStatus.get(position)) {
+                holder.button.setChecked(true);
+            } else {
+                holder.button.setChecked(false);
+            }
+        } else {
+            Log.e("____LightGridAdapter", "mLightStatus的大小为0");
+        }
+
 
         final ViewHolder finalHolder = holder;
         holder.button.setOnClickListener(new View.OnClickListener() {
@@ -83,10 +98,6 @@ public class LightGridAdapter extends BaseAdapter{
         });
 
         return convertView;
-    }
-
-    public void setmLightNum(int mLightNum) {
-        this.mLightNum = mLightNum;
     }
 
     public void setLightStatus(ArrayList<Boolean> list) {

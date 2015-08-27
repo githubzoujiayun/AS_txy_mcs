@@ -34,7 +34,7 @@
             android:screenOrientation="landscape" >
         </activity>
         <activity
-            android:name="com.txy.activity.StartActivity"
+            android:name="com.txy.activity.StartAppActivity"
             android:label="@string/title_activity_start"
             android:screenOrientation="landscape" >
             <intent-filter>

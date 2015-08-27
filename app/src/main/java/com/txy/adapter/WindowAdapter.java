@@ -1,6 +1,7 @@
 package com.txy.adapter;
 
 import com.txy.constants.Constants;
+import com.txy.database.httpdata.CurtainEntity;
 import com.txy.txy_mcs.R;
 import com.txy.udp.InitData.StringMerge;
 import com.txy.udp.InitData.UdpSend;
@@ -19,20 +20,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class WindowAdapter extends BaseAdapter {
 
-    private int mWindowNum = 4;// 控制窗帘的数量
     private Context mContext;
+    private List<CurtainEntity> curtainEntityList;
     private HashMap<Integer, Boolean> isCheckedMap = new HashMap<Integer, Boolean>();
 
-    public WindowAdapter(Context context) {
+    public WindowAdapter(Context context, List<CurtainEntity> curtainEntityList) {
         mContext = context;
+        this.curtainEntityList = curtainEntityList;
     }
 
     @Override
     public int getCount() {
-        return mWindowNum;
+        return curtainEntityList == null ? 0 : curtainEntityList.size();
     }
 
     @Override
@@ -56,6 +59,7 @@ public class WindowAdapter extends BaseAdapter {
         holder.windowClose = (ImageView) layout.findViewById(R.id.closeWindow);
         holder.windowPause = (ImageView) layout.findViewById(R.id.pauseWindow);
 
+        holder.textView.setText(curtainEntityList.get(position).getName());
 
         holder.windowOpen.setOnClickListener(new OnClickListener() {
             @Override
@@ -89,7 +93,6 @@ public class WindowAdapter extends BaseAdapter {
                 new Sender(msg, ip, port).send();
             }
         });
-        holder.textView.setText("窗帘");
 
         return layout;
     }
@@ -99,13 +102,6 @@ public class WindowAdapter extends BaseAdapter {
         ImageView windowClose;
         ImageView windowPause;
         TextView  textView;
-    }
-    /**
-     * 设置Window的数量
-     * @param mNum
-     */
-    public void setNum(int mNum) {
-        this.mWindowNum = mNum;
     }
 
 }

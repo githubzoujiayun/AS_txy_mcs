@@ -1,7 +1,6 @@
 package com.txy.udp.InitData;
 
 import com.txy.database.AirCondition;
-import com.txy.database.LightStatus;
 import com.txy.utils.ByteToBitUtils;
 
 import java.util.ArrayList;
