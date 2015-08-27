@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -15,11 +14,10 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import com.android.volley.VolleyError;
-import com.google.gson.reflect.TypeToken;
 import com.txy.constants.Constants;
 import com.txy.database.DBManager;
 import com.txy.database.MyMusic;
-import com.txy.gson.BoardRoom;
+import com.txy.database.httpdata.BoardRoom;
 import com.txy.gson.GsonUtils;
 import com.txy.txy_mcs.R;
 import com.txy.utils.SPUtils;
@@ -27,7 +25,6 @@ import com.txy.utils.ToastUtils;
 import com.txy.volley.HttpUtils;
 import com.txy.volley.VolleyListener;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +33,6 @@ public class StartActivity extends Activity implements View.OnClickListener {
     private EditText edtText_ipSet;
     private EditText edtText_portSet;
     private AlertDialog mIpSetDialog;
-    private ArrayList<BoardRoom> mBoardRoomLists;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,6 +142,14 @@ public class StartActivity extends Activity implements View.OnClickListener {
 
             @Override
             public void onResponse(String response) {
+
+                BoardRoom boardRoom = GsonUtils.parseJSON(response, BoardRoom.class);
+                int  id = boardRoom.getVersion();
+                int  httpVersion = (int) SPUtils.get(StartActivity.this, "HttpVersion", -1);
+                if (httpVersion != id) {
+                    SPUtils.put(StartActivity.this, "HttpVersion",id);
+
+                }
 
                 new Handler().postDelayed(new Runnable(){
                     @Override
