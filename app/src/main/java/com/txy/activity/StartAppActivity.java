@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -114,20 +115,20 @@ public class StartAppActivity extends Activity implements View.OnClickListener {
     }
 
     private void submitButton() {
-        if (edtText_ipSet.getText().equals("") || edtText_ipSet.getText() == null) {
+        if (edtText_ipSet.getText().toString().equals("") ) {
             ToastUtils.showShort(StartAppActivity.this, "请输入服务器IP地址!");
             return;
         }
 
-        if (edtText_portSet.getText().equals("") || edtText_portSet.getText() == null) {
+        if (edtText_portSet.getText().toString().equals("")) {
             ToastUtils.showShort(StartAppActivity.this, "请输入端口号!");
             return;
         }
 
         String ip = edtText_ipSet.getText().toString();
         String port = edtText_portSet.getText().toString();
-        SPUtils.put(StartAppActivity.this, ip, Constants.DEFAULT_SERVER_IP);
-        SPUtils.put(StartAppActivity.this, port, Constants.DEFAULT_SERVER_PORT);
+        SPUtils.put(StartAppActivity.this, Constants.SERVERIP, Constants.DEFAULT_SERVER_IP);
+        SPUtils.put(StartAppActivity.this, Constants.SERVERPORT, Constants.DEFAULT_SERVER_PORT);
         ToastUtils.showShort(StartAppActivity.this, "设置成功!");
 
         mIpSetDialog.dismiss();
@@ -137,7 +138,10 @@ public class StartAppActivity extends Activity implements View.OnClickListener {
     }
 
     public void getData(){
-        HttpUtils.get(this, Constants.URL.INIT_DATA, new VolleyListener() {
+        String ip = (String) SPUtils.get(this, Constants.SERVERIP, Constants.DEFAULT_SERVER_IP);
+        String port = (String) SPUtils.get(this, Constants.SERVERPORT, Constants.DEFAULT_SERVER_PORT);
+        String url = ip + ":" + port + Constants.URL.INIT_DATA;
+        HttpUtils.get(this, url, new VolleyListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 go2indext();
@@ -145,10 +149,13 @@ public class StartAppActivity extends Activity implements View.OnClickListener {
 
             @Override
             public void onResponse(String response) {
-                HttpUtils.get(StartAppActivity.this, Constants.URL.INIT_CODE, new VolleyListener() {
+                String ip = (String) SPUtils.get(StartAppActivity.this, Constants.SERVERIP, Constants.DEFAULT_SERVER_IP);
+                String port = (String) SPUtils.get(StartAppActivity.this, Constants.SERVERPORT, Constants.DEFAULT_SERVER_PORT);
+                String url = ip + ":" + port + Constants.URL.INIT_CODE;
+                HttpUtils.get(StartAppActivity.this, url, new VolleyListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        go2indext();
                     }
 
                     @Override

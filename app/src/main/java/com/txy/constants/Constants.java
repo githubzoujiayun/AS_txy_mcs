@@ -63,8 +63,8 @@ public final class Constants {
     }
 
     public static final class URL{
-        public static String INIT_DATA = "http://192.168.1.248:8820/tx/api/getAppStatus.action";
-        public static String INIT_CODE = "http://192.168.1.248:8820/tx/api/getBoardRoom.action";
+        public static String INIT_DATA = "/tx/api/getAppStatus.action";
+        public static String INIT_CODE = "/tx/api/getBoardRoom.action";
     }
 
 }

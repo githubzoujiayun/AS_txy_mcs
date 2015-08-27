@@ -4,6 +4,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.Fragment;
@@ -16,15 +17,21 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.txy.adapter.MenuListViewAdapter;
 import com.txy.constants.Constants;
+import com.txy.database.BoardRoomDB;
 import com.txy.database.DBManager;
 import com.txy.database.RoomList;
+import com.txy.database.httpdata.BoardRoomEntity;
 import com.txy.udp.InitData.StringMerge;
 import com.txy.udp.InitData.UdpSend;
 import com.txy.services.ReceiverService;
@@ -44,6 +51,7 @@ import com.txy.udp.Sender;
 import com.txy.utils.SPUtils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class IndexActivity extends FragmentActivity implements OnClickListener,
@@ -110,6 +118,8 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
      */
     private void initParameter() {
 
+
+
         mRoomList = (ArrayList<RoomList>) DBManager.getAllRoomList();
 
         mEquipList = new ArrayList<Integer>();
@@ -155,7 +165,7 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_selectarea:// 区域选择
-
+                showRoomList();
                 break;
             case R.id.menubtn:// 设置
                 showSetMenu(v);
@@ -164,6 +174,26 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
             default:
                 break;
         }
+    }
+
+    private void showRoomList() {
+        View view = getLayoutInflater().from(this).inflate(R.layout.poplist, null);
+        ListView listView = (ListView) view.findViewById(R.id.menu_listview);
+        List<BoardRoomEntity> boardRoomList = BoardRoomDB.getBoardRoomList();
+        if (boardRoomList == null || boardRoomList.size() == 0) {
+            return;
+        }
+        String[] str = new String[]{};
+        for (int i = 0; i < boardRoomList.size(); i++) {
+            str[i] = boardRoomList.get(i).getTypeName();
+        }
+        listView.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,str));
+        PopupWindow popupWindow = new PopupWindow(view, this.getResources()
+                .getDimensionPixelSize(R.dimen.popmenu_width),
+                LinearLayout.LayoutParams.WRAP_CONTENT);/**/
+
+        // 这个是为了点击“返回Back”也能使其消失，并且并不会影响你的背景（很神奇的）
+        popupWindow.setBackgroundDrawable(new BitmapDrawable());
     }
 
     /**

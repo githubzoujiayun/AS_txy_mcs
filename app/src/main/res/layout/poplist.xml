@@ -17,9 +17,7 @@
             android:longClickable="true" 
             android:scrollbarSize="0sp"         
             android:scrollbarStyle="insideOverlay" 
-             
-         
-            android:dividerHeight="1px" 
+            android:dividerHeight="1px"
             android:cacheColorHint="#00000000"> 
     </ListView>    
 </RelativeLayout> 
