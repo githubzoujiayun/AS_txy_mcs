@@ -122,6 +122,9 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
      * 设置默认选择的Fragment
      */
     private void initFragment() {
+        if (mBoardRoomList == null || mBoardRoomList.size() == 0) {
+            return;
+        }
         tabMenu(0);
     }
 

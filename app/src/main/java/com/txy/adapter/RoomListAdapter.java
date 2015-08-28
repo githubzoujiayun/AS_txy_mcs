@@ -12,15 +12,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.txy.database.RoomList;
+import com.txy.database.httpdata.BoardRoomEntity;
 import com.txy.txy_mcs.R;
 
 public class RoomListAdapter extends BaseAdapter {
 
-    private List<RoomList> mRoomListData;
+    private List<BoardRoomEntity> mRoomListData;
     private Context mContext;
     private int mPosition;// 记录下选中的位置
 
-    public RoomListAdapter(Context mcon,List<RoomList> listData,int position) {
+    public RoomListAdapter(Context mcon,List<BoardRoomEntity> listData,int position) {
         mContext = mcon;
         mRoomListData = listData;
         mPosition = position;
@@ -54,7 +55,7 @@ public class RoomListAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.room_name.setText(mRoomListData.get(position).roomName);
+        holder.room_name.setText(mRoomListData.get(position).getTypeName());
         if (mPosition == position) {
             holder.selectedItem.setVisibility(View.VISIBLE);
         } else {
@@ -76,18 +77,6 @@ public class RoomListAdapter extends BaseAdapter {
      */
     public void setPosition(int position) {
         mPosition = position;
-    }
-
-    public void addOneRoomList(RoomList roomList){
-        if(mRoomListData == null){
-            mRoomListData = new ArrayList<RoomList>();
-        }
-        this.mRoomListData.add(roomList);
-    }
-
-    public void setmRoomListData(List<RoomList> mRoomListData) {
-        this.mRoomListData.clear();
-        this.mRoomListData = mRoomListData;
     }
 
 }

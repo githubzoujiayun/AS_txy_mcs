@@ -18,27 +18,38 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:text="@string/set_title"
+            android:textColor="@color/white"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <ImageButton
+        <RelativeLayout
             android:id="@+id/btn_back"
-            android:layout_width="60dip"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="15dp"
-            android:background="@drawable/btn_back"
-            android:scaleType="centerInside" />
+            android:layout_width="100dp"
+            android:layout_height="50dp">
+            <ImageButton
+                android:layout_width="60dip"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/btn_back"
+                android:scaleType="centerInside" />
+        </RelativeLayout>
 
-        <ImageButton
+        <RelativeLayout
             android:id="@+id/btn_saveset"
-            android:layout_width="60dip"
-            android:layout_height="wrap_content"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="15dp"
-            android:background="@drawable/btn_save"
-            android:scaleType="centerInside" />
+            android:gravity="center"
+            >
+            <ImageButton
+                android:layout_width="60dip"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:background="@drawable/btn_save"
+                android:scaleType="centerInside" />
+        </RelativeLayout>
+
     </RelativeLayout>
 
     <LinearLayout
@@ -63,7 +74,8 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="11dp"
-                android:text="点击以下按钮进行设置"
+                android:text="设置IP、端口、投影仪等参数"
+                android:textColor="@color/white"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
         </RelativeLayout>
 

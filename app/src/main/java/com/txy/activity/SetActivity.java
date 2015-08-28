@@ -29,8 +29,10 @@ import android.widget.ListView;
 
 import com.txy.adapter.RoomListAdapter;
 import com.txy.constants.Constants;
+import com.txy.database.BoardRoomDB;
 import com.txy.database.DBManager;
 import com.txy.database.RoomList;
+import com.txy.database.httpdata.BoardRoomEntity;
 import com.txy.fragment.HomeSetFragment;
 import com.txy.fragment.SetModeFragment;
 import com.txy.fragment.SetEquipmentFragment;
@@ -44,21 +46,10 @@ import com.txy.utils.ToastUtils;
 
 public class SetActivity extends FragmentActivity implements OnClickListener, OnItemClickListener, OnLongClickListener {
 
-    private EditText mEtRoomName;
-    private EditText mEtLightNum;
-    private EditText mEtWindowNum;
-    private EditText mEtAirNum;
-    private EditText mEtProjectionNum;
-    private EditText mEtTvNum;
-    private EditText mEtSoundNum;
-    private AlertDialog mAddDialog;
     private ListView mListView;
-    private List<RoomList> mRoomListData;
     private RoomListAdapter mRoomListAdapter;
     private int mPosition;// 当前选中的房间
-    private int mNowSetButton;// 当前设置的按钮
-    private boolean canReturn = false;
-    private MyBroadCast receiver = new MyBroadCast();
+    private List<BoardRoomEntity> boardRoomList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,44 +67,22 @@ public class SetActivity extends FragmentActivity implements OnClickListener, On
     @Override
     protected void onResume() {
         super.onResume();
-        IntentFilter intentFilter = new IntentFilter(Constants.BROADCAST.SETFRAGMENT2SET);
-        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, intentFilter);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event){
-        if (keyCode == KeyEvent.KEYCODE_BACK ){
-            canReturn();
-        }
-        return false;
-    }
-
-    /**
-     * 判断是否可以返回
-     */
-    private boolean canReturn() {
-        if (canReturn){
-            replaceFragment(new HomeSetFragment());
-            canReturn = false;
-            return true;
-        }
-        return false;
-    }
 
     /**
      * 初始化操作的界面
      */
     private void initOperate() {
-        replaceFragment(new SettingFragment());
-        if(mRoomListData != null && mRoomListData.size() > 0 ){
-//            replaceFragment(new SettingFragment());
+        if (boardRoomList == null || boardRoomList.size() == 0) {
+            return;
         }
+        replaceFragment(new SettingFragment());
     }
 
     /**
@@ -133,7 +102,7 @@ public class SetActivity extends FragmentActivity implements OnClickListener, On
      * 获取房间列表
      */
     private void getRoomList() {
-        mRoomListData = DBManager.getAllRoomList();
+        boardRoomList = BoardRoomDB.getBoardRoomList();
     }
 
     /**
@@ -142,7 +111,7 @@ public class SetActivity extends FragmentActivity implements OnClickListener, On
      */
     private void initListView() {
         mListView = (ListView) findViewById(R.id.listview_roomlist);
-        mRoomListAdapter = new RoomListAdapter(this, mRoomListData, 0);
+        mRoomListAdapter = new RoomListAdapter(this, boardRoomList, 0);
         mListView.setAdapter(mRoomListAdapter);
 
         mListView.setOnItemClickListener(this);
@@ -162,26 +131,13 @@ public class SetActivity extends FragmentActivity implements OnClickListener, On
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_back:// 返回按键
-                if (!canReturn()){
-                    finish();
-                }
+                finish();
                 break;
 
             case R.id.btn_saveset:// 保存
                 // 如果可以返回，说明正在进行设置操作,就可以保存
-                if (canReturn){
-                    sendSaveOrder();
-                    ToastUtils.showLong(this, "保存成功");
-                }
-                break;
-
-            case R.id.btn_sure:// Dialog确定按钮
-                if (judge()){
-                    save2DB();
-                }
-                break;
-            case R.id.btn_cancel:// Dialog取消
-                mAddDialog.dismiss();
+                sendSaveOrder();
+                ToastUtils.showLong(this, "保存成功");
                 break;
 
             default:
@@ -189,128 +145,15 @@ public class SetActivity extends FragmentActivity implements OnClickListener, On
         }
     }
 
-    /**
-     * 保存到数据库
-     */
-    private void save2DB() {
-        String roomName = mEtRoomName.getText().toString();
-        String lightNum = mEtLightNum.getText().toString();
-        String windowNum = mEtWindowNum.getText().toString();
-        String airNum = mEtAirNum.getText().toString();
-        String projectionNum = mEtProjectionNum.getText().toString();
-        String tvNum = mEtTvNum.getText().toString();
-        String soundNum = mEtSoundNum.getText().toString();
 
-        int lightnumber = Integer.parseInt(lightNum);
-
-        // 创建一个房间
-        int roomId = (Integer) SPUtils.get(this, "roomid", 0);
-        roomId += 1;
-        RoomList roomList = new RoomList();
-        DBManager.saveRoomList(roomList);
-        mRoomListAdapter.addOneRoomList(roomList);
-        mRoomListAdapter.notifyDataSetChanged();
-        SPUtils.put(this, "roomid", roomId);
-
-        //创建Light模式表
-        saveLight(lightnumber, roomId);
-
-        mAddDialog.dismiss();
-        replaceFragment(new HomeSetFragment());
-    }
-
-    private void saveLight(int lightnumber, int roomId) {
-    }
-
-    /**
-     * 判断输入的参数是否合法
-     * @return
-     */
-    private boolean judge() {
-        if ((mEtRoomName.getText().toString() == null)
-                || (mEtRoomName.getText().toString().equalsIgnoreCase(""))) {
-            ToastUtils.showShort(this, "请输入区域名称！");
-            return false;
-        } else if ((mEtLightNum.getText().toString() == null)
-                || (mEtLightNum.getText().toString().equalsIgnoreCase(""))) {
-            ToastUtils.showShort(this, "请输入灯光数量！");
-            return false;
-        } else if (Integer.parseInt(mEtLightNum.getText().toString()) > 20) {
-            ToastUtils.showShort(this, "灯光数量不能超过20盏！");
-            return false;
-        } else if ((mEtWindowNum.getText().toString() == null)
-                || (mEtWindowNum.getText().toString().equalsIgnoreCase(""))) {
-            ToastUtils.showShort(this, "请输入窗帘数量！");
-            return false;
-        } else if (Integer.parseInt(mEtWindowNum.getText().toString()) > 8) {
-            ToastUtils.showShort(this, "窗帘数量不能超过8！");
-            return false;
-        } else if ((mEtAirNum.getText().toString() == null)
-                || (mEtAirNum.getText().toString().equalsIgnoreCase(""))) {
-            ToastUtils.showShort(this, "请输入空调数量！");
-            return false;
-        } else if (Integer.parseInt(mEtAirNum.getText().toString()) > 8) {
-            ToastUtils.showShort(this, "空调数量不能超过6！");
-            return false;
-        } else if ((mEtProjectionNum.getText().toString() == null)
-                || (mEtProjectionNum.getText().toString().equalsIgnoreCase(""))) {
-            ToastUtils.showShort(this, "请输入投影数量！");
-            return false;
-        } else if (Integer.parseInt(mEtProjectionNum.getText().toString()) > 6) {
-            ToastUtils.showShort(this, "投影数量不能超过6！");
-            return false;
-        } else if ((mEtTvNum.getText().toString() == null)
-                || (mEtTvNum.getText().toString().equalsIgnoreCase(""))) {
-            ToastUtils.showShort(this, "请输入电视机数量！");
-            return false;
-        } else if (Integer.parseInt(mEtTvNum.getText().toString()) > 6) {
-            ToastUtils.showShort(this, "投影电视机不能超过6！");
-            return false;
-        } else if ((mEtSoundNum.getText().toString() == null)
-                || (mEtSoundNum.getText().toString().equalsIgnoreCase(""))) {
-            ToastUtils.showShort(this, "请输入音响数量！");
-            return false;
-        } else if (Integer.parseInt(mEtSoundNum.getText().toString()) > 1) {
-            ToastUtils.showShort(this, "音响不能超过1！");
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * 显示添加房间的对话框
-     */
-    private void showAddDialog() {
-
-        LayoutInflater inflater = LayoutInflater.from(this);
-        LinearLayout addroomlayout = (LinearLayout) inflater.inflate(R.layout.dialog_addroom, null);
-
-        mAddDialog = new AlertDialog.Builder(this).create();
-        mAddDialog.show();
-        mAddDialog.getWindow().setContentView(addroomlayout);
-        mAddDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
-
-        mEtRoomName = (EditText) addroomlayout.findViewById(R.id.et_roomname);
-        mEtLightNum = (EditText) addroomlayout.findViewById(R.id.et_lightnum);
-        mEtWindowNum = (EditText) addroomlayout.findViewById(R.id.et_windowsnum);
-        mEtAirNum = (EditText) addroomlayout.findViewById(R.id.et_kgnum);
-        mEtProjectionNum = (EditText) addroomlayout.findViewById(R.id.et_tynum);
-        mEtTvNum = (EditText) addroomlayout.findViewById(R.id.et_tvnum);
-        mEtSoundNum = (EditText) addroomlayout.findViewById(R.id.et_soundnum);
-
-        addroomlayout.findViewById(R.id.btn_sure).setOnClickListener(this);
-        addroomlayout.findViewById(R.id.btn_cancel).setOnClickListener(this);
-    }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position,
                             long id) {
-        canReturn = false;
         mPosition = position;
-//		int roomid = mRoomListData.get(position).roomid;
         mRoomListAdapter.setPosition(position);
         mRoomListAdapter.notifyDataSetChanged();
-        replaceFragment(new HomeSetFragment());
+        replaceFragment(new SettingFragment());
 
     }
 
@@ -319,55 +162,12 @@ public class SetActivity extends FragmentActivity implements OnClickListener, On
         return false;
     }
 
-    class MyBroadCast extends BroadcastReceiver{
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            canReturn = true;
-            mNowSetButton = intent.getIntExtra("position", 0);
-            switch (mNowSetButton) {
-                case 0:
-                case 1:
-                case 2:
-                case 3:
-                    go2SetMode();
-                    break;
-                case 4:
-                    replaceFragment(new SetIPFragment());
-                    break;
-                case 5:
-                    replaceFragment(new SetEquipmentFragment());
-                    break;
-                case 6:
-                    replaceFragment(new SetNameFragment());
-                    break;
-                case 7:
-                    replaceFragment(new SetProjectionTimeFragment());
-                    break;
-                default:
-                    break;
-            }
-
-        }
-
-
-    }
-
-    private void go2SetMode() {
-        SetModeFragment modeSetFragment = new SetModeFragment();
-        Bundle bundle = new Bundle();
-        bundle.putInt("roomid", mRoomListData.get(mPosition).roomid);
-        bundle.putInt("mode", mNowSetButton);
-        modeSetFragment.setArguments(bundle);
-        replaceFragment(modeSetFragment);
-    }
 
     /**
      * 发送广播跟Fragment通信
      */
     private void sendSaveOrder() {
         Intent intent = new Intent(Constants.BROADCAST.SAVESETTING);
-        intent.putExtra("button", mNowSetButton);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 
