@@ -23,10 +23,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.txy.SPdata;
 import com.txy.adapter.MenuListViewAdapter;
+import com.txy.adapter.PopMenuAdapter;
+import com.txy.adapter.SelectRoomMenuAdapter;
 import com.txy.constants.Constants;
 import com.txy.database.BoardRoomDB;
 import com.txy.database.RoomList;
@@ -36,6 +39,7 @@ import com.txy.database.httpdata.CurtainEntity;
 import com.txy.database.httpdata.ModelEntity;
 import com.txy.database.httpdata.ProjectorEntity;
 import com.txy.database.httpdata.TvEntity;
+import com.txy.tools.AreaMenu;
 import com.txy.udp.InitData.StringMerge;
 import com.txy.udp.InitData.UdpSend;
 import com.txy.services.ReceiverService;
@@ -78,6 +82,7 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
     private TextView mTextModeSheet;
     private List<BoardRoomEntity> mBoardRoomList;
     private PopupWindow mRoomPopupWindow;
+    private AreaMenu areaMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -215,26 +220,14 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
     }
 
     private void showRoomList(View v) {
-
-        View view = getLayoutInflater().from(this).inflate(R.layout.room_list_menu_pop, null);
-        ListView listView = (ListView) view.findViewById(R.id.menu_listview);
-        if (mBoardRoomList == null || mBoardRoomList.size() == 0) {
+        List<BoardRoomEntity> boardRoomList = BoardRoomDB.getBoardRoomList();
+        if (boardRoomList == null || boardRoomList.size() == 0) {
             return;
         }
-        ArrayList<String> stringArrayList = new ArrayList<>();
-        for (int i = 0; i < mBoardRoomList.size(); i++) {
-            stringArrayList.add(mBoardRoomList.get(i).getTypeName());
-        }
-        listView.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,stringArrayList));
-        listView.setOnItemClickListener(this);
-        mRoomPopupWindow = new PopupWindow(view, this.getResources()
-                .getDimensionPixelSize(R.dimen.popmenu_width),
-                LinearLayout.LayoutParams.WRAP_CONTENT);
-
-        mRoomPopupWindow.setFocusable(true);
-        // 这个是为了点击“返回Back”也能使其消失，并且并不会影响你的背景（很神奇的）
-        mRoomPopupWindow.setBackgroundDrawable(new BitmapDrawable());
-        mRoomPopupWindow.showAsDropDown(v);
+        areaMenu = new AreaMenu(this);
+        areaMenu.addItemList(boardRoomList);
+        areaMenu.showAsDropDown(v);
+        areaMenu.setOnItemClickListener(this);
     }
 
     /**
@@ -289,7 +282,7 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
     }
 
     private void closeRoomPopUpWindow() {
-        mRoomPopupWindow.dismiss();
+        areaMenu.dismiss();
     }
 
     /**

@@ -32,7 +32,7 @@ public class PopMenu {
         listView.setFocusableInTouchMode(true);
         listView.setFocusable(true);/**/
 
-        popupWindow = new PopupWindow(view, 100, LayoutParams.WRAP_CONTENT);
+//        popupWindow = new PopupWindow(view, 100, LayoutParams.WRAP_CONTENT);
         popupWindow = new PopupWindow(view, context.getResources()
                 .getDimensionPixelSize(R.dimen.popmenu_width),
                 LayoutParams.WRAP_CONTENT);/**/
