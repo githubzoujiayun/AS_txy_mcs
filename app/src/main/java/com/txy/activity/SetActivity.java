@@ -132,6 +132,7 @@ public class SetActivity extends FragmentActivity implements OnClickListener, On
         switch (v.getId()) {
             case R.id.btn_back:// 返回按键
                 finish();
+                overridePendingTransition(R.anim.left_to_right_in, R.anim.left_to_right_out);
                 break;
 
             case R.id.btn_saveset:// 保存

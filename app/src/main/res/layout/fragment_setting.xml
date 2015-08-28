@@ -4,7 +4,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -16,6 +17,8 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="房间IP、端口设置"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:id="@+id/textView"
             android:textColor="@color/white"
             android:layout_marginLeft="10dp"
@@ -51,6 +54,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="IP示例：192.168.1.1"
+                    android:textColorHint="@color/primary_light"
                     android:ems="10"
                     android:inputType="number" />
             </android.support.design.widget.TextInputLayout>
@@ -86,6 +90,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="端口示例：8888"
+                    android:textColorHint="@color/primary_light"
                     android:ems="10"
                     android:inputType="number" />
             </android.support.design.widget.TextInputLayout>
@@ -145,6 +150,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="IP示例：192.168.1.1"
+                    android:textColorHint="@color/primary_light"
                     android:ems="10"
                     android:inputType="number" />
             </android.support.design.widget.TextInputLayout>
@@ -178,6 +184,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="端口示例：8888"
+                    android:textColorHint="@color/primary_light"
                     android:ems="10"
                     android:inputType="number" />
             </android.support.design.widget.TextInputLayout>

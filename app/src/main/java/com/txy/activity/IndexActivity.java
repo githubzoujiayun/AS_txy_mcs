@@ -300,6 +300,7 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
                 Intent intent = new Intent(this,SetActivity.class);
                 startActivity(intent);
                 closeSetMenu();
+                overridePendingTransition(R.anim.right_to_left_in, R.anim.right_to_left_out);
                 break;
             case 1:// 帮助
                 closeSetMenu();
