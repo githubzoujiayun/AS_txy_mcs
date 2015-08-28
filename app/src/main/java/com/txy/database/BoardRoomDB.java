@@ -1,6 +1,7 @@
 package com.txy.database;
 
 import com.activeandroid.ActiveAndroid;
+import com.activeandroid.Model;
 import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 import com.txy.database.httpdata.AirEntity;
@@ -123,6 +124,14 @@ public class BoardRoomDB {
             ActiveAndroid.endTransaction();
         }
         return true;
+    }
+
+    public static void saveOneMachineIp(MachineCode machineCode) {
+        new Delete()
+                .from(MachineCode.class)
+                .where("typeId = ?", machineCode.getTypeId())
+                .execute();
+        machineCode.save();
     }
 
     public static void deleteMachineCode() {

@@ -1,6 +1,9 @@
 package com.txy.fragment;
 
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,8 +12,13 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.txy.constants.Constants;
+import com.txy.database.BoardRoomDB;
+import com.txy.database.httpdata.BoardRoomEntity;
+import com.txy.database.httpdata.MachineCode;
 import com.txy.txy_mcs.R;
 import com.txy.utils.SPUtils;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,29 +30,32 @@ public class SettingFragment extends Fragment {
     private EditText mRoomPortEdt;
     private EditText mServerIpEdt;
     private EditText mServerPortEdt;
+    private int position;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.fragment_setting, container, false);
         initUI(layout);
-        initEdt();
+        getData();
         return layout;
     }
 
-    private void initEdt() {
-        String ip = (String) SPUtils.get(getActivity(), Constants.IP, Constants.DEFAULT_IP);
-        int port = (int) SPUtils.get(getActivity(), Constants.SENDPORT, Constants.DEFAULT_SENDPORT);
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
 
-        String serverIp = (String) SPUtils.get(getActivity(), Constants.SERVERIP, Constants.DEFAULT_SERVER_IP);
-        String serverPort = (String) SPUtils.get(getActivity(), Constants.SERVERPORT, Constants.DEFAULT_SERVER_PORT);
-
-        mRoomIpEdt.setText(ip);
-        mRoomPortEdt.setText(""+port);
-        mServerIpEdt.setText(serverIp);
-        mServerPortEdt.setText(""+serverPort);
+    private void getData() {
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            position = arguments.getInt("position");
+        } else {
+            position = 0;
+        }
 
     }
+
 
     private void initUI(View layout) {
 
@@ -54,12 +65,17 @@ public class SettingFragment extends Fragment {
         mServerPortEdt = (EditText) layout.findViewById(R.id.servePortEdt);
     }
 
-    private void sava() {
+    private void sava(List<MachineCode> machineCodeList) {
+
         String ip = mRoomIpEdt.getText().toString();
         String port = mRoomPortEdt.getText().toString();
 
         String serverIp = mServerIpEdt.getText().toString();
         String serverPort = mServerPortEdt.getText().toString();
+
+        MachineCode machineCode = machineCodeList.get(position);
+        machineCode.setIp(ip);
+        BoardRoomDB.saveOneMachineIp(machineCode);
 
         SPUtils.put(getActivity(), Constants.IP, ip);
         SPUtils.put(getActivity(), Constants.SENDPORT, port);
@@ -67,5 +83,17 @@ public class SettingFragment extends Fragment {
         SPUtils.put(getActivity(), Constants.SERVERPORT, serverPort);
     }
 
+    class MyBroadCastReceive extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            List<MachineCode> machineCodeList = BoardRoomDB.getMachineCodeList();
+            if (machineCodeList == null || machineCodeList.size() == 0) {
+                return;
+            }
+            sava(machineCodeList);
+
+        }
+    }
 
 }

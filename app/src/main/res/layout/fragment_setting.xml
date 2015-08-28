@@ -2,6 +2,9 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" tools:context="com.txy.fragment.SettingFragment">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -37,14 +40,21 @@
                 android:textColor="@color/white"
                 android:id="@+id/textView8" />
 
-            <EditText
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="number"
-                android:ems="10"
-                android:hint="IP设置"
-                android:id="@+id/roomIPEdt"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                >
+
+                <EditText
+                    android:id="@+id/roomIPEdt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="IP示例：192.168.1.1"
+                    android:ems="10"
+                    android:inputType="number" />
+            </android.support.design.widget.TextInputLayout>
+
         </LinearLayout>
 
         <LinearLayout
@@ -65,14 +75,20 @@
                 android:textColor="@color/white"
                 android:id="@+id/textView9" />
 
-            <EditText
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="number"
-                android:ems="10"
-                android:hint="端口设置"
-                android:id="@+id/roomPortEdt"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                >
+
+                <EditText
+                    android:id="@+id/roomPortEdt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="端口示例：8888"
+                    android:ems="10"
+                    android:inputType="number" />
+            </android.support.design.widget.TextInputLayout>
         </LinearLayout>
 
         <TextView
@@ -117,13 +133,21 @@
                 android:textColor="@color/white"
                 android:id="@+id/textView12" />
 
-            <EditText
+
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="number"
-                android:ems="10"
-                android:hint="IP设置"
-                android:id="@+id/serveIPEdt" />
+                android:layout_weight="1"
+                >
+
+                <EditText
+                    android:id="@+id/serveIPEdt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="IP示例：192.168.1.1"
+                    android:ems="10"
+                    android:inputType="number" />
+            </android.support.design.widget.TextInputLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -143,14 +167,20 @@
                 android:paddingLeft="10dp"
                 android:id="@+id/textView13" />
 
-            <EditText
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="number"
-                android:ems="10"
-                android:hint="端口设置"
-                android:id="@+id/servePortEdt"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                >
+
+                <EditText
+                    android:id="@+id/servePortEdt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="端口示例：8888"
+                    android:ems="10"
+                    android:inputType="number" />
+            </android.support.design.widget.TextInputLayout>
         </LinearLayout>
 
         <TextView
@@ -165,5 +195,7 @@
             android:layout_alignStart="@+id/textView"
             android:layout_marginTop="23dp" />
 
+
     </RelativeLayout>
+    </ScrollView>
 </FrameLayout>

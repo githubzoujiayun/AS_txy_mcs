@@ -153,7 +153,11 @@ public class SetActivity extends FragmentActivity implements OnClickListener, On
         mPosition = position;
         mRoomListAdapter.setPosition(position);
         mRoomListAdapter.notifyDataSetChanged();
-        replaceFragment(new SettingFragment());
+        SettingFragment settingFragment = new SettingFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt("position", position);
+        settingFragment.setArguments(bundle);
+        replaceFragment(settingFragment);
 
     }
 
