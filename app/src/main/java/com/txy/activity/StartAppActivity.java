@@ -156,31 +156,6 @@ public class StartAppActivity extends Activity implements View.OnClickListener {
 
             @Override
             public void onResponse(String response) {
-                String ip = (String) SPUtils.get(StartAppActivity.this, Constants.SERVERIP, Constants.DEFAULT_SERVER_IP);
-                String port = (String) SPUtils.get(StartAppActivity.this, Constants.SERVERPORT, Constants.DEFAULT_SERVER_PORT);
-                String url = "http://" + ip + ":" + port + Constants.URL.INIT_CODE;
-                HttpUtils.get(StartAppActivity.this, url, new VolleyListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        go2indext();
-                    }
-
-                    @Override
-                    public void onResponse(String response) {
-
-                        BoardRoomMachineCode boardRoomMachineCode = GsonUtils.parseJSON(response, BoardRoomMachineCode.class);
-                        List<MachineCode> machineCode = boardRoomMachineCode.getMachineCode();
-                        BoardRoomDB.deleteMachineCode();
-                        BoardRoomDB.saveMachineCode(machineCode);
-                        new Handler().postDelayed(new Runnable(){
-                            @Override
-                            public void run() {
-                                go2indext();
-                            }
-
-                        },Constants.STARTAPP_DELAY);
-                    }
-                });
 
                 BoardRoom boardRoom = GsonUtils.parseJSON(response, BoardRoom.class);
                 int  id = boardRoom.getVersion();
@@ -189,6 +164,31 @@ public class StartAppActivity extends Activity implements View.OnClickListener {
                     SPUtils.put(StartAppActivity.this, "HttpVersion",id);
                     BoardRoomDB.deleteBoardRoomList();
                     BoardRoomDB.saveBoardRoom(boardRoom.getBoardRoom());
+                    String ip = (String) SPUtils.get(StartAppActivity.this, Constants.SERVERIP, Constants.DEFAULT_SERVER_IP);
+                    String port = (String) SPUtils.get(StartAppActivity.this, Constants.SERVERPORT, Constants.DEFAULT_SERVER_PORT);
+                    String url = "http://" + ip + ":" + port + Constants.URL.INIT_CODE;
+                    HttpUtils.get(StartAppActivity.this, url, new VolleyListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            go2indext();
+                        }
+
+                        @Override
+                        public void onResponse(String response) {
+
+                            BoardRoomMachineCode boardRoomMachineCode = GsonUtils.parseJSON(response, BoardRoomMachineCode.class);
+                            List<MachineCode> machineCode = boardRoomMachineCode.getMachineCode();
+                            BoardRoomDB.deleteMachineCode();
+                            BoardRoomDB.saveMachineCode(machineCode);
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    go2indext();
+                                }
+
+                            }, Constants.STARTAPP_DELAY);
+                        }
+                    });
                 }
             }
         });

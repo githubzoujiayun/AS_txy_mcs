@@ -54,8 +54,8 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.fragment_air_control, null);
-//        initParams();
-//        initUI(layout);
+        initParams();
+        initUI(layout);
 //        initListener();
 //        initAirConditionStatus();
         return layout;

@@ -27,7 +27,7 @@
             android:layout_marginStart="72dp" />
 
         <RelativeLayout
-            android:layout_width="290dp"
+            android:layout_width="310dp"
             android:layout_height="140dp"
             android:layout_below="@+id/btn_kgpower"
             android:layout_alignParentStart="true"
@@ -46,7 +46,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center"
+                    android:gravity="right|center"
                     android:layout_weight="1.1">
 
 
@@ -55,6 +55,7 @@
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text="当前温度："
+                        android:textSize="15sp"
                         android:textColor="@color/white"
                         android:id="@+id/textView15" />
 
@@ -129,19 +130,20 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="温度控制："
+            android:textSize="15sp"
             android:textColor="@color/white"
             android:id="@+id/textView17"
             android:layout_marginTop="24dp"
             android:layout_below="@+id/relativeLayout2"
             android:layout_alignStart="@+id/relativeLayout2"
-            android:layout_marginStart="20dp" />
+             />
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="2dp"
+            android:layout_height="1dp"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:id="@+id/textView18"
-            android:background="@color/gray"
+            android:background="@color/black_gray"
             android:layout_below="@+id/btn_kgpower"
             android:layout_marginTop="15dp"
             android:layout_marginLeft="20dp"
@@ -162,7 +164,7 @@
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/imageButton"
+            android:id="@+id/tempdown"
             android:background="@drawable/air_down_selector"
             android:layout_alignTop="@+id/textView17"
             android:layout_marginLeft="20dp"
@@ -171,11 +173,10 @@
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/imageButton2"
+            android:id="@+id/tempup"
             android:background="@drawable/air_up_selector"
-            android:layout_alignTop="@+id/imageButton"
-            android:layout_toEndOf="@+id/imageButton"
-            android:layout_marginStart="19dp" />
+            android:layout_alignTop="@+id/tempdown"
+            android:layout_toStartOf="@+id/btn_kgmode" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -203,20 +204,21 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView21"
             android:layout_alignStart="@+id/textView21"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="10dp"
+            android:id="@+id/radioGroup">
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:id="@+id/radioButton"
+                android:id="@+id/btn_kgwf"
                 android:layout_marginBottom="10dp"
                 android:button="@drawable/radio_weifeng_selector"/>
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/radioButton2"
+                android:id="@+id/btn_kgzf"
                 android:layout_marginBottom="10dp"
                 android:button="@drawable/radio_zhongfeng_selector"
                 />
@@ -224,8 +226,56 @@
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/radioButton3"
+                android:id="@+id/btn_kgdf"
                 android:button="@drawable/radio_dafeng_selector"/>
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="模式："
+            android:textColor="@color/white"
+            android:id="@+id/textView22"
+            android:layout_marginStart="41dp"
+            android:layout_above="@+id/textView21"
+            android:layout_toEndOf="@+id/radioGroup" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="mode："
+            android:textColor="@color/white"
+            android:id="@+id/textView23"
+            android:layout_below="@+id/textView22"
+            android:layout_alignStart="@+id/textView22" />
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/radioGroup"
+            android:layout_alignStart="@+id/textView23">
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imgBtn_zl"
+                android:layout_marginBottom="10dp"
+                android:button="@drawable/radio_zhileng_selector"/>
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/radio_zhire_selector"
+                android:layout_marginBottom="10dp"
+                android:id="@+id/imgBtn_zr" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/radio_songfeng_selector"
+                android:id="@+id/imgBtn_sf" />
         </RadioGroup>
 
     </RelativeLayout>
