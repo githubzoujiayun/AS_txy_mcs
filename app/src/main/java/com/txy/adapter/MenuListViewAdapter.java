@@ -21,10 +21,12 @@ public class MenuListViewAdapter extends BaseAdapter {
             R.drawable.ctrl_win_off,// 窗帘控制
             R.drawable.ctrl_ty_off,// 投影
             R.drawable.ctrl_kg_off,// 空调
-            R.drawable.ctrl_tv_off,// 电视
-            R.drawable.ctrl_sound_off,// 音响
             R.drawable.ctrl_music_off,// 音乐控制
-            R.drawable.ctrl_ppt_off// 同屏
+            R.drawable.ctrl_tv_off,// 电视
+            R.drawable.ctrl_ppt_off,// 同屏
+            R.drawable.ctrl_sound_off// 音响
+
+
     };
 
     public MenuListViewAdapter(Context context,ArrayList<Integer> equipList){

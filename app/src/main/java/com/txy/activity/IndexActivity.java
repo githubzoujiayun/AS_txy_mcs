@@ -161,7 +161,7 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
 
         List<TvEntity> tv = BoardRoomDB.getTv(boardRoomEntity.getTypeId());
         if (tv != null && tv.size() != 0) {
-            mEquipList.add(Constants.EQUIPMENT.CTR_TV);
+//            mEquipList.add(Constants.EQUIPMENT.CTR_TV);
         }
 
         List<ProjectorEntity> projector = BoardRoomDB.getProjector(boardRoomEntity.getTypeId());
@@ -176,7 +176,7 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
 
         mEquipList.add(Constants.EQUIPMENT.CTR_MUSIC);
 
-        mEquipList.add(Constants.EQUIPMENT.CTR_PPT);
+//        mEquipList.add(Constants.EQUIPMENT.CTR_PPT);
     }
 
     /**
@@ -350,20 +350,22 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
                 mTextModeSheet.setText(R.string.air_sheet);
                 break;
             case 4:// 电视控制
-                fragment = new TabTV();
-                mTextModeSheet.setText(R.string.tv_sheet);
-                break;
-            case 5:// 音响输出
-                fragment = new TabSound();
-                mTextModeSheet.setText(R.string.sound_sheet);
-                break;
-            case 6:// 音乐控制
                 fragment = new TabMusic();
                 mTextModeSheet.setText(R.string.music_sheet);
+
                 break;
-            case 7:// 同屏输出
+            case 5:// 音响输出
+                fragment = new TabTV();
+                mTextModeSheet.setText(R.string.tv_sheet);
+
+                break;
+            case 6:// 音乐控制
                 fragment = new TabScreen();
                 mTextModeSheet.setText(R.string.tong_sheet);
+                break;
+            case 7:// 同屏输出
+                fragment = new TabSound();
+                mTextModeSheet.setText(R.string.sound_sheet);
                 break;
 
             default:

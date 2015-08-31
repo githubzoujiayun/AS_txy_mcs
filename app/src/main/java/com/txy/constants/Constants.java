@@ -36,8 +36,8 @@ public final class Constants {
         public static int CTR_PROJECTION = 2;
         public static int CTR_AIR = 3;
         public static int CTR_MUSIC = 4;
-        public static int CTR_PPT = 5;
-        public static int CTR_TV = 6;
+        public static int CTR_TV = 5;
+        public static int CTR_PPT = 6;
         public static int CTR_SOUND = 7;
 
     }

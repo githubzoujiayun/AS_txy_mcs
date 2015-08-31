@@ -4,7 +4,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
-     <dimen name="popmenu_width">180.0dip</dimen>
+     <dimen name="popmenu_width">240.0dip</dimen>
     <dimen name="popmenu_height">200.0dip</dimen>
     <dimen name="popmenu_yoff">0.0dip</dimen>
     <dimen name="dip2pix">1.0dip</dimen>
