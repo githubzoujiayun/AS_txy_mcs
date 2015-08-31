@@ -1,14 +1,39 @@
 package com.txy.udp.InitData;
 
+import android.content.Context;
 import android.util.Log;
 
+import com.txy.SPdata;
 import com.txy.constants.Constants;
 import com.txy.database.AirCondition;
+import com.txy.database.BoardRoomDB;
+import com.txy.database.httpdata.BoardRoomMachineCode;
+import com.txy.database.httpdata.MachineCode;
+
+import java.util.List;
 
 /**
  * Created by Administrator on 2015/8/12.
  */
 public class StringMerge {
+
+
+    public static String readProjectorNum(Context context) {
+        int i = SPdata.readSelectBoardRoomPosition(context);
+        List<MachineCode> machineCodeList = BoardRoomDB.getMachineCodeList();
+        MachineCode machineCode = null;
+        if (machineCodeList != null && machineCodeList.size() > 0) {
+            if (i < machineCodeList.size()) {
+                machineCode = machineCodeList.get(0);
+            } else {
+                machineCode = machineCodeList.get(i);
+            }
+        } else {
+            Log.e("StringMerge", "------机器代码的数据库为空-----");
+            return "";
+        }
+        return machineCode.getMacCode();
+    }
 
 
     /**
@@ -17,13 +42,13 @@ public class StringMerge {
      * @param mode
      * @return
      */
-    public static String  situationControl(int situationMode, int mode){
+    public static String  situationControl(Context context,int situationMode, int mode){
         String msg = UdpSend.SITUATION_FRAME_LENGTH
                 + UdpSend.HMIS
                 + UdpSend.TARGET_EQUIPMENT
                 + UdpSend.SOURCE_EQUIPMENT
                 + UdpSend.MESSAGE_NUM
-                + UdpSend.PROJECT_NUM
+                + readProjectorNum(context)
                 + UdpSend.TARGET_MODULE
                 + UdpSend.SITUATION_CONTROL_ORDER_CODE
                 + UdpSend.SEND_ASK
@@ -48,13 +73,13 @@ public class StringMerge {
      * 获取场景的状态
      * @return
      */
-    public static String getSituation(){
+    public static String getSituation(Context context){
         String msg = UdpSend.GET_SITUATION_FRAME_LENGTH
                 + UdpSend.HMIS
                 + UdpSend.TARGET_EQUIPMENT
                 + UdpSend.SOURCE_EQUIPMENT
                 + UdpSend.MESSAGE_NUM
-                + UdpSend.PROJECT_NUM
+                + readProjectorNum(context)
                 + UdpSend.TARGET_MODULE
                 + UdpSend.GET_SITUATION_ORDER_CODE
                 + UdpSend.SEND_ASK
@@ -68,13 +93,13 @@ public class StringMerge {
      * 获取所有设备的状态
      * @return
      */
-    public static String getAllEquipMentStatus(){
+    public static String getAllEquipMentStatus(Context context){
         String msg = UdpSend.GET_EQUIPMENT_STATUS_FRAME_LENGTH
                 + UdpSend.HMIS
                 + UdpSend.TARGET_EQUIPMENT
                 + UdpSend.SOURCE_EQUIPMENT
                 + UdpSend.MESSAGE_NUM
-                + UdpSend.PROJECT_NUM
+                + readProjectorNum(context)
                 + UdpSend.TARGET_MODULE
                 + UdpSend.GET_EQUIPMENT_STATUS_ORDER_CODE
                 + UdpSend.SEND_ASK
@@ -90,14 +115,14 @@ public class StringMerge {
      * @param tag
      * @return
      */
-    public static String lightControl(int position, boolean tag){
+    public static String lightControl(Context context,int position, boolean tag){
 
         String msg = UdpSend.LIGHT_CONTROL_FRAME_LENGTH
                 + UdpSend.HMIS
                 + UdpSend.TARGET_EQUIPMENT
                 + UdpSend.SOURCE_EQUIPMENT
                 + UdpSend.MESSAGE_NUM
-                + UdpSend.PROJECT_NUM
+                + readProjectorNum(context)
                 + UdpSend.TARGET_MODULE
                 + UdpSend.LIGHT_CONTROL_ORDER_CODE
                 + UdpSend.SEND_ASK
@@ -126,7 +151,7 @@ public class StringMerge {
      * @param airCondition
      * @return
      */
-    public static String airConditionControl(String equip,String position, AirCondition airCondition){
+    public static String airConditionControl(Context context,String equip,String position, AirCondition airCondition){
 
         String s = ByteMerge.AirConditionMerge(airCondition);
         Log.e("airConditionControl", s);
@@ -135,7 +160,7 @@ public class StringMerge {
                 + UdpSend.TARGET_EQUIPMENT
                 + UdpSend.SOURCE_EQUIPMENT
                 + UdpSend.MESSAGE_NUM
-                + UdpSend.PROJECT_NUM
+                + readProjectorNum(context)
                 + UdpSend.TARGET_MODULE
                 + UdpSend.INFRARED_CONTROL_ORDER_CODE
                 + UdpSend.SEND_ASK
@@ -155,13 +180,13 @@ public class StringMerge {
      * @param orderCode
      * @return
      */
-    public static String infrafedControl(String equip,String position,String orderCode){
+    public static String infrafedControl(Context context,String equip,String position,String orderCode){
         String msg = UdpSend.INFRARED_CONTROL_FRAME_LENGTH
                 + UdpSend.HMIS
                 + UdpSend.TARGET_EQUIPMENT
                 + UdpSend.SOURCE_EQUIPMENT
                 + UdpSend.MESSAGE_NUM
-                + UdpSend.PROJECT_NUM
+                + readProjectorNum(context)
                 + UdpSend.TARGET_MODULE
                 + UdpSend.INFRARED_CONTROL_ORDER_CODE
                 + UdpSend.SEND_ASK
@@ -174,7 +199,7 @@ public class StringMerge {
         return msg + CRC16.ccr16(msg);
     }
 
-    public static String curtainControl(String channel, String status){
+    public static String curtainControl(Context context,String channel, String status){
 
         String orderCode = ByteMerge.Curtain(channel, status);
         String msg = UdpSend.CURTAIN_CONTROL_FRAME_LENGTH
@@ -182,7 +207,7 @@ public class StringMerge {
                 + UdpSend.TARGET_EQUIPMENT
                 + UdpSend.SOURCE_EQUIPMENT
                 + UdpSend.MESSAGE_NUM
-                + UdpSend.PROJECT_NUM
+                + readProjectorNum(context)
                 + UdpSend.TARGET_MODULE
                 + UdpSend.CURTAIN_CONTROL_ORDER_CODE
                 + UdpSend.SEND_ASK

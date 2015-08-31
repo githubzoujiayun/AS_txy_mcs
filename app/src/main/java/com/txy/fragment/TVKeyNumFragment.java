@@ -122,7 +122,7 @@ public class TVKeyNumFragment extends Fragment implements View.OnClickListener {
         } else {
             s = String.valueOf(position);
         }
-        String msg = StringMerge.infrafedControl(UdpSend.TV.TV, s, orderCode);
+        String msg = StringMerge.infrafedControl(getActivity(), UdpSend.TV.TV, s, orderCode);
         String ip = (String) SPUtils.get(getActivity(), Constants.IP, Constants.DEFAULT_IP);
         int port =(Integer) SPUtils.get(getActivity(), Constants.SENDPORT, Constants.DEFAULT_SENDPORT);
         new Sender(msg, ip,port).send();

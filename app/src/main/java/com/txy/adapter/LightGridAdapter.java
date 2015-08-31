@@ -87,9 +87,9 @@ public class LightGridAdapter extends BaseAdapter{
             public void onClick(View view) {
                 String msg = "";
                 if (finalHolder.button.isChecked()) {
-                    msg = StringMerge.lightControl(position, true);
+                    msg = StringMerge.lightControl(mContext, position, true);
                 } else {
-                    msg = StringMerge.lightControl(position, false);
+                    msg = StringMerge.lightControl(mContext,position, false);
                 }
                 String ip = (String) SPUtils.get(mContext, Constants.IP, Constants.DEFAULT_IP);
                 int port =(Integer) SPUtils.get(mContext, Constants.SENDPORT, Constants.DEFAULT_SENDPORT);

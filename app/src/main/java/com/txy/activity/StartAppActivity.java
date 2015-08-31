@@ -70,6 +70,7 @@ public class StartAppActivity extends Activity implements View.OnClickListener {
         Intent intent = new Intent(this, IndexActivity.class);
         startActivity(intent );
         this.finish();
+        overridePendingTransition(R.anim.right_to_left_in, R.anim.right_to_left_out);
     }
 
     /**
@@ -144,7 +145,13 @@ public class StartAppActivity extends Activity implements View.OnClickListener {
         HttpUtils.get(this, url, new VolleyListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                go2indext();
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        go2indext();
+                    }
+                }, Constants.STARTAPP_DELAY);
             }
 
             @Override
@@ -183,8 +190,6 @@ public class StartAppActivity extends Activity implements View.OnClickListener {
                     BoardRoomDB.deleteBoardRoomList();
                     BoardRoomDB.saveBoardRoom(boardRoom.getBoardRoom());
                 }
-
-
             }
         });
     }

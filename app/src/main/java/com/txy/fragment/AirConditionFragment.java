@@ -53,11 +53,11 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-        View layout = inflater.inflate(R.layout.fragment_tab_air_condition, null);
-        initParams();
-        initUI(layout);
-        initListener();
-        initAirConditionStatus();
+        View layout = inflater.inflate(R.layout.fragment_air_control, null);
+//        initParams();
+//        initUI(layout);
+//        initListener();
+//        initAirConditionStatus();
         return layout;
     }
 
@@ -117,7 +117,7 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
         mImageFanSpeedMid = (ImageView) layout.findViewById(R.id.view_fs2);
         mImageFanSpeedHigh = (ImageView) layout.findViewById(R.id.view_fs3);
 
-        mImageMode = (ImageView) layout.findViewById(R.id.view_sf);
+//        mImageMode = (ImageView) layout.findViewById(R.id.view_sf);
 
         mNowTemperatureShow = (TextView) layout.findViewById(R.id.txt_temp);
 
@@ -289,7 +289,7 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
         }
 
 
-        String msg = new StringMerge().airConditionControl(UdpSend.AIRCONDITION.AIRCONDITION, "01", airCondition);
+        String msg = new StringMerge().airConditionControl(getActivity(), UdpSend.AIRCONDITION.AIRCONDITION, "01", airCondition);
         String ip = (String) SPUtils.get(getActivity(), Constants.IP, Constants.DEFAULT_IP);
         int port =(Integer) SPUtils.get(getActivity(), Constants.SENDPORT, Constants.DEFAULT_SENDPORT);
         new Sender(msg, ip,port).send();
@@ -301,27 +301,27 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
     private void setModeBackGround() {
         if (mMode == 0)
         {
-            mFanSong.setBackgroundResource(R.drawable.btn_sf_on);
-            mHot.setBackgroundResource(R.drawable.btn_zr_off);
-            mCold.setBackgroundResource(R.drawable.btn_zl_off);
+            mFanSong.setBackgroundResource(R.drawable.sf2);
+            mHot.setBackgroundResource(R.drawable.zr1);
+            mCold.setBackgroundResource(R.drawable.zr1);
 
-            mImageMode.setBackgroundResource(R.drawable.sfz);
+//            mImageMode.setBackgroundResource(R.drawable.sfz);
         }
         else if (mMode == 1)
         {
-            mFanSong.setBackgroundResource(R.drawable.btn_sf_off);
-            mHot.setBackgroundResource(R.drawable.btn_zr_on);
-            mCold.setBackgroundResource(R.drawable.btn_zl_off);
+            mFanSong.setBackgroundResource(R.drawable.sf1);
+            mHot.setBackgroundResource(R.drawable.zr2);
+            mCold.setBackgroundResource(R.drawable.zl1);
 
-            mImageMode.setBackgroundResource(R.drawable.view_zr);
+//            mImageMode.setBackgroundResource(R.drawable.view_zr);
         }
         else if (mMode == 2)
         {
-            mFanSong.setBackgroundResource(R.drawable.btn_sf_off);
-            mHot.setBackgroundResource(R.drawable.btn_zr_off);
-            mCold.setBackgroundResource(R.drawable.btn_zl_on);
+            mFanSong.setBackgroundResource(R.drawable.sf1);
+            mHot.setBackgroundResource(R.drawable.zr1);
+            mCold.setBackgroundResource(R.drawable.zl2);
 
-            mImageMode.setBackgroundResource(R.drawable.zlz);
+//            mImageMode.setBackgroundResource(R.drawable.zlz);
         }
     }
 
@@ -329,7 +329,7 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
      * 关闭空调
      */
     private void closeAirCondition() {
-        mImageMode.setBackground(null);
+//        mImageMode.setBackground(null);
         mImageFanSpeedLow.setVisibility(View.INVISIBLE);
         mImageFanSpeedMid.setVisibility(View.INVISIBLE);
         mImageFanSpeedHigh.setVisibility(View.INVISIBLE);
@@ -339,9 +339,9 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
         mFanMid.setBackgroundResource(R.drawable.btn_zf_off);
         mFanHig.setBackgroundResource(R.drawable.btn_df_off);
 
-        mFanSong.setBackgroundResource(R.drawable.btn_sf_off);
-        mHot.setBackgroundResource(R.drawable.btn_zr_off);
-        mCold.setBackgroundResource(R.drawable.btn_zl_off);
+        mFanSong.setBackgroundResource(R.drawable.sf1);
+        mHot.setBackgroundResource(R.drawable.zr1);
+        mCold.setBackgroundResource(R.drawable.zl1);
     }
 
     private void openAirCondition() {

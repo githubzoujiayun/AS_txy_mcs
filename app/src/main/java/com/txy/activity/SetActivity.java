@@ -146,8 +146,6 @@ public class SetActivity extends FragmentActivity implements OnClickListener, On
         }
     }
 
-
-
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position,
                             long id) {
@@ -160,6 +158,17 @@ public class SetActivity extends FragmentActivity implements OnClickListener, On
         settingFragment.setArguments(bundle);
         replaceFragment(settingFragment);
 
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            finish();
+            overridePendingTransition(R.anim.left_to_right_in, R.anim.left_to_right_out);
+            return true;
+        }
+
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override

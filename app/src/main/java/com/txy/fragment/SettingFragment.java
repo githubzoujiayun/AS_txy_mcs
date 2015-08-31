@@ -13,7 +13,6 @@ import android.widget.EditText;
 
 import com.txy.constants.Constants;
 import com.txy.database.BoardRoomDB;
-import com.txy.database.httpdata.BoardRoomEntity;
 import com.txy.database.httpdata.MachineCode;
 import com.txy.txy_mcs.R;
 import com.txy.utils.SPUtils;
@@ -65,7 +64,7 @@ public class SettingFragment extends Fragment {
         mServerPortEdt = (EditText) layout.findViewById(R.id.servePortEdt);
     }
 
-    private void sava(List<MachineCode> machineCodeList) {
+    private void save(List<MachineCode> machineCodeList) {
 
         String ip = mRoomIpEdt.getText().toString();
         String port = mRoomPortEdt.getText().toString();
@@ -91,7 +90,7 @@ public class SettingFragment extends Fragment {
             if (machineCodeList == null || machineCodeList.size() == 0) {
                 return;
             }
-            sava(machineCodeList);
+            save(machineCodeList);
 
         }
     }

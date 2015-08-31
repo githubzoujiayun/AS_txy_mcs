@@ -65,7 +65,7 @@ public class WindowAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 String channel = String.valueOf(position);
-                String msg = StringMerge.curtainControl(channel, UdpSend.CURTAIN.OPEN);
+                String msg = StringMerge.curtainControl(mContext,channel, UdpSend.CURTAIN.OPEN);
                 String ip = (String) SPUtils.get(mContext, Constants.IP, Constants.DEFAULT_IP);
                 int port =(Integer) SPUtils.get(mContext, Constants.SENDPORT, Constants.DEFAULT_SENDPORT);
                 new Sender(msg, ip, port).send();
@@ -76,7 +76,7 @@ public class WindowAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 String channel = String.valueOf(position);
-                String msg = StringMerge.curtainControl(channel, UdpSend.CURTAIN.CLOSE);
+                String msg = StringMerge.curtainControl(mContext, channel, UdpSend.CURTAIN.CLOSE);
                 String ip = (String) SPUtils.get(mContext, Constants.IP, Constants.DEFAULT_IP);
                 int port =(Integer) SPUtils.get(mContext, Constants.SENDPORT, Constants.DEFAULT_SENDPORT);
                 new Sender(msg, ip, port).send();
@@ -87,7 +87,7 @@ public class WindowAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 String channel = String.valueOf(position);
-                String msg = StringMerge.curtainControl(channel, UdpSend.CURTAIN.PAUSE);
+                String msg = StringMerge.curtainControl(mContext, channel, UdpSend.CURTAIN.PAUSE);
                 String ip = (String) SPUtils.get(mContext, Constants.IP, Constants.DEFAULT_IP);
                 int port =(Integer) SPUtils.get(mContext, Constants.SENDPORT, Constants.DEFAULT_SENDPORT);
                 new Sender(msg, ip, port).send();

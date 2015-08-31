@@ -388,7 +388,7 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
      * 发送命令去获取所有设备的状态
      */
     private void getAllEquipStatus() {
-        String allEquipStatus = StringMerge.getAllEquipMentStatus();
+        String allEquipStatus = StringMerge.getAllEquipMentStatus(this);
         String ip = (String) SPUtils.get(this, Constants.IP, Constants.DEFAULT_IP);
         int port =(Integer) SPUtils.get(this, Constants.SENDPORT, Constants.DEFAULT_SENDPORT);
         new Sender(allEquipStatus,ip,port).send();
@@ -398,7 +398,7 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
      * 获取当前的情景模式
      */
     private void getSituation() {
-        String situation = StringMerge.getSituation();
+        String situation = StringMerge.getSituation(this);
         String ip = (String) SPUtils.get(this, Constants.IP, Constants.DEFAULT_IP);
         int port =(Integer) SPUtils.get(this, Constants.SENDPORT, Constants.DEFAULT_SENDPORT);
         new Sender(situation,ip,port).send();
