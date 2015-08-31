@@ -130,7 +130,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="温度控制："
-            android:textSize="15sp"
+            android:textSize="13sp"
             android:textColor="@color/white"
             android:id="@+id/textView17"
             android:layout_marginTop="24dp"
@@ -143,7 +143,7 @@
             android:layout_height="1dp"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:id="@+id/textView18"
-            android:background="@color/black_gray"
+            android:background="@color/gray"
             android:layout_below="@+id/btn_kgpower"
             android:layout_marginTop="15dp"
             android:layout_marginLeft="20dp"
@@ -155,7 +155,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Temperature:"
-            android:textSize="15sp"
+            android:textSize="13sp"
             android:id="@+id/textView19"
             android:textColor="@color/white"
             android:layout_below="@+id/textView17"
@@ -254,6 +254,7 @@
         <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/mode_radioGroup"
             android:layout_alignTop="@+id/radioGroup"
             android:layout_alignStart="@+id/textView23">
 

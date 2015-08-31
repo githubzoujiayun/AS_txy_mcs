@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.txy.constants.Constants;
@@ -24,7 +26,7 @@ import com.txy.utils.SPUtils;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AirConditionFragment extends Fragment implements View.OnClickListener {
+public class AirConditionFragment extends Fragment implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
 
     private int mPosition;// 第几台空调
     private int mAirConditionNum;// 空调的总数
@@ -34,21 +36,22 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
     private int mNowTemperature = 22;// 当前的温度
     private int mStatus = 0;// 开/关状态
 
-    private ImageButton mFanLow;
-    private ImageButton mFanMid;
-    private ImageButton mFanHig;
-    private ImageButton mFanSong;
-    private ImageButton mHot;
-    private ImageButton mCold;
+    private RadioButton mFanLow;
+    private RadioButton mFanMid;
+    private RadioButton mFanHig;
+    private RadioButton mFanSong;
+    private RadioButton mHot;
+    private RadioButton mCold;
     private ImageView mImageFanSpeedLow;
     private ImageView mImageFanSpeedMid;
     private ImageView mImageFanSpeedHigh;
-    private ImageView mImageMode;
     private ImageButton mTemperatureUp;
     private ImageButton mTemperatureDown;
     private TextView mNowTemperatureShow;
     private ImageButton mUseAll;
     private ImageButton mSwitchButton;
+    private RadioGroup mModeRadioGroup;
+    private RadioGroup mRadioGroup;
 
 
     @Override
@@ -56,8 +59,8 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
         View layout = inflater.inflate(R.layout.fragment_air_control, null);
         initParams();
         initUI(layout);
-//        initListener();
-//        initAirConditionStatus();
+        initListener();
+        initAirConditionStatus();
         return layout;
     }
 
@@ -82,31 +85,25 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
     }
 
     private void initListener() {
-        mFanLow.setOnClickListener(this);
-        mFanMid.setOnClickListener(this);
-        mFanHig.setOnClickListener(this);
-
-        mFanSong.setOnClickListener(this);
-        mHot.setOnClickListener(this);
-        mCold.setOnClickListener(this);
 
         mTemperatureUp.setOnClickListener(this);
         mTemperatureDown.setOnClickListener(this);
-
         mUseAll.setOnClickListener(this);
-
         mSwitchButton.setOnClickListener(this);
+
+        mModeRadioGroup.setOnCheckedChangeListener(this);
+
     }
 
     private void initUI(View layout) {
 
-        mFanLow = (ImageButton) layout.findViewById(R.id.btn_kgwf);
-        mFanMid = (ImageButton) layout.findViewById(R.id.btn_kgzf);
-        mFanHig = (ImageButton) layout.findViewById(R.id.btn_kgdf);
+        mFanLow = (RadioButton) layout.findViewById(R.id.btn_kgwf);
+        mFanMid = (RadioButton) layout.findViewById(R.id.btn_kgzf);
+        mFanHig = (RadioButton) layout.findViewById(R.id.btn_kgdf);
 
-        mFanSong = (ImageButton) layout.findViewById(R.id.imgBtn_sf);
-        mHot = (ImageButton) layout.findViewById(R.id.imgBtn_zr);
-        mCold = (ImageButton) layout.findViewById(R.id.imgBtn_zl);
+        mFanSong = (RadioButton) layout.findViewById(R.id.imgBtn_sf);
+        mHot = (RadioButton) layout.findViewById(R.id.imgBtn_zr);
+        mCold = (RadioButton) layout.findViewById(R.id.imgBtn_zl);
 
         mTemperatureUp = (ImageButton) layout.findViewById(R.id.tempup);
         mTemperatureDown = (ImageButton) layout.findViewById(R.id.tempdown);
@@ -117,11 +114,12 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
         mImageFanSpeedMid = (ImageView) layout.findViewById(R.id.view_fs2);
         mImageFanSpeedHigh = (ImageView) layout.findViewById(R.id.view_fs3);
 
-//        mImageMode = (ImageView) layout.findViewById(R.id.view_sf);
-
-        mNowTemperatureShow = (TextView) layout.findViewById(R.id.txt_temp);
+        mNowTemperatureShow = (TextView) layout.findViewById(R.id.tv_show_tempeture);
 
         mSwitchButton = (ImageButton) layout.findViewById(R.id.btn_kgpower);
+
+        mModeRadioGroup = (RadioGroup) layout.findViewById(R.id.mode_radioGroup);
+        mRadioGroup = (RadioGroup) layout.findViewById(R.id.radioGroup);
 
     }
 
@@ -145,54 +143,7 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
                 }
                 break;
 
-            case R.id.btn_kgwf:
-                if (mStatus == 0) {
-                    return;
-                }
-                mFanSpeed = 0;
-                setFanSpeedBackGround();
-                send(mPosition);
-                break;
-            case R.id.btn_kgzf:
-                if (mStatus == 0) {
-                    return;
-                }
-                mFanSpeed = 1;
-                setFanSpeedBackGround();
-                send(mPosition);
-                break;
-            case R.id.btn_kgdf:
-                if (mStatus == 0) {
-                    return;
-                }
-                mFanSpeed = 2;
-                setFanSpeedBackGround();
-                send(mPosition);
-                break;
-            case R.id.imgBtn_sf:
-                if (mStatus == 0) {
-                    return;
-                }
-                mMode = 0;
-                setModeBackGround();
-                send(mPosition);
-                break;
-            case R.id.imgBtn_zr:
-                if (mStatus == 0) {
-                    return;
-                }
-                mMode = 1;
-                setModeBackGround();
-                send(mPosition);
-                break;
-            case R.id.imgBtn_zl:
-                if (mStatus == 0) {
-                    return;
-                }
-                mMode = 2;
-                setModeBackGround();
-                send(mPosition);
-                break;
+
 
             case R.id.tempup:
                 if (mStatus == 0) {
@@ -223,6 +174,30 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
         }
     }
 
+    private void setFanSpeedBackGround() {
+        if (mFanSpeed == 0)
+        {
+            mImageFanSpeedLow.setVisibility(View.VISIBLE);
+            mImageFanSpeedMid.setVisibility(View.INVISIBLE);
+            mImageFanSpeedHigh.setVisibility(View.INVISIBLE);
+        }
+
+        else if (mFanSpeed == 1)
+        {
+            mImageFanSpeedLow.setVisibility(View.VISIBLE);
+            mImageFanSpeedMid.setVisibility(View.VISIBLE);
+            mImageFanSpeedHigh.setVisibility(View.INVISIBLE);
+        }
+
+        else if (mFanSpeed == 2)
+        {
+
+            mImageFanSpeedLow.setVisibility(View.VISIBLE);
+            mImageFanSpeedMid.setVisibility(View.VISIBLE);
+            mImageFanSpeedHigh.setVisibility(View.VISIBLE);
+        }
+    }
+
     /**
      * 应用到全部
      */
@@ -238,7 +213,7 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
      * 更新温度的显示
      */
     private void upDataTemperatureShow() {
-        mNowTemperatureShow.setText(mNowTemperature+"°");
+        mNowTemperatureShow.setText(mNowTemperature + "°");
     }
 
 
@@ -295,100 +270,70 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
         new Sender(msg, ip,port).send();
     }
 
-    /**
-     * 设置模式按钮的选中图片
-     */
-    private void setModeBackGround() {
-        if (mMode == 0)
-        {
-            mFanSong.setBackgroundResource(R.drawable.sf2);
-            mHot.setBackgroundResource(R.drawable.zr1);
-            mCold.setBackgroundResource(R.drawable.zr1);
-
-//            mImageMode.setBackgroundResource(R.drawable.sfz);
-        }
-        else if (mMode == 1)
-        {
-            mFanSong.setBackgroundResource(R.drawable.sf1);
-            mHot.setBackgroundResource(R.drawable.zr2);
-            mCold.setBackgroundResource(R.drawable.zl1);
-
-//            mImageMode.setBackgroundResource(R.drawable.view_zr);
-        }
-        else if (mMode == 2)
-        {
-            mFanSong.setBackgroundResource(R.drawable.sf1);
-            mHot.setBackgroundResource(R.drawable.zr1);
-            mCold.setBackgroundResource(R.drawable.zl2);
-
-//            mImageMode.setBackgroundResource(R.drawable.zlz);
-        }
-    }
 
     /**
      * 关闭空调
      */
     private void closeAirCondition() {
-//        mImageMode.setBackground(null);
+
+        mRadioGroup.setOnCheckedChangeListener(null);
+        mModeRadioGroup.setOnCheckedChangeListener(null);
+
         mImageFanSpeedLow.setVisibility(View.INVISIBLE);
         mImageFanSpeedMid.setVisibility(View.INVISIBLE);
         mImageFanSpeedHigh.setVisibility(View.INVISIBLE);
         mNowTemperatureShow.setText("");
 
-        mFanLow.setBackgroundResource(R.drawable.btn_wf_off);
-        mFanMid.setBackgroundResource(R.drawable.btn_zf_off);
-        mFanHig.setBackgroundResource(R.drawable.btn_df_off);
-
-        mFanSong.setBackgroundResource(R.drawable.sf1);
-        mHot.setBackgroundResource(R.drawable.zr1);
-        mCold.setBackgroundResource(R.drawable.zl1);
+        mRadioGroup.clearCheck();
+        mModeRadioGroup.clearCheck();
     }
 
     private void openAirCondition() {
-        setModeBackGround();
+        setCheck();
         upDataTemperatureShow();
         setFanSpeedBackGround();
+
+    }
+
+    private void setCheck() {
+        mModeRadioGroup.check(mModeRadioGroup.getChildAt(mMode).getId());
+        mRadioGroup.check(mRadioGroup.getChildAt(mFanSpeed).getId());
+
+        mRadioGroup.setOnCheckedChangeListener(this);
+        mModeRadioGroup.setOnCheckedChangeListener(this);
     }
 
 
+    @Override
+    public void onCheckedChanged(RadioGroup radioGroup, int position) {
 
-    /**
-     * 设置风速的背景
-     */
-    private void setFanSpeedBackGround() {
-        if (mFanSpeed == 0)
-        {
-            mFanLow.setBackgroundResource(R.drawable.btn_wf_on);
-            mFanMid.setBackgroundResource(R.drawable.btn_zf_off);
-            mFanHig.setBackgroundResource(R.drawable.btn_df_off);
-
-            mImageFanSpeedLow.setVisibility(View.VISIBLE);
-            mImageFanSpeedMid.setVisibility(View.INVISIBLE);
-            mImageFanSpeedHigh.setVisibility(View.INVISIBLE);
+        if (mStatus == 0) {
+            return;
         }
 
-        else if (mFanSpeed == 1)
-        {
-            mFanLow.setBackgroundResource(R.drawable.btn_wf_off);
-            mFanMid.setBackgroundResource(R.drawable.btn_zf_on);
-            mFanHig.setBackgroundResource(R.drawable.btn_df_off);
-
-            mImageFanSpeedLow.setVisibility(View.VISIBLE);
-            mImageFanSpeedMid.setVisibility(View.VISIBLE);
-            mImageFanSpeedHigh.setVisibility(View.INVISIBLE);
+        int id = radioGroup.getId();
+        if (id == R.id.radioGroup) {
+            int checkedRadioButtonId = radioGroup.getCheckedRadioButtonId();
+            if (checkedRadioButtonId == R.id.btn_kgwf) {
+                mFanSpeed = 0;
+            } else if (checkedRadioButtonId == R.id.btn_kgzf) {
+                mFanSpeed = 1;
+            } else if (checkedRadioButtonId == R.id.btn_kgdf) {
+                mFanSpeed = 2;
+            }
+        } else if (id == R.id.mode_radioGroup) {
+            int checkedRadioButtonId = radioGroup.getCheckedRadioButtonId();
+            if (checkedRadioButtonId == R.id.imgBtn_zl) {
+                mMode = 2;
+            } else if (checkedRadioButtonId == R.id.imgBtn_zr) {
+                mMode = 1;
+            } else if (checkedRadioButtonId == R.id.imgBtn_sf) {
+                mMode = 0;
+            }
         }
-
-        else if (mFanSpeed == 2)
-        {
-            mFanLow.setBackgroundResource(R.drawable.btn_wf_off);
-            mFanMid.setBackgroundResource(R.drawable.btn_zf_off);
-            mFanHig.setBackgroundResource(R.drawable.btn_df_on);
-
-            mImageFanSpeedLow.setVisibility(View.VISIBLE);
-            mImageFanSpeedMid.setVisibility(View.VISIBLE);
-            mImageFanSpeedHigh.setVisibility(View.VISIBLE);
-        }
+        send(mPosition);
     }
+
 
     class UpdateAirConditionStatus extends BroadcastReceiver{
 
