@@ -141,6 +141,7 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
                     mStatus = 0;
                     closeAirCondition();
                 }
+                send(mPosition);
                 break;
 
 
@@ -224,7 +225,47 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
     private void send(int position) {
         AirCondition airCondition = new AirCondition();
         airCondition.position = position;
-        airCondition.temperature = mNowTemperature;
+        switch (mNowTemperature) {
+            case 18:
+                airCondition.temperature = Integer.parseInt(UdpSend.AIRCONDITION.TEMPERATURE22);
+                break;
+            case 19:
+                airCondition.temperature = Integer.parseInt(UdpSend.AIRCONDITION.TEMPERATURE22);
+                break;
+            case 20:
+                airCondition.temperature = Integer.parseInt(UdpSend.AIRCONDITION.TEMPERATURE22);
+                break;
+            case 21:
+                airCondition.temperature = Integer.parseInt(UdpSend.AIRCONDITION.TEMPERATURE22);
+                break;
+            case 22:
+                airCondition.temperature = Integer.parseInt(UdpSend.AIRCONDITION.TEMPERATURE22);
+                break;
+            case 23:
+                airCondition.temperature = Integer.parseInt(UdpSend.AIRCONDITION.TEMPERATURE22);
+                break;
+            case 24:
+                airCondition.temperature = Integer.parseInt(UdpSend.AIRCONDITION.TEMPERATURE22);
+                break;
+            case 25:
+                airCondition.temperature = Integer.parseInt(UdpSend.AIRCONDITION.TEMPERATURE22);
+                break;
+            case 26:
+                airCondition.temperature = Integer.parseInt(UdpSend.AIRCONDITION.TEMPERATURE22);
+                break;
+            case 27:
+                airCondition.temperature = Integer.parseInt(UdpSend.AIRCONDITION.TEMPERATURE22);
+                break;
+            case 28:
+                airCondition.temperature = Integer.parseInt(UdpSend.AIRCONDITION.TEMPERATURE22);
+                break;
+            case 29:
+                airCondition.temperature = Integer.parseInt(UdpSend.AIRCONDITION.TEMPERATURE22);
+                break;
+            case 30:
+                airCondition.temperature = Integer.parseInt(UdpSend.AIRCONDITION.TEMPERATURE22);
+                break;
+        }
 
         switch (mFanSpeed) {
             case 0:
@@ -321,6 +362,7 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
             } else if (checkedRadioButtonId == R.id.btn_kgdf) {
                 mFanSpeed = 2;
             }
+            setFanSpeedBackGround();
         } else if (id == R.id.mode_radioGroup) {
             int checkedRadioButtonId = radioGroup.getCheckedRadioButtonId();
             if (checkedRadioButtonId == R.id.imgBtn_zl) {

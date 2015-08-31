@@ -159,10 +159,22 @@ public class BoardRoomDB {
                 .execute();
     }
 
+    public static void deleteLight() {
+        new Delete()
+                .from(LightEntity.class)
+                .execute();
+    }
+
     public static List<AirEntity> getAir(int typeId) {
         return new Select()
                 .from(AirEntity.class)
                 .where("boardRoomId = ?",typeId)
+                .execute();
+    }
+
+    public static void deleteAir() {
+        new Delete()
+                .from(AirEntity.class)
                 .execute();
     }
 
@@ -173,10 +185,22 @@ public class BoardRoomDB {
                 .execute();
     }
 
+    public static void deleteProjector() {
+        new Delete()
+                .from(ProjectorEntity.class)
+                .execute();
+    }
+
     public static List<TvEntity> getTv(int typeId) {
         return new Select()
                 .from(TvEntity.class)
                 .where("boardRoomId = ?",typeId)
+                .execute();
+    }
+
+    public static void deleteTv() {
+        new Delete()
+                .from(TvEntity.class)
                 .execute();
     }
 
@@ -187,10 +211,22 @@ public class BoardRoomDB {
                 .execute();
     }
 
+    public static void deleteCurtain() {
+        new Delete()
+                .from(CurtainEntity.class)
+                .execute();
+    }
+
     public static List<ModelEntity> getModel(int typeId) {
         return new Select()
                 .from(ModelEntity.class)
                 .where("boardRoomId = ?",typeId)
+                .execute();
+    }
+
+    public static void deleteModel() {
+        new Delete()
+                .from(ModelEntity.class)
                 .execute();
     }
 

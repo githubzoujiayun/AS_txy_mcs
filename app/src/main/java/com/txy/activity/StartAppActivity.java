@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -51,6 +52,7 @@ public class StartAppActivity extends Activity implements View.OnClickListener {
             createMusicDB();
         } else {
             getData();
+            getMachineCode();
         }
 
     }
@@ -135,7 +137,8 @@ public class StartAppActivity extends Activity implements View.OnClickListener {
         mIpSetDialog.dismiss();
 
         getData();
-        SPUtils.put(StartAppActivity.this,"isFirstTime",false);
+        getMachineCode();
+        SPUtils.put(StartAppActivity.this, "isFirstTime", false);
     }
 
     public void getData(){
@@ -146,50 +149,61 @@ public class StartAppActivity extends Activity implements View.OnClickListener {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        go2indext();
-                    }
-                }, Constants.STARTAPP_DELAY);
+                Log.e("onErrorResponse", "------读取会议列表出错----------");
+            }
+
+            @Override
+            public void onResponse(String response) {
+                BoardRoom boardRoom = GsonUtils.parseJSON(response, BoardRoom.class);
+                int id = boardRoom.getVersion();
+                int httpVersion = (int) SPUtils.get(StartAppActivity.this, "HttpVersion", -1);
+                SPUtils.put(StartAppActivity.this, "HttpVersion", id);
+                BoardRoomDB.deleteBoardRoomList();
+                BoardRoomDB.deleteLight();
+                BoardRoomDB.deleteModel();
+                BoardRoomDB.deleteCurtain();
+                BoardRoomDB.deleteAir();
+                BoardRoomDB.deleteProjector();
+                BoardRoomDB.deleteTv();
+                BoardRoomDB.saveBoardRoom(boardRoom.getBoardRoom());
+                if (httpVersion != id) {
+
+                }
+            }
+
+        });
+    }
+
+    private void delayGoToIndextActivity() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                go2indext();
+            }
+
+        }, Constants.STARTAPP_DELAY);
+    }
+
+    private void getMachineCode() {
+        String ip = (String) SPUtils.get(StartAppActivity.this, Constants.SERVERIP, Constants.DEFAULT_SERVER_IP);
+        String port = (String) SPUtils.get(StartAppActivity.this, Constants.SERVERPORT, Constants.DEFAULT_SERVER_PORT);
+        String url = "http://" + ip + ":" + port + Constants.URL.INIT_CODE;
+        HttpUtils.get(StartAppActivity.this, url, new VolleyListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                delayGoToIndextActivity();
+                Log.e("onErrorResponse", "---------读取机器代码错误-----------");
+
             }
 
             @Override
             public void onResponse(String response) {
 
-                BoardRoom boardRoom = GsonUtils.parseJSON(response, BoardRoom.class);
-                int  id = boardRoom.getVersion();
-                int  httpVersion = (int) SPUtils.get(StartAppActivity.this, "HttpVersion", -1);
-                if (httpVersion != id) {
-                    SPUtils.put(StartAppActivity.this, "HttpVersion",id);
-                    BoardRoomDB.deleteBoardRoomList();
-                    BoardRoomDB.saveBoardRoom(boardRoom.getBoardRoom());
-                    String ip = (String) SPUtils.get(StartAppActivity.this, Constants.SERVERIP, Constants.DEFAULT_SERVER_IP);
-                    String port = (String) SPUtils.get(StartAppActivity.this, Constants.SERVERPORT, Constants.DEFAULT_SERVER_PORT);
-                    String url = "http://" + ip + ":" + port + Constants.URL.INIT_CODE;
-                    HttpUtils.get(StartAppActivity.this, url, new VolleyListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            go2indext();
-                        }
-
-                        @Override
-                        public void onResponse(String response) {
-
-                            BoardRoomMachineCode boardRoomMachineCode = GsonUtils.parseJSON(response, BoardRoomMachineCode.class);
-                            List<MachineCode> machineCode = boardRoomMachineCode.getMachineCode();
-                            BoardRoomDB.deleteMachineCode();
-                            BoardRoomDB.saveMachineCode(machineCode);
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    go2indext();
-                                }
-
-                            }, Constants.STARTAPP_DELAY);
-                        }
-                    });
-                }
+                BoardRoomMachineCode boardRoomMachineCode = GsonUtils.parseJSON(response, BoardRoomMachineCode.class);
+                List<MachineCode> machineCode = boardRoomMachineCode.getMachineCode();
+                BoardRoomDB.deleteMachineCode();
+                BoardRoomDB.saveMachineCode(machineCode);
+                delayGoToIndextActivity();
             }
         });
     }

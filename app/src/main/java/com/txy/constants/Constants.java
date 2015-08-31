@@ -3,7 +3,7 @@ package com.txy.constants;
 public final class Constants {
 
     public static int STARTAPP_DELAY = 2000;// 延时3秒
-    public static int MY_SOCKET_TIMEOUT_MS = 3000;
+    public static int MY_SOCKET_TIMEOUT_MS = 20000;
 
     public static int DAYMODE = 0;// 白天模式
     public static int NIGHTMODE = 1;// 夜晚模式
@@ -21,7 +21,7 @@ public final class Constants {
     public static String SENDPORT = "SENDPORT";// 发送的端口
     public static String RECEIVEPORT = "RECEIVEPORT";// 接收的端口
 
-    public static String DEFAULT_IP = "192.168.1.102";// 默认的发送IP
+    public static String DEFAULT_IP = "192.168.1.190";// 默认的发送IP
     public static int DEFAULT_SENDPORT = 3341;// 默认的发送端口号
     public static int DEFAULT_RECEIVEPORT = 3339;// 默认的接收端口号
 

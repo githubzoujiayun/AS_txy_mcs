@@ -48,11 +48,11 @@ public class StringMerge {
                 + UdpSend.TARGET_EQUIPMENT
                 + UdpSend.SOURCE_EQUIPMENT
                 + UdpSend.MESSAGE_NUM
-                + readProjectorNum(context)
+                + UdpSend.PROJECT_NUM
                 + UdpSend.TARGET_MODULE
-                + UdpSend.SITUATION_CONTROL_ORDER_CODE
+                + UdpSend.INFRARED_CONTROL_ORDER_CODE
                 + UdpSend.SEND_ASK
-                + UdpSend.TARGET_HOST_CODE
+                + readProjectorNum(context)
                 + "0600000000";
         switch (mode) {
             case 0:
@@ -79,11 +79,11 @@ public class StringMerge {
                 + UdpSend.TARGET_EQUIPMENT
                 + UdpSend.SOURCE_EQUIPMENT
                 + UdpSend.MESSAGE_NUM
-                + readProjectorNum(context)
+                + UdpSend.PROJECT_NUM
                 + UdpSend.TARGET_MODULE
-                + UdpSend.GET_SITUATION_ORDER_CODE
+                + UdpSend.INFRARED_CONTROL_ORDER_CODE
                 + UdpSend.SEND_ASK
-                + UdpSend.TARGET_HOST_CODE
+                + readProjectorNum(context)
                 + "01";
         return msg;
     }
@@ -99,11 +99,11 @@ public class StringMerge {
                 + UdpSend.TARGET_EQUIPMENT
                 + UdpSend.SOURCE_EQUIPMENT
                 + UdpSend.MESSAGE_NUM
-                + readProjectorNum(context)
+                + UdpSend.PROJECT_NUM
                 + UdpSend.TARGET_MODULE
-                + UdpSend.GET_EQUIPMENT_STATUS_ORDER_CODE
+                + UdpSend.INFRARED_CONTROL_ORDER_CODE
                 + UdpSend.SEND_ASK
-                + UdpSend.TARGET_HOST_CODE
+                + readProjectorNum(context)
                 + "01" ;
 
         return msg + CRC16.ccr16(msg);
@@ -122,11 +122,11 @@ public class StringMerge {
                 + UdpSend.TARGET_EQUIPMENT
                 + UdpSend.SOURCE_EQUIPMENT
                 + UdpSend.MESSAGE_NUM
-                + readProjectorNum(context)
+                + UdpSend.PROJECT_NUM
                 + UdpSend.TARGET_MODULE
-                + UdpSend.LIGHT_CONTROL_ORDER_CODE
+                + UdpSend.INFRARED_CONTROL_ORDER_CODE
                 + UdpSend.SEND_ASK
-                + UdpSend.TARGET_HOST_CODE
+                + readProjectorNum(context)
                 + "03" ;
 
         if (position >= 10) {
@@ -160,11 +160,11 @@ public class StringMerge {
                 + UdpSend.TARGET_EQUIPMENT
                 + UdpSend.SOURCE_EQUIPMENT
                 + UdpSend.MESSAGE_NUM
-                + readProjectorNum(context)
+                + UdpSend.PROJECT_NUM
                 + UdpSend.TARGET_MODULE
                 + UdpSend.INFRARED_CONTROL_ORDER_CODE
                 + UdpSend.SEND_ASK
-                + UdpSend.TARGET_HOST_CODE
+                + readProjectorNum(context)
                 + "04"
                 + equip
                 + position
@@ -186,11 +186,11 @@ public class StringMerge {
                 + UdpSend.TARGET_EQUIPMENT
                 + UdpSend.SOURCE_EQUIPMENT
                 + UdpSend.MESSAGE_NUM
-                + readProjectorNum(context)
+                + UdpSend.PROJECT_NUM
                 + UdpSend.TARGET_MODULE
                 + UdpSend.INFRARED_CONTROL_ORDER_CODE
                 + UdpSend.SEND_ASK
-                + UdpSend.TARGET_HOST_CODE
+                + readProjectorNum(context)
                 + "04"
                 + equip
                 + position
@@ -207,11 +207,11 @@ public class StringMerge {
                 + UdpSend.TARGET_EQUIPMENT
                 + UdpSend.SOURCE_EQUIPMENT
                 + UdpSend.MESSAGE_NUM
-                + readProjectorNum(context)
+                + UdpSend.PROJECT_NUM
                 + UdpSend.TARGET_MODULE
-                + UdpSend.CURTAIN_CONTROL_ORDER_CODE
+                + UdpSend.INFRARED_CONTROL_ORDER_CODE
                 + UdpSend.SEND_ASK
-                + UdpSend.TARGET_HOST_CODE
+                + readProjectorNum(context)
                 + "02"
                 + orderCode;
         return msg + CRC16.ccr16(msg);
