@@ -12,7 +12,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- 打开UDP接收功能的时候需要用到的权限 -->
     <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <meta-data
         android:name="AA_DB_NAME"
@@ -20,6 +20,9 @@
     <meta-data
         android:name="AA_DB_VERSION"
         android:value="2" />
+
+    <android:uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <android:uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:name="com.txy.application.MyApplication"
@@ -61,6 +64,11 @@
         </service>
         <service
             android:name="com.txy.services.MusicService"
+            android:enabled="true"
+            android:exported="false" >
+        </service>
+        <service
+            android:name="com.txy.services.ProjectorServices"
             android:enabled="true"
             android:exported="false" >
         </service>
