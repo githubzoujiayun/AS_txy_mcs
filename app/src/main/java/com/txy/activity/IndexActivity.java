@@ -58,6 +58,7 @@ import com.txy.tools.PopMenu;
 import com.txy.txy_mcs.R;
 import com.txy.udp.Sender;
 import com.txy.utils.SPUtils;
+import com.umeng.update.UmengUpdateAgent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,7 +91,7 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_index);
-
+        UmengUpdateAgent.update(this);
         initUI();
         initListener();
         initParameter(0);
