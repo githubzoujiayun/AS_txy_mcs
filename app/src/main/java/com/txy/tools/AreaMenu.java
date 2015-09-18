@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.txy.adapter.AreaMenuAdapter;
 import com.txy.database.httpdata.BoardRoomEntity;
+import com.txy.database.httpdata.MachineCode;
 import com.txy.txy_mcs.R;
 
 import android.content.Context;
@@ -57,9 +58,9 @@ public class AreaMenu {
 		}
 	}
 
-	public void addItemList(List<BoardRoomEntity> boardRoomEntityList) {
+	public void addItemList(List<MachineCode> boardRoomEntityList) {
 		for (int i = 0 ;i < boardRoomEntityList.size(); i++) {
-			itemList.add(boardRoomEntityList.get(i).getTypeName());
+			itemList.add(boardRoomEntityList.get(i).getBoardRoomName());
 		}
 	}
 

@@ -86,7 +86,10 @@ public class HomeFragment extends Fragment implements OnClickListener {
     }
 
     private void getEquipStatus() {
-
+        String msg = StringMerge.getSituation(getActivity());
+        String ip = (String) SPUtils.get(getActivity(), Constants.IP, Constants.DEFAULT_IP);
+        int port =(Integer) SPUtils.get(getActivity(), Constants.SENDPORT, Constants.DEFAULT_SENDPORT);
+        new Sender(msg, ip,port).send();
     }
 
     /**
@@ -336,6 +339,7 @@ public class HomeFragment extends Fragment implements OnClickListener {
             }
             setMode(mMode);
             modeSetBG(mSituationMode);
+            saveNowMode();
         }
     }
 

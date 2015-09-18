@@ -33,7 +33,7 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
 
     private int mFanSpeed;// 风速
     private int mMode;// 模式
-    private int mNowTemperature = 22;// 当前的温度
+    private int mNowTemperature = 16;// 当前的温度
     private int mStatus = 0;// 开/关状态
 
     private RadioButton mFanLow;
@@ -226,67 +226,69 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
         AirCondition airCondition = new AirCondition();
         airCondition.position = position;
         switch (mNowTemperature) {
+            case 16:
+                airCondition.temperature = Integer.parseInt(UdpSend.AIRCONDITION.TEMPERATURE16);
+                break;
+            case 17:
+                airCondition.temperature = Integer.parseInt(UdpSend.AIRCONDITION.TEMPERATURE17);
+                break;
             case 18:
-                airCondition.temperature = Integer.parseInt(UdpSend.AIRCONDITION.TEMPERATURE22);
+                airCondition.temperature = Integer.parseInt(UdpSend.AIRCONDITION.TEMPERATURE18);
                 break;
             case 19:
-                airCondition.temperature = Integer.parseInt(UdpSend.AIRCONDITION.TEMPERATURE22);
+                airCondition.temperature = Integer.parseInt(UdpSend.AIRCONDITION.TEMPERATURE19);
                 break;
             case 20:
-                airCondition.temperature = Integer.parseInt(UdpSend.AIRCONDITION.TEMPERATURE22);
+                airCondition.temperature = Integer.parseInt(UdpSend.AIRCONDITION.TEMPERATURE20);
                 break;
             case 21:
-                airCondition.temperature = Integer.parseInt(UdpSend.AIRCONDITION.TEMPERATURE22);
+                airCondition.temperature = Integer.parseInt(UdpSend.AIRCONDITION.TEMPERATURE21);
                 break;
             case 22:
                 airCondition.temperature = Integer.parseInt(UdpSend.AIRCONDITION.TEMPERATURE22);
                 break;
             case 23:
-                airCondition.temperature = Integer.parseInt(UdpSend.AIRCONDITION.TEMPERATURE22);
+                airCondition.temperature = Integer.parseInt(UdpSend.AIRCONDITION.TEMPERATURE23);
                 break;
             case 24:
-                airCondition.temperature = Integer.parseInt(UdpSend.AIRCONDITION.TEMPERATURE22);
+                airCondition.temperature = Integer.parseInt(UdpSend.AIRCONDITION.TEMPERATURE24);
                 break;
             case 25:
-                airCondition.temperature = Integer.parseInt(UdpSend.AIRCONDITION.TEMPERATURE22);
+                airCondition.temperature = Integer.parseInt(UdpSend.AIRCONDITION.TEMPERATURE25);
                 break;
             case 26:
-                airCondition.temperature = Integer.parseInt(UdpSend.AIRCONDITION.TEMPERATURE22);
+                airCondition.temperature = Integer.parseInt(UdpSend.AIRCONDITION.TEMPERATURE26);
                 break;
             case 27:
-                airCondition.temperature = Integer.parseInt(UdpSend.AIRCONDITION.TEMPERATURE22);
+                airCondition.temperature = Integer.parseInt(UdpSend.AIRCONDITION.TEMPERATURE27);
                 break;
             case 28:
-                airCondition.temperature = Integer.parseInt(UdpSend.AIRCONDITION.TEMPERATURE22);
+                airCondition.temperature = Integer.parseInt(UdpSend.AIRCONDITION.TEMPERATURE28);
                 break;
             case 29:
-                airCondition.temperature = Integer.parseInt(UdpSend.AIRCONDITION.TEMPERATURE22);
+                airCondition.temperature = Integer.parseInt(UdpSend.AIRCONDITION.TEMPERATURE29);
                 break;
             case 30:
-                airCondition.temperature = Integer.parseInt(UdpSend.AIRCONDITION.TEMPERATURE22);
+                airCondition.temperature = Integer.parseInt(UdpSend.AIRCONDITION.TEMPERATURE30);
                 break;
         }
 
         switch (mFanSpeed) {
             case 0:
-                airCondition.fanRate_L = Integer.parseInt(UdpSend.AIRCONDITION.FAN_RATE_LOW_L);
-                airCondition.fanRate_H = Integer.parseInt(UdpSend.AIRCONDITION.FAN_RATE_LOW_H);
+                airCondition.fanRate = Integer.parseInt(UdpSend.AIRCONDITION.FAN_RATE_LOW);
                 break;
             case 1:
-                airCondition.fanRate_L = Integer.parseInt(UdpSend.AIRCONDITION.FAN_RATE_MID_L);
-                airCondition.fanRate_H = Integer.parseInt(UdpSend.AIRCONDITION.FAN_RATE_MID_H);
+                airCondition.fanRate = Integer.parseInt(UdpSend.AIRCONDITION.FAN_RATE_MID);
                 break;
 
             case 2:
-                airCondition.fanRate_L = Integer.parseInt(UdpSend.AIRCONDITION.FAN_RATE_HIGH_L);
-                airCondition.fanRate_H = Integer.parseInt(UdpSend.AIRCONDITION.FAN_RATE_HIGH_H);
+                airCondition.fanRate = Integer.parseInt(UdpSend.AIRCONDITION.FAN_RATE_HIGH);
                 break;
         }
 
         switch (mMode) {
             case 0:
-                airCondition.fanRate_L = Integer.parseInt(UdpSend.AIRCONDITION.FAN_RATE_HOT_L);
-                airCondition.fanRate_H = Integer.parseInt(UdpSend.AIRCONDITION.FAN_RATE_HOT_H);
+                airCondition.fanRate = Integer.parseInt(UdpSend.AIRCONDITION.FAN_RATE_HOT);
                 break;
 
             case 1:

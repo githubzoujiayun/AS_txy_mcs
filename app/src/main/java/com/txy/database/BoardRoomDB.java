@@ -105,6 +105,13 @@ public class BoardRoomDB {
                 .execute();
     }
 
+    public static BoardRoomEntity getOneBoardRoom(int typeName) {
+        return new Select()
+                .from(BoardRoomEntity.class)
+                .where("typeId = ?", typeName)
+                .executeSingle();
+    }
+
     public static boolean saveMachineCode(List<MachineCode> machineCodeList) {
 
         if (machineCodeList == null) {

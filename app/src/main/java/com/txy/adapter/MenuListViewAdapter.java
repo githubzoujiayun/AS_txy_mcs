@@ -71,6 +71,14 @@ public class MenuListViewAdapter extends BaseAdapter {
 
     }
 
+    public void clearEquipList() {
+        mEquipList.clear();
+    }
+
+    public void setEquipList(ArrayList<Integer> equipList) {
+        mEquipList.addAll(equipList);
+    }
+
     private class ViewHolder {
         View groupItem;
         ImageView selectedItem;

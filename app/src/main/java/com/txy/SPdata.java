@@ -2,6 +2,7 @@ package com.txy;
 
 import android.content.Context;
 
+import com.txy.constants.Constants;
 import com.txy.utils.SPUtils;
 
 /**
@@ -23,5 +24,9 @@ public class SPdata {
 
     public static void writeSelectBoardRoomPosition(Context context, int position) {
         SPUtils.put(context, "selectBoardRoomPosition", position);
+    }
+
+    public static void writeSendIp(Context context, String ip) {
+        SPUtils.put(context, Constants.IP, ip);
     }
 }

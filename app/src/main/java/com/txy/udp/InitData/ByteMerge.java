@@ -18,8 +18,8 @@ public class ByteMerge {
      */
     public static String AirConditionMerge(AirCondition airCondition){
 
-        int l = airCondition.temperature + airCondition.fanRate_L;
-        int h = airCondition.fanRate_H + airCondition.mode + airCondition.status;
+        int l = airCondition.temperature;
+        int h = airCondition.fanRate + airCondition.mode + airCondition.status;
 
         String s1 = Integer.toHexString(l);
         String s2 = Integer.toHexString(h);

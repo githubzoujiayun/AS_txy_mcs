@@ -32,7 +32,10 @@ public class StringMerge {
             Log.e("StringMerge", "------机器代码的数据库为空-----");
             return "";
         }
-        return machineCode.getMacCode();
+        String macCode = machineCode.getMacCode();
+        int i1 = Integer.parseInt(macCode);
+        String s = Integer.toHexString(i1);
+        return s;
     }
 
 
@@ -50,7 +53,7 @@ public class StringMerge {
                 + UdpSend.MESSAGE_NUM
                 + UdpSend.PROJECT_NUM
                 + UdpSend.TARGET_MODULE
-                + UdpSend.INFRARED_CONTROL_ORDER_CODE
+                + UdpSend.SITUATION_CONTROL_ORDER_CODE
                 + UdpSend.SEND_ASK
                 + readProjectorNum(context)
                 + "0600000000";
@@ -124,7 +127,7 @@ public class StringMerge {
                 + UdpSend.MESSAGE_NUM
                 + UdpSend.PROJECT_NUM
                 + UdpSend.TARGET_MODULE
-                + UdpSend.INFRARED_CONTROL_ORDER_CODE
+                + UdpSend.LIGHT_CONTROL_ORDER_CODE
                 + UdpSend.SEND_ASK
                 + readProjectorNum(context)
                 + "03" ;
@@ -209,7 +212,7 @@ public class StringMerge {
                 + UdpSend.MESSAGE_NUM
                 + UdpSend.PROJECT_NUM
                 + UdpSend.TARGET_MODULE
-                + UdpSend.INFRARED_CONTROL_ORDER_CODE
+                + UdpSend.CURTAIN_CONTROL_ORDER_CODE
                 + UdpSend.SEND_ASK
                 + readProjectorNum(context)
                 + "02"

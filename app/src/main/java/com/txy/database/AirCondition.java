@@ -21,10 +21,7 @@ public class AirCondition extends Model {
     public int temperature;
 
     @Column
-    public int fanRate_L;
-
-    @Column
-    public int fanRate_H;
+    public int fanRate;
 
     @Column
     public int mode;

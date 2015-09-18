@@ -37,6 +37,7 @@ import com.txy.database.RoomList;
 import com.txy.database.httpdata.AirEntity;
 import com.txy.database.httpdata.BoardRoomEntity;
 import com.txy.database.httpdata.CurtainEntity;
+import com.txy.database.httpdata.MachineCode;
 import com.txy.database.httpdata.ModelEntity;
 import com.txy.database.httpdata.ProjectorEntity;
 import com.txy.database.httpdata.TvEntity;
@@ -82,9 +83,10 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
 
     private ArrayList<RoomList> mRoomList = new ArrayList<RoomList>();// 所有房间的的信息
     private TextView mTextModeSheet;
-    private List<BoardRoomEntity> mBoardRoomList;
+//    private List<BoardRoomEntity> mBoardRoomList;
     private PopupWindow mRoomPopupWindow;
     private AreaMenu areaMenu;
+    private List<MachineCode> machineCodeList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,7 +126,7 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
      * 设置默认选择的Fragment
      */
     private void initFragment() {
-        if (mBoardRoomList == null || mBoardRoomList.size() == 0) {
+        if (machineCodeList == null || machineCodeList.size() == 0) {
             return;
         }
         tabMenu(0);
@@ -135,42 +137,52 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
      */
     private void initParameter(int position) {
         mEquipList = new ArrayList<Integer>();
-        mBoardRoomList = BoardRoomDB.getBoardRoomList();
-        if (mBoardRoomList == null || mBoardRoomList.size() == 0) {
+        machineCodeList = BoardRoomDB.getMachineCodeList();
+        if (machineCodeList == null || machineCodeList.size() == 0) {
             return;
         }
 
+
+
         int i = SPdata.readSelectBoardRoomPosition(this);
-        int size = mBoardRoomList.size();
-        BoardRoomEntity boardRoomEntity;
+
+
+        int size = machineCodeList.size();
+        BoardRoomEntity oneBoardRoom;
+        MachineCode machineCode;
         if (size < i) {
-            boardRoomEntity = mBoardRoomList.get(position);
+            machineCode = machineCodeList.get(position);
+            SPdata.writeSendIp(this, machineCode.getIp());
+            oneBoardRoom = BoardRoomDB.getOneBoardRoom(machineCode.getTypeId());
+
         } else {
-            boardRoomEntity = mBoardRoomList.get(i);
+            machineCode = machineCodeList.get(i);
+            SPdata.writeSendIp(this, machineCode.getIp());
+            oneBoardRoom = BoardRoomDB.getOneBoardRoom(machineCode.getTypeId());
         }
 
-        mTVHeader.setText(boardRoomEntity.getTypeName());
-        List<ModelEntity> model = BoardRoomDB.getModel(boardRoomEntity.getTypeId());
+        mTVHeader.setText(machineCode.getBoardRoomName());
+        List<ModelEntity> model = BoardRoomDB.getModel(oneBoardRoom.getTypeId());
         if (model != null && model.size() != 0) {
             mEquipList.add(Constants.EQUIPMENT.CTR_MODE);
         }
 
-        List<CurtainEntity> curtain = BoardRoomDB.getCurtain(boardRoomEntity.getTypeId());
+        List<CurtainEntity> curtain = BoardRoomDB.getCurtain(oneBoardRoom.getTypeId());
         if (curtain != null && curtain.size() != 0) {
             mEquipList.add(Constants.EQUIPMENT.CTR_WINDOW);
         }
 
-        List<TvEntity> tv = BoardRoomDB.getTv(boardRoomEntity.getTypeId());
+        List<TvEntity> tv = BoardRoomDB.getTv(oneBoardRoom.getTypeId());
         if (tv != null && tv.size() != 0) {
 //            mEquipList.add(Constants.EQUIPMENT.CTR_TV);
         }
 
-        List<ProjectorEntity> projector = BoardRoomDB.getProjector(boardRoomEntity.getTypeId());
+        List<ProjectorEntity> projector = BoardRoomDB.getProjector(oneBoardRoom.getTypeId());
         if (projector != null && projector.size() != 0) {
             mEquipList.add(Constants.EQUIPMENT.CTR_PROJECTION);
         }
 
-        List<AirEntity> air = BoardRoomDB.getAir(boardRoomEntity.getTypeId());
+        List<AirEntity> air = BoardRoomDB.getAir(oneBoardRoom.getTypeId());
         if (air != null && air.size() != 0) {
             mEquipList.add(Constants.EQUIPMENT.CTR_AIR);
         }
@@ -225,12 +237,12 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
     }
 
     private void showRoomList(View v) {
-        List<BoardRoomEntity> boardRoomList = BoardRoomDB.getBoardRoomList();
-        if (boardRoomList == null || boardRoomList.size() == 0) {
+        List<MachineCode> machineCodeList = BoardRoomDB.getMachineCodeList();
+        if (machineCodeList == null || machineCodeList.size() == 0) {
             return;
         }
         areaMenu = new AreaMenu(this);
-        areaMenu.addItemList(boardRoomList);
+        areaMenu.addItemList(machineCodeList);
         areaMenu.showAsDropDown(v);
         areaMenu.setOnItemClickListener(this);
     }
@@ -274,8 +286,11 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
             case R.id.menu_listview:
 
                 closeRoomPopUpWindow();
+                tabMenu(0);
                 SPdata.writeSelectBoardRoomPosition(this,position);
                 initParameter(position);
+                mMenuListViewAdapter.clearEquipList();
+                mMenuListViewAdapter.setEquipList(mEquipList);
                 mMenuListViewAdapter.notifyDataSetChanged();
 
                 break;
@@ -430,7 +445,7 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
 
         @Override// 成功接收到数据
         public void onSuccessData(String msg) {
-            String orderCode = msg.substring(29, 30);
+            String orderCode = msg.substring(47, 51);
             // 场景模式控制命令
             if (orderCode.equalsIgnoreCase(UdpSend.SITUATION_CONTROL_ORDER_CODE))
             {

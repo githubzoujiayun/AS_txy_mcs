@@ -13,7 +13,7 @@ public class UdpSend {
     public static String CURTAIN_CONTROL_FRAME_LENGTH = "1a1a";//窗帘控制帧长度
     public static String IP_SET_FRAME_LENGTH = "1d1d";// IP设置帧长度
 
-    public static String HMIS = "484d4953";// 系统标识码“HMIS”
+    public static String HMIS = "54585041524b";// 系统标识码“HMIS”
     public static String TARGET_EQUIPMENT = "00";// 目标设备号
     public static String SOURCE_EQUIPMENT = "08";// 源设备号
     public static String MESSAGE_NUM = "0000";// 报文号
@@ -21,13 +21,13 @@ public class UdpSend {
     public static String TARGET_MODULE = "00";// 目标模块
 
     // 命令代号
-    public static String SITUATION_CONTROL_ORDER_CODE = "0050";// 场景模式控制命令
-    public static String GET_SITUATION_ORDER_CODE = "0051";// 获取场景模式命令
-    public static String GET_EQUIPMENT_STATUS_ORDER_CODE = "0052";// 获取设备状态命令
-    public static String LIGHT_CONTROL_ORDER_CODE = "0053";// 灯光控制命令
-    public static String INFRARED_CONTROL_ORDER_CODE = "0054";// 红外控制命令
-    public static String CURTAIN_CONTROL_ORDER_CODE = "0055";// 窗帘控制命令
-    public static String IP_SET_ORDER_CODE = "005e";// IP设置命令
+    public static String SITUATION_CONTROL_ORDER_CODE = "00a0";// 场景模式控制命令
+    public static String GET_SITUATION_ORDER_CODE = "00a1";// 获取场景模式命令
+    public static String GET_EQUIPMENT_STATUS_ORDER_CODE = "00a2";// 获取设备状态命令
+    public static String LIGHT_CONTROL_ORDER_CODE = "00a3";// 灯光控制命令
+    public static String INFRARED_CONTROL_ORDER_CODE = "00a4";// 红外控制命令
+    public static String CURTAIN_CONTROL_ORDER_CODE = "00a5";// 窗帘控制命令
+    public static String IP_SET_ORDER_CODE = "00ae";// IP设置命令
 
     public static String SEND_ASK = "01";// ASK
     public static String TARGET_HOST_CODE = "ffffffff";// 目标主机编码
@@ -36,14 +36,21 @@ public class UdpSend {
     public static final class AIRCONDITION{
         public static String AIRCONDITION = "00";// 空调
         // 第四位
-        public static String TEMPERATURE22 = "0";// 温度22
-        public static String TEMPERATURE23 = "1";// 温度23
-        public static String TEMPERATURE24 = "2";// 温度24
-        public static String TEMPERATURE25 = "3";// 温度25
-        public static String TEMPERATURE26 = "4";// 温度26
-        public static String TEMPERATURE27 = "5";// 温度27
-        public static String TEMPERATURE28 = "6";// 温度28
-        public static String TEMPERATURE29 = "7";// 温度29
+        public static String TEMPERATURE16 = "0";// 温度16
+        public static String TEMPERATURE17 = "1";// 温度17
+        public static String TEMPERATURE18 = "2";// 温度18
+        public static String TEMPERATURE19 = "3";// 温度19
+        public static String TEMPERATURE20 = "4";// 温度20
+        public static String TEMPERATURE21 = "5";// 温度21
+        public static String TEMPERATURE22 = "6";// 温度22
+        public static String TEMPERATURE23 = "7";// 温度23
+        public static String TEMPERATURE24 = "8";// 温度24
+        public static String TEMPERATURE25 = "9";// 温度25
+        public static String TEMPERATURE26 = "10";// 温度26
+        public static String TEMPERATURE27 = "11";// 温度27
+        public static String TEMPERATURE28 = "12";// 温度28
+        public static String TEMPERATURE29 = "13";// 温度29
+        public static String TEMPERATURE30 = "14";// 温度30
 
         // 风扇占据了分别占了高低四位的一位
         // 风扇低位
@@ -57,14 +64,19 @@ public class UdpSend {
         public static String FAN_RATE_HIGH_H = "1";
         public static String FAN_RATE_HOT_H = "1";
 
+        // 风扇
+        public static String FAN_RATE_LOW = "0";
+        public static String FAN_RATE_MID = "1";
+        public static String FAN_RATE_HIGH = "2";
+        public static String FAN_RATE_HOT = "3";
+
         // 模式
         public static String COLD = "0";
-        public static String HOT = "2";
+        public static String HOT = "4";
 
         // 开关机
         public static String CLOSE = "0";
-        public static String OPEN = "4";
-        public static String STATUS = "8";
+        public static String OPEN = "8";
     }
 
     public static final class PROJECTION{

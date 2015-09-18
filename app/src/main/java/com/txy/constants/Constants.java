@@ -21,11 +21,11 @@ public final class Constants {
     public static String SENDPORT = "SENDPORT";// 发送的端口
     public static String RECEIVEPORT = "RECEIVEPORT";// 接收的端口
 
-    public static String DEFAULT_IP = "192.168.1.190";// 默认的发送IP
+    public static String DEFAULT_IP = "192.168.1.137";// 默认的发送IP
     public static int DEFAULT_SENDPORT = 3341;// 默认的发送端口号
     public static int DEFAULT_RECEIVEPORT = 3339;// 默认的接收端口号
 
-    public static String DEFAULT_SERVER_IP = "192.168.1.2";// 默认的服务器IP
+    public static String DEFAULT_SERVER_IP = "192.168.1.137";// 默认的服务器IP
     public static String DEFAULT_SERVER_PORT = "8888";// 默认的服务器端口号
 
 
@@ -63,8 +63,8 @@ public final class Constants {
     }
 
     public static final class URL{
-        public static String INIT_DATA = "/tx/api/getAppStatus.action";
-        public static String INIT_CODE = "/tx/api/getBoardRoom.action";
+        public static String INIT_DATA = "/wireless/api/getAppStatus.action";
+        public static String INIT_CODE = "/wireless/api/getBoardRoom.action";
     }
 
 }
