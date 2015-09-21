@@ -84,7 +84,7 @@ public class StringMerge {
                 + UdpSend.MESSAGE_NUM
                 + UdpSend.PROJECT_NUM
                 + UdpSend.TARGET_MODULE
-                + UdpSend.INFRARED_CONTROL_ORDER_CODE
+                + UdpSend.GET_SITUATION_ORDER_CODE
                 + UdpSend.SEND_ASK
                 + readProjectorNum(context)
                 + "01";
@@ -104,7 +104,7 @@ public class StringMerge {
                 + UdpSend.MESSAGE_NUM
                 + UdpSend.PROJECT_NUM
                 + UdpSend.TARGET_MODULE
-                + UdpSend.INFRARED_CONTROL_ORDER_CODE
+                + UdpSend.GET_EQUIPMENT_STATUS_ORDER_CODE
                 + UdpSend.SEND_ASK
                 + readProjectorNum(context)
                 + "01" ;

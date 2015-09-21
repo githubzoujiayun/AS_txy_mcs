@@ -5,11 +5,11 @@ package com.txy.udp.InitData;
  */
 public class UdpSend {
 
-    public static String SITUATION_FRAME_LENGTH = "1e1e";// 场景模式的帧长度
-    public static String GET_SITUATION_FRAME_LENGTH = "1919";// 获取场景模式帧长度
-    public static String GET_EQUIPMENT_STATUS_FRAME_LENGTH = "1919";// 获取设备状态帧长度
+    public static String SITUATION_FRAME_LENGTH = "2020";// 场景模式的帧长度
+    public static String GET_SITUATION_FRAME_LENGTH = "1b1b";// 获取场景模式帧长度
+    public static String GET_EQUIPMENT_STATUS_FRAME_LENGTH = "1b1b";// 获取设备状态帧长度
     public static String LIGHT_CONTROL_FRAME_LENGTH = "1d1d";// 灯光控制帧长度
-    public static String INFRARED_CONTROL_FRAME_LENGTH = "1c1c";// 红外控制帧长度
+    public static String INFRARED_CONTROL_FRAME_LENGTH = "1e1e";// 红外控制帧长度
     public static String CURTAIN_CONTROL_FRAME_LENGTH = "1a1a";//窗帘控制帧长度
     public static String IP_SET_FRAME_LENGTH = "1d1d";// IP设置帧长度
 

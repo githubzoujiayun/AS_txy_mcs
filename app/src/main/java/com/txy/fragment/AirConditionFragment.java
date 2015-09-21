@@ -4,8 +4,10 @@ package com.txy.fragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +23,7 @@ import com.txy.txy_mcs.R;
 import com.txy.udp.InitData.StringMerge;
 import com.txy.udp.InitData.UdpSend;
 import com.txy.udp.Sender;
+import com.txy.utils.ParseUtil;
 import com.txy.utils.SPUtils;
 
 /**
@@ -52,6 +55,7 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
     private ImageButton mSwitchButton;
     private RadioGroup mModeRadioGroup;
     private RadioGroup mRadioGroup;
+    private UpdateAirConditionStatus receive;
 
 
     @Override
@@ -61,6 +65,7 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
         initUI(layout);
         initListener();
         initAirConditionStatus();
+        getAllEquipStatus();
         return layout;
     }
 
@@ -80,8 +85,18 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
-
+            getAllEquipStatus();
         }
+    }
+
+    /**
+     * 发送命令去获取所有设备的状态
+     */
+    private void getAllEquipStatus() {
+        String allEquipStatus = StringMerge.getAllEquipMentStatus(getActivity());
+        String ip = (String) SPUtils.get(getActivity(), Constants.IP, Constants.DEFAULT_IP);
+        int port =(Integer) SPUtils.get(getActivity(), Constants.SENDPORT, Constants.DEFAULT_SENDPORT);
+        new Sender(allEquipStatus,ip,port).send();
     }
 
     private void initListener() {
@@ -150,7 +165,7 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
                 if (mStatus == 0) {
                     return;
                 }
-                if (mNowTemperature == 30) {
+                if (mNowTemperature >= 30) {
                     return;
                 }
                 mNowTemperature++;
@@ -161,7 +176,7 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
                 if (mStatus == 0) {
                     return;
                 }
-                if (mNowTemperature == 18) {
+                if (mNowTemperature <= 16) {
                     return;
                 }
                 mNowTemperature--;
@@ -214,6 +229,7 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
      * 更新温度的显示
      */
     private void upDataTemperatureShow() {
+        mNowTemperatureShow.setVisibility(View.VISIBLE);
         mNowTemperatureShow.setText(mNowTemperature + "°");
     }
 
@@ -225,6 +241,7 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
     private void send(int position) {
         AirCondition airCondition = new AirCondition();
         airCondition.position = position;
+        position += 1;
         switch (mNowTemperature) {
             case 16:
                 airCondition.temperature = Integer.parseInt(UdpSend.AIRCONDITION.TEMPERATURE16);
@@ -307,7 +324,7 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
         }
 
 
-        String msg = new StringMerge().airConditionControl(getActivity(), UdpSend.AIRCONDITION.AIRCONDITION, "01", airCondition);
+        String msg = new StringMerge().airConditionControl(getActivity(), UdpSend.AIRCONDITION.AIRCONDITION, "0"+position, airCondition);
         String ip = (String) SPUtils.get(getActivity(), Constants.IP, Constants.DEFAULT_IP);
         int port =(Integer) SPUtils.get(getActivity(), Constants.SENDPORT, Constants.DEFAULT_SENDPORT);
         new Sender(msg, ip,port).send();
@@ -378,11 +395,67 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
         send(mPosition);
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        receive = new UpdateAirConditionStatus();
+        IntentFilter filter = new IntentFilter("txPark.updateEquipStatus");
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(receive, filter);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(receive);
+    }
 
     class UpdateAirConditionStatus extends BroadcastReceiver{
 
         @Override
         public void onReceive(Context context, Intent intent) {
+//            String equipStatus = intent.getStringExtra("equipStatus");
+            String equipStatus = "";
+            String substring = "";
+            if (mPosition == 0) {
+//                substring = equipStatus.substring(90, 105).replaceAll(" ","");
+                substring = "010000021a19";
+            } else if (mPosition == 1) {
+//                substring = equipStatus.substring(108, 123).replaceAll(" ", "");
+                substring = "000000000000";
+            } else if (mPosition == 2) {
+                substring = equipStatus.substring(126, 141).replaceAll(" ", "");
+            } else if (mPosition == 3) {
+                substring = equipStatus.substring(144, 159).replaceAll(" ", "");
+            }
+            String switchStatus = substring.substring(0, 2);
+            if (switchStatus.equals("00")) {
+                mStatus = 0;
+                closeAirCondition();
+                return;
+            } else {
+                switchStatus = substring.substring(4, 6);
+                if (switchStatus.equals("00")) {
+                    mMode = 2;
+                } else if (switchStatus.equals("01")){
+                    mMode = 1;
+                } else if (switchStatus.equals("02")){
+                    mMode = 0;
+                }
+
+                switchStatus = substring.substring(6, 8);
+                if (switchStatus.equals("00")) {
+                    mFanSpeed = 0;
+                } else if (switchStatus.equals("01")){
+                    mFanSpeed = 1;
+                } else if (switchStatus.equals("02")){
+                    mFanSpeed = 2;
+                } else if (switchStatus.equals("03")){
+                    mFanSpeed = 3;
+                }
+                mNowTemperature = ParseUtil.getStringToInt(substring.substring(8, 9)) * 16 + ParseUtil.getStringToInt(substring.substring(9, 10));
+                mStatus = 1;
+                openAirCondition();
+            }
 
         }
     }

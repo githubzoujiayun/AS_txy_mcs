@@ -436,7 +436,7 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
             receiveService.setOnReceiveSuccessListener(this);
 
             getAllEquipStatus();
-            getSituation();
+//            getSituation();
         }
 
         @Override
@@ -445,7 +445,7 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
 
         @Override// 成功接收到数据
         public void onSuccessData(String msg) {
-            String orderCode = msg.substring(47, 51);
+            String orderCode = msg.substring(51, 56).replaceAll(" ","");
             // 场景模式控制命令
             if (orderCode.equalsIgnoreCase(UdpSend.SITUATION_CONTROL_ORDER_CODE))
             {
@@ -454,21 +454,18 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
             // 获取场景模式命令
             else if (orderCode.equalsIgnoreCase(UdpSend.GET_SITUATION_ORDER_CODE))
             {
-                String substring = msg.substring(60, 61);
-                SPUtils.put(IndexActivity.this, "situationMode", substring);
-                Intent intent = new Intent();
-                intent.putExtra("updateSituation",substring);
-                intent.setAction("txPark.updateSituation");
+                SPUtils.put(IndexActivity.this, "situationMode", msg);
+                Intent intent = new Intent("txPark.updateSituation");
+                intent.putExtra("updateSituation",msg);
                 LocalBroadcastManager.getInstance(IndexActivity.this).sendBroadcast(intent);
             }
             // 获取设备状态命令
             else if (orderCode.equalsIgnoreCase(UdpSend.GET_EQUIPMENT_STATUS_ORDER_CODE))
             {
 
-                String data = msg.substring(44);
-                SPUtils.put(IndexActivity.this, "equipStatus", data);// 保存到SP
+                SPUtils.put(IndexActivity.this, "equipStatus", msg);// 保存到SP
                 Intent intent = new Intent("txPark.updateEquipStatus");
-                intent.putExtra("equipStatus",data);
+                intent.putExtra("equipStatus",msg);
                 LocalBroadcastManager.getInstance(IndexActivity.this).sendBroadcast(intent);
 
             }

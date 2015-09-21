@@ -84,6 +84,7 @@
                         android:id="@+id/tv_show_tempeture"
                         android:textSize="60sp"
                         android:text="22°"
+                        android:visibility="invisible"
                         android:textColor="@color/white"
                         android:textStyle="bold"/>
                 </RelativeLayout>
@@ -102,6 +103,7 @@
                         android:src="@drawable/fs1"
                         android:layout_marginEnd="6dp"
                         android:layout_centerVertical="true"
+                        android:visibility="invisible"
                         android:layout_toStartOf="@+id/view_fs2" />
 
                     <ImageView
@@ -109,6 +111,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/fs2"
+                        android:visibility="invisible"
                         android:layout_alignBottom="@+id/view_fs3"
                         android:layout_centerHorizontal="true" />
 
@@ -117,6 +120,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/fs3"
+                        android:visibility="invisible"
                         android:layout_alignBottom="@+id/view_fs1"
                         android:layout_toEndOf="@+id/view_fs2"
                         android:layout_marginStart="6dp" />

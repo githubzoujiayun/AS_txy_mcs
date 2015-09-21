@@ -1,6 +1,8 @@
 package com.txy.utils;
 
 
+import com.txy.udp.InitData.ByteMerge;
+
 public class ParseUtil {
 
     public static byte getByteFromEigthBitsString(String str) throws Exception {
@@ -37,4 +39,16 @@ public class ParseUtil {
         return str.substring(len - 8, len);
 
     }
+
+    public static int getStringToInt(String str ) {
+        byte[] bytes = str.getBytes();
+        byte j = 0;
+        if (bytes[0] >= 48 && bytes[0] <= 57) {
+            j = (byte) ( bytes[0] - '0');
+        } else if (bytes[0] >= 97 && bytes[0] <= 122) {
+            j = (byte) (bytes[0] - 'a' + 10);
+        }
+        return j;
+    }
+
 }

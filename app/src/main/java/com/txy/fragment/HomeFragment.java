@@ -80,7 +80,6 @@ public class HomeFragment extends Fragment implements OnClickListener {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
-
             getEquipStatus();
         }
     }
@@ -165,6 +164,7 @@ public class HomeFragment extends Fragment implements OnClickListener {
                 mMode = Constants.OFFMODE;
                 modeSetBG(mSituationMode);
                 setMode(mMode);
+                mMode = 0;
                 send();
                 mDialog.dismiss();
                 break;
@@ -291,52 +291,25 @@ public class HomeFragment extends Fragment implements OnClickListener {
         @Override
         public void onReceive(Context context, Intent intent) {
             String updateSituation = intent.getStringExtra("updateSituation");
-            if (updateSituation.equalsIgnoreCase("00"))// 白天模式1
-            {
-                mSituationMode = 0;
+            String substring = updateSituation.substring(93, 94);
+            if (substring.equals("0")) {
                 mMode = 0;
-
+            } else if (substring.equals("8")){
+                mMode = 1;
             }
-            else if (updateSituation.equalsIgnoreCase("01"))// 白天模式2
-            {
+            substring = updateSituation.substring(94, 95);
+            if (substring.equals("0")) {
+                mSituationMode = 0;
+            } else if (substring.equals("1")){
                 mSituationMode = 1;
-                mMode = 0;
-            }
-            else if (updateSituation.equalsIgnoreCase("02"))// 白天模式3
-            {
+            } else if (substring.equals("2")){
                 mSituationMode = 2;
-                mMode = 0;
-            }
-            else if (updateSituation.equalsIgnoreCase("03"))// 白天模式4
-            {
+            } else if (substring.equals("3")){
                 mSituationMode = 3;
-                mMode = 0;
-            }
-            else if (updateSituation.equalsIgnoreCase("80"))// 夜间模式1
-            {
-                mSituationMode = 0;
-                mMode = 1;
-            }
-            else if (updateSituation.equalsIgnoreCase("81"))// 夜间模式2
-            {
-                mSituationMode = 2;
-                mMode = 1;
-            }
-            else if (updateSituation.equalsIgnoreCase("82"))// 夜间模式3
-            {
-                mSituationMode = 3;
-                mMode = 1;
-            }
-            else if (updateSituation.equalsIgnoreCase("83"))// 夜间模式4
-            {
+            } else if (substring.equals("4")){
                 mSituationMode = 4;
-                mMode = 1;
             }
-            else if (updateSituation.equalsIgnoreCase("04"))// 总关模式
-            {
-                mSituationMode = Constants.OFFMODE;
-                mMode = Constants.OFFMODE;
-            }
+
             setMode(mMode);
             modeSetBG(mSituationMode);
             saveNowMode();

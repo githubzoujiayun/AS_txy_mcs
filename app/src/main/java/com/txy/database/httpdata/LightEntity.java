@@ -6,15 +6,15 @@ import com.activeandroid.annotation.Table;
 
 @Table(name = "LightEntity")
 public  class LightEntity extends Model{
-            /**
-             * name : 死猴子
-             * code : 13_1
-             */
+    /**
+     * name : 死猴子
+     * code : 13_1
+     */
 
-            @Column
-            private String name;
-            @Column
-            private String code;
+    @Column
+    private String name;
+    @Column
+    private String code;
     @Column
     private int boardRoomId;
 

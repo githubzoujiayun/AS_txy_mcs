@@ -1,6 +1,7 @@
 package com.txy.fragment;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import android.content.BroadcastReceiver;
@@ -17,11 +18,17 @@ import android.widget.GridView;
 
 import com.txy.SPdata;
 import com.txy.adapter.LightGridAdapter;
+import com.txy.constants.Constants;
 import com.txy.database.BoardRoomDB;
 import com.txy.database.httpdata.BoardRoomEntity;
 import com.txy.database.httpdata.LightEntity;
+import com.txy.database.httpdata.MachineCode;
 import com.txy.txy_mcs.R;
 import com.txy.udp.InitData.ByteMerge;
+import com.txy.udp.InitData.StringMerge;
+import com.txy.udp.Sender;
+import com.txy.utils.BytesUtils;
+import com.txy.utils.ParseUtil;
 import com.txy.utils.SPUtils;
 
 /**
@@ -41,7 +48,16 @@ public class LightControlFragment extends Fragment {
         View layout = inflater.inflate(R.layout.fragment_light_control, null);
 
         initGridView(layout);
+        initLightNum();
         return layout;
+    }
+
+    private void initLightNum() {
+        List<MachineCode> machineCodeList = BoardRoomDB.getMachineCodeList();
+        int selectBoardRoomPosition = SPdata.readSelectBoardRoomPosition(getActivity());
+        List<LightEntity> light = BoardRoomDB.getLight(machineCodeList.get(selectBoardRoomPosition).getTypeId());
+        mLightGridAdapter.setLightList(light);
+        mLightGridAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -49,7 +65,7 @@ public class LightControlFragment extends Fragment {
         super.onStart();
         receive = new UpdateLightStatusReceive();
         IntentFilter filter = new IntentFilter("txPark.updateEquipStatus");
-        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(receive,filter);
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(receive, filter);
     }
 
     @Override
@@ -63,11 +79,7 @@ public class LightControlFragment extends Fragment {
         super.setUserVisibleHint(isVisibleToUser);
 
         if (isVisibleToUser) {
-            List<BoardRoomEntity> boardRoomList = BoardRoomDB.getBoardRoomList();
-            int selectBoardRoomPosition = SPdata.readSelectBoardRoomPosition(getActivity());
-            List<LightEntity> light = BoardRoomDB.getLight(boardRoomList.get(selectBoardRoomPosition).getTypeId());
-            getEquipStatus();
-            updateLightStatus(light);
+            getAllEquipStatus();
         }
 
     }
@@ -85,26 +97,17 @@ public class LightControlFragment extends Fragment {
 
     }
 
-
-    public void getEquipStatus() {
-
-        mLightStatus.clear();
-        String equipStatus = (String) SPUtils.get(getActivity(), "equipStatus", null);
-        if (equipStatus == null) {
-            return;
-        }
-
-        byte[] bytes = equipStatus.getBytes();
-        for (int i = 0; i < 5; i++) {
-            mLightStatus.addAll(ByteMerge.parseByteToBit(bytes[i]));
-        }
-
+    /**
+     * 发送命令去获取所有设备的状态
+     */
+    private void getAllEquipStatus() {
+        String allEquipStatus = StringMerge.getAllEquipMentStatus(getActivity());
+        String ip = (String) SPUtils.get(getActivity(), Constants.IP, Constants.DEFAULT_IP);
+        int port =(Integer) SPUtils.get(getActivity(), Constants.SENDPORT, Constants.DEFAULT_SENDPORT);
+        new Sender(allEquipStatus,ip,port).send();
     }
 
-    private void updateLightStatus(List<LightEntity> light) {
-        if (light != null) {
-            mLightGridAdapter.setLightList(light);
-        }
+    private void updateLightStatus() {
         mLightGridAdapter.setLightStatus(mLightStatus);
         mLightGridAdapter.notifyDataSetChanged();
 
@@ -117,12 +120,18 @@ public class LightControlFragment extends Fragment {
 
             mLightStatus.clear();
             String equipStatus = intent.getStringExtra("equipStatus");
-            byte[] bytes = equipStatus.substring(48, 52).getBytes();
-            for (int i = 0; i < 5; i++) {
-                mLightStatus.addAll(ByteMerge.parseByteToBit(bytes[i]));
+            String substring = equipStatus.substring(75, 89);
+            String s = substring.replaceAll(" ", "");
+//            String s = "b000000000";
+            String array[] = new String[5];
+            for (int j = 0; j < 5; j++) {
+                array[j] = s.substring(2 * j, 2 * j + 2);
+                for (int i = 0; i < array[j].length(); i++) {
+                    byte[] bytes = array[j].getBytes();
+                    mLightStatus.addAll(ByteMerge.parseByteToBit(bytes[i]));
+                }
             }
-
-            updateLightStatus(null);
+            updateLightStatus();
         }
     }
 }

@@ -4,6 +4,7 @@ import com.txy.database.AirCondition;
 import com.txy.utils.ByteToBitUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -38,16 +39,24 @@ public class ByteMerge {
 
 
     public static List<Boolean> parseByteToBit(byte b) {
-        byte[] bytes = ByteToBitUtils.getBooleanArray(b);
+        byte j = 0;
+        if (b >= 48 && b <= 57) {
+            j = (byte) ( b - '0');
+        } else if (b >= 97 && b <= 122) {
+            j = (byte) (b - 'a' + 10);
+        }
+
+        byte[] bytes = ByteToBitUtils.getBooleanArray(j);
         ArrayList<Boolean> booleans = new ArrayList<Boolean>();
         int length = bytes.length;
-        for (int i = 0; i < length; i++) {
+        for (int i = length - 1; i >= 4; i--) {
             if (bytes[i] == 0) {
                 booleans.add(false);
             } else {
                 booleans.add(true);
             }
         }
+        Collections.reverse(booleans);
         return booleans;
     }
 }

@@ -23,20 +23,20 @@ public class LightGridAdapter extends BaseAdapter{
 
     private Context mContext;
     private ArrayList<Boolean> mLightStatus = new ArrayList<Boolean>();// 灯的状态
-    private List<LightEntity> mLightList;// 灯
+    private List<LightEntity> mLightList = new ArrayList<>();// 灯
 
     public LightGridAdapter(Context context, ArrayList<Boolean> lightStatus) {
         mContext  = context;
-        mLightStatus = lightStatus;
+        mLightStatus.addAll(lightStatus);
     }
 
     public void setLightList(List<LightEntity> lightList) {
-        this.mLightList = lightList;
+        this.mLightList.addAll(lightList);
     }
 
     @Override
     public int getCount() {
-        return mLightList == null ? 0 : mLightList.size();
+        return  mLightList.size();
     }
 
     @Override
@@ -100,6 +100,7 @@ public class LightGridAdapter extends BaseAdapter{
 
         return convertView;
     }
+
 
     public void setLightStatus(ArrayList<Boolean> list) {
         mLightStatus.clear();
