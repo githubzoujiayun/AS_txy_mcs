@@ -15,6 +15,9 @@ public class AirCondition extends Model {
     }
 
     @Column
+    public int roomId;
+
+    @Column
     public int position;
 
     @Column

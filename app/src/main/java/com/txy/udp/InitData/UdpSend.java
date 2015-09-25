@@ -10,7 +10,7 @@ public class UdpSend {
     public static String GET_EQUIPMENT_STATUS_FRAME_LENGTH = "1b1b";// 获取设备状态帧长度
     public static String LIGHT_CONTROL_FRAME_LENGTH = "1d1d";// 灯光控制帧长度
     public static String INFRARED_CONTROL_FRAME_LENGTH = "1e1e";// 红外控制帧长度
-    public static String CURTAIN_CONTROL_FRAME_LENGTH = "1a1a";//窗帘控制帧长度
+    public static String CURTAIN_CONTROL_FRAME_LENGTH = "1c1c";//窗帘控制帧长度
     public static String IP_SET_FRAME_LENGTH = "1d1d";// IP设置帧长度
 
     public static String HMIS = "54585041524b";// 系统标识码“HMIS”
@@ -68,7 +68,7 @@ public class UdpSend {
         public static String FAN_RATE_LOW = "0";
         public static String FAN_RATE_MID = "1";
         public static String FAN_RATE_HIGH = "2";
-        public static String FAN_RATE_HOT = "3";
+        public static String FAN_RATE_HOT = "15";
 
         // 模式
         public static String COLD = "0";

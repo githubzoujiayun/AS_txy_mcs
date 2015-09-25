@@ -15,6 +15,7 @@ import com.txy.database.httpdata.TvEntity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by Administrator on 2015/8/26.
@@ -235,6 +236,29 @@ public class BoardRoomDB {
         new Delete()
                 .from(ModelEntity.class)
                 .execute();
+    }
+
+    public static void saveAirConditionStatus(AirCondition airCondition){
+        new Delete()
+                .from(AirCondition.class)
+                .where("roomId = ? and position = ?", new Object[]{airCondition.roomId, airCondition.position})
+                .execute();
+        ActiveAndroid.beginTransaction();
+        try {
+
+            airCondition.save();
+
+            ActiveAndroid.setTransactionSuccessful();
+        } finally {
+            ActiveAndroid.endTransaction();
+        }
+    }
+
+    public static AirCondition getAirConditionStatus(int roomId, int position) {
+        return new Select()
+                .from(AirCondition.class)
+                .where("roomId = ? and position = ?",new Object[]{roomId, position})
+                .executeSingle();
     }
 
 }

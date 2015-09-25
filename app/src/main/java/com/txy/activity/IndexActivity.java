@@ -1,5 +1,6 @@
 package com.txy.activity;
 
+import android.app.Application;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -31,6 +32,7 @@ import com.txy.SPdata;
 import com.txy.adapter.MenuListViewAdapter;
 import com.txy.adapter.PopMenuAdapter;
 import com.txy.adapter.SelectRoomMenuAdapter;
+import com.txy.application.MyApplication;
 import com.txy.constants.Constants;
 import com.txy.database.BoardRoomDB;
 import com.txy.database.RoomList;
@@ -160,6 +162,9 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
             SPdata.writeSendIp(this, machineCode.getIp());
             oneBoardRoom = BoardRoomDB.getOneBoardRoom(machineCode.getTypeId());
         }
+
+        MyApplication application = (MyApplication) getApplication();
+        application.setNowRoomId(machineCode.getRoomId());
 
         mTVHeader.setText(machineCode.getBoardRoomName());
         List<ModelEntity> model = BoardRoomDB.getModel(oneBoardRoom.getTypeId());
@@ -412,15 +417,15 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
         new Sender(allEquipStatus,ip,port).send();
     }
 
-    /**
-     * 获取当前的情景模式
-     */
-    private void getSituation() {
-        String situation = StringMerge.getSituation(this);
-        String ip = (String) SPUtils.get(this, Constants.IP, Constants.DEFAULT_IP);
-        int port =(Integer) SPUtils.get(this, Constants.SENDPORT, Constants.DEFAULT_SENDPORT);
-        new Sender(situation,ip,port).send();
-    }
+//    /**
+//     * 获取当前的情景模式
+//     */
+//    private void getSituation() {
+//        String situation = StringMerge.getSituation(this);
+//        String ip = (String) SPUtils.get(this, Constants.IP, Constants.DEFAULT_IP);
+//        int port =(Integer) SPUtils.get(this, Constants.SENDPORT, Constants.DEFAULT_SENDPORT);
+//        new Sender(situation,ip,port).send();
+//    }
 
     /**
      * 跟服务的绑定的连接
@@ -436,7 +441,6 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
             receiveService.setOnReceiveSuccessListener(this);
 
             getAllEquipStatus();
-//            getSituation();
         }
 
         @Override

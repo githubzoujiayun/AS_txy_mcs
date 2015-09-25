@@ -59,7 +59,7 @@ public class HomeFragment extends Fragment implements OnClickListener {
     public void onStart() {
         super.onStart();
         updateSituationReceive = new UpdateSituationReceive();
-        IntentFilter intentfilter = new IntentFilter("txPark.updateSituation");
+        IntentFilter intentfilter = new IntentFilter("txPark.updateEquipStatus");
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver(updateSituationReceive,intentfilter);
     }
 
@@ -160,12 +160,7 @@ public class HomeFragment extends Fragment implements OnClickListener {
                 break;
 
             case R.id.btn_powerdownok:
-                mSituationMode = Constants.OFFMODE;
-                mMode = Constants.OFFMODE;
-                modeSetBG(mSituationMode);
-                setMode(mMode);
-                mMode = 0;
-                send();
+                close();
                 mDialog.dismiss();
                 break;
             case R.id.btn_powerdowncancel:
@@ -176,6 +171,15 @@ public class HomeFragment extends Fragment implements OnClickListener {
                 break;
         }
         saveNowMode();
+    }
+
+    private void close() {
+        mSituationMode = Constants.OFFMODE;
+        mMode = Constants.OFFMODE;
+        modeSetBG(mSituationMode);
+        setMode(mMode);
+        mMode = 0;
+        send();
     }
 
     /**
@@ -290,14 +294,14 @@ public class HomeFragment extends Fragment implements OnClickListener {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            String updateSituation = intent.getStringExtra("updateSituation");
-            String substring = updateSituation.substring(93, 94);
+            String updateSituation = intent.getStringExtra("equipStatus");
+            String substring = updateSituation.substring(186, 187);
             if (substring.equals("0")) {
                 mMode = 0;
             } else if (substring.equals("8")){
                 mMode = 1;
             }
-            substring = updateSituation.substring(94, 95);
+            substring = updateSituation.substring(187, 188);
             if (substring.equals("0")) {
                 mSituationMode = 0;
             } else if (substring.equals("1")){
@@ -308,6 +312,11 @@ public class HomeFragment extends Fragment implements OnClickListener {
                 mSituationMode = 3;
             } else if (substring.equals("4")){
                 mSituationMode = 4;
+                mMode = 4;
+                setMode(mMode);
+                modeSetBG(mSituationMode);
+                mMode = 0;
+                return;
             }
 
             setMode(mMode);

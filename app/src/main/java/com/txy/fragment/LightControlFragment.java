@@ -126,7 +126,7 @@ public class LightControlFragment extends Fragment {
             String array[] = new String[5];
             for (int j = 0; j < 5; j++) {
                 array[j] = s.substring(2 * j, 2 * j + 2);
-                for (int i = 0; i < array[j].length(); i++) {
+                for (int i = array[j].length() - 1; i >= 0; i--) {
                     byte[] bytes = array[j].getBytes();
                     mLightStatus.addAll(ByteMerge.parseByteToBit(bytes[i]));
                 }

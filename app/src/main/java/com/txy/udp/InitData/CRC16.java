@@ -86,7 +86,11 @@ public class CRC16 {
             uchCRCLo = auchCRCLo[uIndex] ;
         }
         clc =  uchCRCHi << 8 | uchCRCLo;
-        return Integer.toHexString(clc);
+		String s = Integer.toHexString(clc);
+		if (s.length() < 4) {
+			s = "0" + s;
+		}
+		return s;
 
     }
 

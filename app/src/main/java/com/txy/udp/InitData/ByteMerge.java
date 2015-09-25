@@ -20,7 +20,7 @@ public class ByteMerge {
     public static String AirConditionMerge(AirCondition airCondition){
 
         int l = airCondition.temperature;
-        int h = airCondition.fanRate + airCondition.mode + airCondition.status;
+        int h = airCondition.status + airCondition.mode + airCondition.fanRate;
 
         String s1 = Integer.toHexString(l);
         String s2 = Integer.toHexString(h);
@@ -56,7 +56,7 @@ public class ByteMerge {
                 booleans.add(true);
             }
         }
-        Collections.reverse(booleans);
+//        Collections.reverse(booleans);
         return booleans;
     }
 }
