@@ -10,6 +10,8 @@ public class MyApplication extends Application{
 
     private int mNowRoomId;
 
+    private int mPosition;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -28,6 +30,14 @@ public class MyApplication extends Application{
 
     public void setNowRoomId(int mNowRoomId) {
         this.mNowRoomId = mNowRoomId;
+    }
+
+    public int getPosition() {
+        return mPosition;
+    }
+
+    public void setPosition(int mPosition) {
+        this.mPosition = mPosition;
     }
 
 }

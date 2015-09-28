@@ -5,6 +5,7 @@ import com.txy.adapter.WindowAdapter;
 import com.txy.database.BoardRoomDB;
 import com.txy.database.httpdata.BoardRoomEntity;
 import com.txy.database.httpdata.CurtainEntity;
+import com.txy.database.httpdata.MachineCode;
 import com.txy.txy_mcs.R;
 import com.txy.txy_mcs.R.layout;
 
@@ -38,9 +39,9 @@ public class TabCurtain extends Fragment {
 	 * @param layout
 	 */
 	private void initListView(View layout) {
-		List<BoardRoomEntity> boardRoomList = BoardRoomDB.getBoardRoomList();
+		List<MachineCode> machineCodeList = BoardRoomDB.getMachineCodeList();
 		int selectBoardRoomPosition = SPdata.readSelectBoardRoomPosition(getActivity());
-		List<CurtainEntity> curtain = BoardRoomDB.getCurtain(boardRoomList.get(selectBoardRoomPosition).getTypeId());
+		List<CurtainEntity> curtain = BoardRoomDB.getCurtain(machineCodeList.get(selectBoardRoomPosition).getTypeId());
 		mListView = (ListView) layout.findViewById(R.id.listView1);
 		windowAdapter = new WindowAdapter(getActivity(), curtain);
 		mListView.setAdapter(windowAdapter);
