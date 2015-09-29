@@ -8,8 +8,8 @@ android {
         applicationId "com.txpark.yzd.mcs"
         minSdkVersion 19
         targetSdkVersion 21
-        versionCode 147
-        versionName "1.4.7"
+        versionCode 148
+        versionName "1.4.8"
     }
     buildTypes {
         release {

@@ -9,7 +9,7 @@
         android:id="@+id/pauseWindow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/view_powerdonw" />
+        android:background="@drawable/view_powerdonw" />
 
     <ImageButton
         android:id="@+id/btn_powerdownok"

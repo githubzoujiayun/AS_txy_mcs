@@ -1,6 +1,7 @@
 package com.txy.fragment;
 
 
+import android.app.AlertDialog;
 import android.app.Application;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -16,6 +17,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.txy.application.MyApplication;
@@ -59,6 +61,9 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
     private RadioGroup mModeRadioGroup;
     private RadioGroup mRadioGroup;
     private UpdateAirConditionStatus receive;
+    private ImageButton mOkButton;
+    private ImageButton mCancelButton;
+    private AlertDialog mDialog;
 
 
     @Override
@@ -210,7 +215,15 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
                 break;
 
             case R.id.btn_kgmode:
+                showDialog();
+                break;
+
+            case R.id.btn_powerdownok:
                 useToAll();
+                mDialog.dismiss();
+                break;
+            case R.id.btn_powerdowncancel:
+                mDialog.dismiss();
                 break;
         }
     }
@@ -248,6 +261,26 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
             send(i);
         }
 
+    }
+
+    /**
+     * 弹出自定义对话框
+     */
+    private void showDialog() {
+        LayoutInflater inflater = LayoutInflater.from(getActivity());
+        RelativeLayout layout = (RelativeLayout) inflater.inflate(
+                R.layout.dialog_powerdown, null);
+        layout.findViewById(R.id.pauseWindow).setBackground(getActivity().getResources().getDrawable(R.mipmap.user_all_air_dialog));
+        mOkButton = (ImageButton) layout.findViewById(R.id.btn_powerdownok);
+        mCancelButton = (ImageButton) layout
+                .findViewById(R.id.btn_powerdowncancel);
+
+        mDialog = new AlertDialog.Builder(getActivity()).create();
+        mDialog.setCancelable(false);
+        mDialog.show();
+        mDialog.getWindow().setContentView(layout);
+        mOkButton.setOnClickListener(this);
+        mCancelButton.setOnClickListener(this);
     }
 
     /**

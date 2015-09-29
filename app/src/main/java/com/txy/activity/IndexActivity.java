@@ -43,6 +43,7 @@ import com.txy.database.httpdata.MachineCode;
 import com.txy.database.httpdata.ModelEntity;
 import com.txy.database.httpdata.ProjectorEntity;
 import com.txy.database.httpdata.TvEntity;
+import com.txy.fragment.AboutUsFragment;
 import com.txy.tools.AreaMenu;
 import com.txy.udp.InitData.StringMerge;
 import com.txy.udp.InitData.UdpSend;
@@ -327,6 +328,7 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
                 closeSetMenu();
                 break;
             case 2:// 关于我们
+                replaceFragment(new AboutUsFragment());
                 closeSetMenu();
                 break;
             case 3:// 退出
