@@ -164,14 +164,19 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
             oneBoardRoom = BoardRoomDB.getOneBoardRoom(machineCode.getTypeId());
         }
 
+        if (oneBoardRoom == null) {
+            return;
+        }
         MyApplication application = (MyApplication) getApplication();
         application.setNowRoomId(machineCode.getRoomId());
 
         mTVHeader.setText(machineCode.getBoardRoomName());
-        List<ModelEntity> model = BoardRoomDB.getModel(oneBoardRoom.getTypeId());
-        if (model != null && model.size() != 0) {
-            mEquipList.add(Constants.EQUIPMENT.CTR_MODE);
-        }
+
+        mEquipList.add(Constants.EQUIPMENT.CTR_MODE);
+//        List<ModelEntity> model = BoardRoomDB.getModel(oneBoardRoom.getTypeId());
+//        if (model != null && model.size() != 0) {
+//
+//        }
 
         List<CurtainEntity> curtain = BoardRoomDB.getCurtain(oneBoardRoom.getTypeId());
         if (curtain != null && curtain.size() != 0) {
@@ -355,6 +360,9 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
         Fragment fragment = null;
         mMenuListViewAdapter.setPosition(position);
         mMenuListViewAdapter.notifyDataSetChanged();
+        if (mEquipList == null) {
+            return false;
+        }
         switch (mEquipList.get(position)) {
             case 0:// 情景控制
                 fragment = new TabSituation();

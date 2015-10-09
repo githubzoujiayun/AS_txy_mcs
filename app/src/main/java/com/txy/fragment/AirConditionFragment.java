@@ -24,12 +24,16 @@ import com.txy.application.MyApplication;
 import com.txy.constants.Constants;
 import com.txy.database.AirCondition;
 import com.txy.database.BoardRoomDB;
+import com.txy.database.httpdata.MachineCode;
+import com.txy.database.httpdata.SetAirEntity;
 import com.txy.txy_mcs.R;
 import com.txy.udp.InitData.StringMerge;
 import com.txy.udp.InitData.UdpSend;
 import com.txy.udp.Sender;
 import com.txy.utils.ParseUtil;
 import com.txy.utils.SPUtils;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -115,7 +119,7 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
-//            getAllEquipStatus();
+            getAllEquipStatus();
         }
     }
 
@@ -172,6 +176,39 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
         Bundle bundle = getArguments();
         mPosition = bundle.getInt("position");
         mAirConditionNum = bundle.getInt("airConditionNum");
+
+        MyApplication application = (MyApplication) getActivity().getApplication();
+        List<MachineCode> machineCodeList = BoardRoomDB.getMachineCodeList();
+        MachineCode machineCode = machineCodeList.get(application.getPosition());
+        List<SetAirEntity> setAir = BoardRoomDB.getSetAir(machineCode.getTypeId());
+        if (setAir == null) {
+            return;
+        }
+        SetAirEntity setAirEntity = setAir.get(mPosition);
+        String mode = setAirEntity.getMode();
+        if (mode.equalsIgnoreCase("0")) {
+            mMode = 2;
+        } else if (mode.equalsIgnoreCase("1")) {
+            mMode = 1;
+        } else {
+            mMode = 0;
+        }
+        if (mMode == 0) {
+            mNowTemperature = 16;
+        } else {
+            String temp = setAirEntity.getTemp();
+            mNowTemperature = Integer.parseInt(temp);
+        }
+
+        String speed = setAirEntity.getSpeed();
+        if (speed.equalsIgnoreCase("00")) {
+            mFanSpeed = 0;
+        } else if (speed.equalsIgnoreCase("01")) {
+            mFanSpeed = 1;
+        } else if (speed.equalsIgnoreCase("10")) {
+            mFanSpeed = 2;
+        }
+
     }
 
     @Override
@@ -462,15 +499,15 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
     @Override
     public void onStart() {
         super.onStart();
-//        receive = new UpdateAirConditionStatus();
-//        IntentFilter filter = new IntentFilter("txPark.updateEquipStatus");
-//        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(receive, filter);
+        receive = new UpdateAirConditionStatus();
+        IntentFilter filter = new IntentFilter("txPark.updateEquipStatus");
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(receive, filter);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-//        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(receive);
+        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(receive);
     }
 
     class UpdateAirConditionStatus extends BroadcastReceiver{
@@ -478,14 +515,11 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
         @Override
         public void onReceive(Context context, Intent intent) {
             String equipStatus = intent.getStringExtra("equipStatus");
-//            String equipStatus = "";
             String substring = "";
             if (mPosition == 0) {
                 substring = equipStatus.substring(90, 105).replaceAll(" ","");
-//                substring = "010000021a19";
             } else if (mPosition == 1) {
                 substring = equipStatus.substring(108, 123).replaceAll(" ", "");
-//                substring = "000000000000";
             } else if (mPosition == 2) {
                 substring = equipStatus.substring(126, 141).replaceAll(" ", "");
             } else if (mPosition == 3) {

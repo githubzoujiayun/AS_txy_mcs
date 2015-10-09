@@ -32,6 +32,16 @@ public  class BoardRoomEntity extends Model{
         private List<LightEntity> light;
         private List<CurtainEntity> curtain;
 
+    public List<SetAirEntity> getSet() {
+        return set;
+    }
+
+    public void setSet(List<SetAirEntity> set) {
+        this.set = set;
+    }
+
+    private List<SetAirEntity> set;
+
         public void setTypeName(String typeName) {
             this.typeName = typeName;
         }

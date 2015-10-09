@@ -11,6 +11,7 @@ import com.txy.database.httpdata.LightEntity;
 import com.txy.database.httpdata.MachineCode;
 import com.txy.database.httpdata.ModelEntity;
 import com.txy.database.httpdata.ProjectorEntity;
+import com.txy.database.httpdata.SetAirEntity;
 import com.txy.database.httpdata.TvEntity;
 
 import java.util.ArrayList;
@@ -49,6 +50,14 @@ public class BoardRoomDB {
                     for (int j = 0; j < size; j++) {
                         boardRoomEntity.getLight().get(j).setBoardRoomId(boardRoomEntity.getTypeId());
                         boardRoomEntity.getLight().get(j).save();
+                    }
+                }
+
+                if (boardRoomEntity.getSet() != null) {
+                    int size = boardRoomEntity.getSet().size();
+                    for (int j = 0; j < size; j++) {
+                        boardRoomEntity.getSet().get(j).setBoardRoomId(boardRoomEntity.getTypeId());
+                        boardRoomEntity.getSet().get(j).save();
                     }
                 }
 
@@ -219,6 +228,13 @@ public class BoardRoomDB {
                 .execute();
     }
 
+    public static List<SetAirEntity> getSetAir(int typeId) {
+        return new Select()
+                .from(SetAirEntity.class)
+                .where("boardRoomId = ?",typeId)
+                .execute();
+    }
+
     public static void deleteCurtain() {
         new Delete()
                 .from(CurtainEntity.class)
@@ -260,5 +276,7 @@ public class BoardRoomDB {
                 .where("roomId = ? and position = ?",new Object[]{roomId, position})
                 .executeSingle();
     }
+
+
 
 }
