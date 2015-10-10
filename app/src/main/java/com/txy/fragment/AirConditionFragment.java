@@ -76,7 +76,7 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
         initParams();
         initUI(layout);
         initListener();
-        initAirConditionStatus();
+//        initAirConditionStatus();
         getAllEquipStatus();
         return layout;
     }
@@ -177,37 +177,37 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
         mPosition = bundle.getInt("position");
         mAirConditionNum = bundle.getInt("airConditionNum");
 
-        MyApplication application = (MyApplication) getActivity().getApplication();
-        List<MachineCode> machineCodeList = BoardRoomDB.getMachineCodeList();
-        MachineCode machineCode = machineCodeList.get(application.getPosition());
-        List<SetAirEntity> setAir = BoardRoomDB.getSetAir(machineCode.getTypeId());
-        if (setAir == null) {
-            return;
-        }
-        SetAirEntity setAirEntity = setAir.get(mPosition);
-        String mode = setAirEntity.getMode();
-        if (mode.equalsIgnoreCase("0")) {
-            mMode = 2;
-        } else if (mode.equalsIgnoreCase("1")) {
-            mMode = 1;
-        } else {
-            mMode = 0;
-        }
-        if (mMode == 0) {
-            mNowTemperature = 16;
-        } else {
-            String temp = setAirEntity.getTemp();
-            mNowTemperature = Integer.parseInt(temp);
-        }
-
-        String speed = setAirEntity.getSpeed();
-        if (speed.equalsIgnoreCase("00")) {
-            mFanSpeed = 0;
-        } else if (speed.equalsIgnoreCase("01")) {
-            mFanSpeed = 1;
-        } else if (speed.equalsIgnoreCase("10")) {
-            mFanSpeed = 2;
-        }
+//        MyApplication application = (MyApplication) getActivity().getApplication();
+//        List<MachineCode> machineCodeList = BoardRoomDB.getMachineCodeList();
+//        MachineCode machineCode = machineCodeList.get(application.getPosition());
+//        List<SetAirEntity> setAir = BoardRoomDB.getSetAir(machineCode.getTypeId());
+//        if (setAir == null) {
+//            return;
+//        }
+//        SetAirEntity setAirEntity = setAir.get(mPosition);
+//        String mode = setAirEntity.getMode();
+//        if (mode.equalsIgnoreCase("0")) {
+//            mMode = 0;
+//        } else if (mode.equalsIgnoreCase("1")) {
+//            mMode = 1;
+//        } else {
+//            mMode = 2;
+//        }
+//        if (mMode == 0) {
+//            mNowTemperature = 16;
+//        } else {
+//            String temp = setAirEntity.getTemp();
+//            mNowTemperature = Integer.parseInt(temp);
+//        }
+//
+//        String speed = setAirEntity.getSpeed();
+//        if (speed.equalsIgnoreCase("00")) {
+//            mFanSpeed = 0;
+//        } else if (speed.equalsIgnoreCase("01")) {
+//            mFanSpeed = 1;
+//        } else if (speed.equalsIgnoreCase("10")) {
+//            mFanSpeed = 2;
+//        }
 
     }
 
@@ -405,15 +405,15 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
         }
 
         switch (mMode) {
-            case 0:
+            case 2:
                 airCondition.temperature = Integer.parseInt(UdpSend.AIRCONDITION.FAN_RATE_HOT);
                 break;
 
-            case 1:
+            case 0:
                 airCondition.mode = Integer.parseInt(UdpSend.AIRCONDITION.HOT);
                 break;
 
-            case 2:
+            case 1:
                 airCondition.mode = Integer.parseInt(UdpSend.AIRCONDITION.COLD);
                 break;
         }
@@ -486,11 +486,11 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
         } else if (id == R.id.mode_radioGroup) {
             int checkedRadioButtonId = radioGroup.getCheckedRadioButtonId();
             if (checkedRadioButtonId == R.id.imgBtn_zl) {
-                mMode = 2;
+                mMode = 0;
             } else if (checkedRadioButtonId == R.id.imgBtn_zr) {
                 mMode = 1;
             } else if (checkedRadioButtonId == R.id.imgBtn_sf) {
-                mMode = 0;
+                mMode = 2;
             }
         }
         send(mPosition);
@@ -533,11 +533,11 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
             } else {
                 switchStatus = substring.substring(4, 6);
                 if (switchStatus.equals("00")) {
-                    mMode = 2;
+                    mMode = 0;
                 } else if (switchStatus.equals("01")){
                     mMode = 1;
                 } else if (switchStatus.equals("02")){
-                    mMode = 0;
+                    mMode = 2;
                 }
 
                 switchStatus = substring.substring(6, 8);
