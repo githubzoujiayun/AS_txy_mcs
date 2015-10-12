@@ -1,5 +1,6 @@
 package com.txy.activity;
 
+import android.app.AlertDialog;
 import android.app.Application;
 import android.content.ComponentName;
 import android.content.Context;
@@ -14,12 +15,15 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -62,6 +66,7 @@ import com.txy.tools.PopMenu;
 import com.txy.txy_mcs.R;
 import com.txy.udp.Sender;
 import com.txy.utils.SPUtils;
+import com.txy.utils.ToastUtils;
 import com.umeng.update.UmengUpdateAgent;
 
 import java.util.ArrayList;
@@ -90,6 +95,9 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
     private PopupWindow mRoomPopupWindow;
     private AreaMenu areaMenu;
     private List<MachineCode> machineCodeList;
+    private AlertDialog mIpSetDialog;
+    private EditText edtText_ipSet;
+    private EditText edtText_portSet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -241,10 +249,41 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
             case R.id.menubtn:// 设置
                 showSetMenu(v);
                 break;
+            case R.id.imgBtn_ipsubmit:
+                submitButton();
+                break;
+            case R.id.imgBtn_ipcancel:
+                cancelButton();
+                break;
 
             default:
                 break;
         }
+    }
+
+    private void cancelButton() {
+        mIpSetDialog.dismiss();
+    }
+
+    private void submitButton() {
+        if (edtText_ipSet.getText().toString().equals("") ) {
+            ToastUtils.showShort(this, "请输入服务器IP地址!");
+            return;
+        }
+
+        if (edtText_portSet.getText().toString().equals("")) {
+            ToastUtils.showShort(this, "请输入端口号!");
+            return;
+        }
+
+        String ip = edtText_ipSet.getText().toString();
+        String port = edtText_portSet.getText().toString();
+        SPUtils.put(this, Constants.SERVERIP, ip);
+        SPUtils.put(this, Constants.SERVERPORT, port);
+        ToastUtils.showShort(this, "设置成功!");
+
+        mIpSetDialog.dismiss();
+
     }
 
     private void showRoomList(View v) {
@@ -265,9 +304,9 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
      */
     private void showSetMenu(View v) {
         mSetMenu = new PopMenu(this);
-        mSetMenu.addItems(new int[] { R.drawable.isetinfoselector,
+        mSetMenu.addItems(new int[]{R.drawable.isetinfoselector,
                 R.drawable.ihelpselector, R.drawable.iaboutselector,
-                R.drawable.iexitselector });
+                R.drawable.iexitselector});
         mSetMenu.showAsDropDown(v);
         mSetMenu.setOnItemClickListener(this);
     }
@@ -324,10 +363,10 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
 
         switch (position) {
             case 0:// 设置
-                Intent intent = new Intent(this,SetActivity.class);
-                startActivity(intent);
-                closeSetMenu();
-                overridePendingTransition(R.anim.right_to_left_in, R.anim.right_to_left_out);
+//                Intent intent = new Intent(this,SetActivity.class);
+//                startActivity(intent);
+//                closeSetMenu();
+//                overridePendingTransition(R.anim.right_to_left_in, R.anim.right_to_left_out);
                 break;
             case 1:// 帮助
                 closeSetMenu();
@@ -343,6 +382,31 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
             default:
                 break;
         }
+    }
+
+    /**
+     * IP、Port的设置Dialog
+     */
+    private void show(){
+
+        LayoutInflater inflater = LayoutInflater.from(this);
+        LinearLayout ipSetLayout = (LinearLayout) inflater.inflate(R.layout.dialog_ipset, null);
+
+        // 2. 新建对话框对象
+        mIpSetDialog = new AlertDialog.Builder(this).create();
+        mIpSetDialog.show();
+        mIpSetDialog.getWindow().setContentView(ipSetLayout);
+        mIpSetDialog.getWindow().clearFlags( WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+
+        edtText_ipSet = (EditText) ipSetLayout.findViewById(R.id.edtText_ipset);
+        edtText_portSet = (EditText) ipSetLayout.findViewById(R.id.edtText_portset);
+
+        ImageButton imgBtn_ipSubmit = (ImageButton) ipSetLayout.findViewById(R.id.imgBtn_ipsubmit);
+        ImageButton imgBtn_ipCancel = (ImageButton) ipSetLayout.findViewById(R.id.imgBtn_ipcancel);
+
+        imgBtn_ipSubmit.setOnClickListener(this);
+        imgBtn_ipCancel.setOnClickListener(this);
+
     }
 
     /**

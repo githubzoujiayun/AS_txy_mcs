@@ -47,6 +47,7 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
     private int mMode;// 模式
     private int mNowTemperature = 16;// 当前的温度
     private int mStatus = 0;// 开/关状态
+    private boolean isVisible = false;
 
     private RadioButton mFanLow;
     private RadioButton mFanMid;
@@ -119,7 +120,10 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
+            isVisible = true;
             getAllEquipStatus();
+        } else {
+            isVisible = false;
         }
     }
 
@@ -409,11 +413,11 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
                 airCondition.temperature = Integer.parseInt(UdpSend.AIRCONDITION.FAN_RATE_HOT);
                 break;
 
-            case 0:
+            case 1:
                 airCondition.mode = Integer.parseInt(UdpSend.AIRCONDITION.HOT);
                 break;
 
-            case 1:
+            case 0:
                 airCondition.mode = Integer.parseInt(UdpSend.AIRCONDITION.COLD);
                 break;
         }
@@ -457,8 +461,11 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
     }
 
     private void setCheck() {
+
         mModeRadioGroup.check(mModeRadioGroup.getChildAt(mMode).getId());
-        mRadioGroup.check(mRadioGroup.getChildAt(mFanSpeed).getId());
+        View childAt = mRadioGroup.getChildAt(mFanSpeed);
+        int id = childAt.getId();
+        mRadioGroup.check(id);
 
         mRadioGroup.setOnCheckedChangeListener(this);
         mModeRadioGroup.setOnCheckedChangeListener(this);
@@ -514,16 +521,19 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
 
         @Override
         public void onReceive(Context context, Intent intent) {
+//            if (!isVisible) {
+//                return;
+//            }
             String equipStatus = intent.getStringExtra("equipStatus");
             String substring = "";
             if (mPosition == 0) {
-                substring = equipStatus.substring(90, 105).replaceAll(" ","");
+                substring = equipStatus.substring(90, 107).replaceAll(" ","");
             } else if (mPosition == 1) {
-                substring = equipStatus.substring(108, 123).replaceAll(" ", "");
+                substring = equipStatus.substring(108, 125).replaceAll(" ", "");
             } else if (mPosition == 2) {
-                substring = equipStatus.substring(126, 141).replaceAll(" ", "");
+                substring = equipStatus.substring(126, 143).replaceAll(" ", "");
             } else if (mPosition == 3) {
-                substring = equipStatus.substring(144, 159).replaceAll(" ", "");
+                substring = equipStatus.substring(144, 162).replaceAll(" ", "");
             }
             String switchStatus = substring.substring(0, 2);
             if (switchStatus.equals("00")) {
@@ -544,14 +554,23 @@ public class AirConditionFragment extends Fragment implements View.OnClickListen
                 if (switchStatus.equals("00")) {
                     mFanSpeed = 0;
                 } else if (switchStatus.equals("01")){
-                    mFanSpeed = 1;
+                    mFanSpeed = 0;
                 } else if (switchStatus.equals("02")){
-                    mFanSpeed = 2;
+                    mFanSpeed = 1;
                 } else if (switchStatus.equals("03")){
-                    mFanSpeed = 3;
+                    mFanSpeed = 2;
                 }
-                mNowTemperature = ParseUtil.getStringToInt(substring.substring(8, 9)) * 16 + ParseUtil.getStringToInt(substring.substring(9, 10));
+                int stringToInt = ParseUtil.getStringToInt(substring.substring(10, 11));
+                stringToInt = stringToInt * 16;
+                int stringToInt1 = ParseUtil.getStringToInt(substring.substring(11, 12));
+                mNowTemperature = stringToInt + stringToInt1;
+
                 mStatus = 1;
+
+
+                if (mModeRadioGroup == null || mRadioGroup == null) {
+                    return;
+                }
                 openAirCondition();
             }
 
