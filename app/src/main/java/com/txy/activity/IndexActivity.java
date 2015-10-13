@@ -424,7 +424,7 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
         Fragment fragment = null;
         mMenuListViewAdapter.setPosition(position);
         mMenuListViewAdapter.notifyDataSetChanged();
-        if (mEquipList == null) {
+        if (mEquipList == null || mEquipList.size() == 0) {
             return false;
         }
         switch (mEquipList.get(position)) {

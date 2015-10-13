@@ -86,7 +86,11 @@ public class LightGridAdapter extends BaseAdapter{
             @Override
             public void onClick(View view) {
                 String msg = "";
-                int i = position + 1;
+//                int i = position + 1;
+                String code = mLightList.get(position).getCode();
+                int lastIndexOf = code.lastIndexOf("_");
+                String substring = code.substring(lastIndexOf + 1);
+                int i = Integer.parseInt(substring);
                 if (finalHolder.button.isChecked()) {
                     msg = StringMerge.lightControl(mContext, i, true);
                 } else {
