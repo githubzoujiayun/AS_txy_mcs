@@ -205,7 +205,7 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
         if (air != null && air.size() != 0) {
             mEquipList.add(Constants.EQUIPMENT.CTR_AIR);
         }
-
+        mEquipList.add(Constants.EQUIPMENT.CTR_TV);
         mEquipList.add(Constants.EQUIPMENT.CTR_MUSIC);
 
 //        mEquipList.add(Constants.EQUIPMENT.CTR_PPT);
@@ -367,6 +367,7 @@ public class IndexActivity extends FragmentActivity implements OnClickListener,
 //                startActivity(intent);
 //                closeSetMenu();
 //                overridePendingTransition(R.anim.right_to_left_in, R.anim.right_to_left_out);
+                show();
                 break;
             case 1:// 帮助
                 closeSetMenu();

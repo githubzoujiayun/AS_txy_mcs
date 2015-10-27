@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 
+import com.txy.adapter.TvChannelAdapter;
 import com.txy.txy_mcs.R;
 
 /**
@@ -17,6 +18,7 @@ public class TVChannelFragment extends Fragment {
 
 
     private GridView mChannelGridView;
+    private TvChannelAdapter tvChannelAdapter;
 
     public TVChannelFragment() {
     }
@@ -32,6 +34,8 @@ public class TVChannelFragment extends Fragment {
 
     private void initGridView(View layout) {
         mChannelGridView = (GridView) layout.findViewById(R.id.channelGridView);
+        tvChannelAdapter = new TvChannelAdapter(getActivity());
+        mChannelGridView.setAdapter(tvChannelAdapter);
     }
 
 
