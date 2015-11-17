@@ -12,7 +12,8 @@
 
         <CheckBox
             android:id="@+id/lightbutton"
-            style="@style/mycheckbox"
+            android:button="@null"
+            android:background="@drawable/light_seletor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -25,7 +26,7 @@
             android:layout_above="@+id/lightbutton"
             android:layout_centerHorizontal="true"
             android:textColor="#ffffff"
-            android:text="" />
+             />
     </RelativeLayout>
 
 </RelativeLayout>
